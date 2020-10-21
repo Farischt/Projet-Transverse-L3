@@ -5,7 +5,7 @@ const verifyConnection = (req, res, next) => {
 }
 
 const verifyAuth = (req, res, next) => {
-    if(!req.session.userId) return res.status(401).send('Acces Denied')
+    if(!req.session.userId) return res.status(401).send('Acces Denied');
     next();
 }
 
