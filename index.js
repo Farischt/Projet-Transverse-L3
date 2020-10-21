@@ -19,7 +19,7 @@ mongoose.connect(process.env.DB_CONNECT, {
 
 //Middlewares
 app.use(express.json())
-app.use(session({ secret: 'grehjznejzkhgjrez', saveUninitialized: false, resave: false }))
+app.use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: false, resave: false }))
 app.use(logger('dev'))
 
 // Route Middlewares : 
