@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const User = require('../model/User');
 const Item = require('../model/Items');
 const { verifyAuth }   = require('./verifyAuth');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 class Cart {
     constructor() {
@@ -22,9 +23,8 @@ router.use((req, res, next) => {
     }
 })
 
-router.get('/cart', verifyAuth, (req, res) => {
-    res.send(req.session.cart)   // a faire avec la db
-})
+
+// this route return all the items in items table (not the cart)
 
 router.get('/items', verifyAuth, async (req, res) => {
     try {
@@ -36,6 +36,8 @@ router.get('/items', verifyAuth, async (req, res) => {
         res.status(400).send(error)
     }
 })
+
+// This route add an item to items Table Only
 
 router.post('/additem', verifyAuth, async (req, res) => {
     const item = new Item({
@@ -52,14 +54,38 @@ router.post('/additem', verifyAuth, async (req, res) => {
     }
 })
 
-/*router.post('/cart', async (req, res) => {
-    // We check if the item exist in dataBase
-    const item = await findOne({ _id: parseInt(req.body.id)});
-    if(!item) return res.status(404).send(`Article number ${req.body.id} doesn't.`);
+router.delete('/deleteItem')
 
-    // We add the item in cart
-    req.session.cart.push({ id: parseInt(req.body.id), quantity: parseInt(req.body.quantity) });
-    return res.send(req.session.carte)
-})*/
+
+
+// CART ROUTES AND MIDDLEWARE
+
+router.get('/cart', verifyAuth, (req, res) => {
+    res.send(req.session.cart)   
+})
+
+router.post('/add', verifyAuth, async (req, res) => {
+    // We first check if the id is a mongoose.Types.ObjectId
+    if(!ObjectId.isValid(req.body._id)) return res.status(404).send("Id isn't valid")
+    
+    // We then check if the quantity is a number
+    if(isNaN(parseInt(req.body.quantity))) return res.status(404).send('Quantity must be a number')
+
+    // We need to check if the item in req.body is in the database
+    const item = await Item.findById(req.body._id);      
+    if(!item) return res.status(404).send('Item not found in db')
+
+    // Then we need to check if the article is already in the cart 
+    // ! TO MODIFY WHEN CART WILL BE IN DB 
+    const cart = req.session.cart.items.find(i => i._id === req.body._id)
+    if(cart) return res.status(400).send('Item is already in cart, delete it, or change quantity in the cart')
+
+    // Now we can add our item in cart 
+    req.session.cart.items.push({ 
+        _id: req.body._id, 
+        quantity: parseInt(req.body.quantity)
+    })
+    res.send(req.session.cart.items)
+})
 
 module.exports = router;

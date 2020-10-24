@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const logger = require('morgan');
+const bodyParser = require('body-parser')
 const authRoute = require("./routes/auth");
 const cartRoute = require('./routes/cart');
 require('dotenv').config();
@@ -19,6 +20,7 @@ mongoose.connect(process.env.DB_CONNECT, {
 
 //Middlewares
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(session({ secret: process.env.SESSION_SECRET, saveUninitialized: false, resave: false }));
 app.use(logger('dev'));
 
