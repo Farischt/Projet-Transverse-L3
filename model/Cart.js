@@ -9,8 +9,7 @@ const cartSchema = new mongoose.Schema({
         type: Date, 
         default: Date.now()
     },
-    Items: {
-        type: Array,
-
+    items: {
+        type: Number,
     }
 })
