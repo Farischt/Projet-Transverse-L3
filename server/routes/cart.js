@@ -9,7 +9,7 @@ class Cart {
       this.createdAt = new Date();
       this.updatedAt = new Date();
       this.items = [];
-      this.cartId = null
+      this.userId = null
     }
   }
   
@@ -54,38 +54,37 @@ router.post('/additem', verifyAuth, async (req, res) => {
     }
 })
 
-router.delete('/deleteItem')
-
-
 
 // CART ROUTES AND MIDDLEWARE
-
 router.get('/cart', verifyAuth, (req, res) => {
-    res.send(req.session.cart)   
+    res.json(req.session.cart)   
 })
 
-router.post('/add', verifyAuth, async (req, res) => {
+router.post('/add/:_id', verifyAuth, async (req, res) => {
     // We first check if the id is a mongoose.Types.ObjectId
-    if(!ObjectId.isValid(req.body._id)) return res.status(404).send("Id isn't valid")
+    if(!ObjectId.isValid(req.params._id)) return res.status(404).send("item's id isn't valid")
     
     // We then check if the quantity is a number
     if(isNaN(parseInt(req.body.quantity))) return res.status(404).send('Quantity must be a number')
 
     // We need to check if the item in req.body is in the database
-    const item = await Item.findById(req.body._id);      
+    const item = await Item.findById(req.params._id);      
     if(!item) return res.status(404).send('Item not found in db')
 
     // Then we need to check if the article is already in the cart 
     // ! TO MODIFY WHEN CART WILL BE IN DB 
-    const cart = req.session.cart.items.find(i => i._id === req.body._id)
+    const cart = req.session.cart.items.find(i => i._id === req.params._id)
     if(cart) return res.status(400).send('Item is already in cart, delete it, or change quantity in the cart')
 
-    // Now we can add our item in cart 
+    // Now we can update our  cart 
     req.session.cart.items.push({ 
-        _id: req.body._id, 
+        _id: req.params._id, 
         quantity: parseInt(req.body.quantity)
     })
-    res.send(req.session.cart.items)
+    req.session.cart.updatedAt = new Date()
+    req.session.cart.userId = req.session.userId
+    
+    res.send(req.session.cart)
 })
 
 module.exports = router;
