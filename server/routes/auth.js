@@ -31,10 +31,10 @@ router.post('/register', async (req, res) => {
         email: req.body.email,
         password: hashedPassword
     })
-
     try {
         const savedUser = await user.save();
-        res.send({ user: savedUser._id})
+        req.session.userId = savedUser._id
+        res.send({ user: savedUser._id, message: `Connected as ${savedUser.name}`})
     } catch (error) {
         res.status(400).send(error)
     }   
@@ -58,9 +58,10 @@ router.post('/login', verifyConnection, async (req, res) => {
     req.session.userId = user._id;
     
     // Create and assign a jwt
-    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+   /* const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
     console.log(req.session);
-    res.header('auth-token', token).send(`Welcome back ${token}`);
+    res.header('auth-token', token).send(`Welcome back ${token}`);*/
+    res.send(`Welcome back ${user.name}`)
     
 });
 
