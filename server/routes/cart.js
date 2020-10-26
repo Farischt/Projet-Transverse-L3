@@ -23,57 +23,24 @@ router.use((req, res, next) => {
     }
 })
 
-
-// this route return all the items in items table (not the cart)
-
-router.get('/items', verifyAuth, async (req, res) => {
-    try {
-        // We request the db to get all the items
-        const items = await Item.find({})
-        if(items.length === 0) return res.status(404).send('No available data, please add some items first')
-        res.send(items)
-    } catch(err) {
-        res.status(400).send(error)
-    }
-})
-
-// This route add an item to items Table Only
-
-router.post('/additem', verifyAuth, async (req, res) => {
-    const item = new Item({
-        name: req.body.name,
-        description: req.body.descritpion,
-        price: parseInt(req.body.price),
-    })
-    try {
-        const savedItem = await item.save();
-        console.log(savedItem);
-        res.send({ item: savedItem._id});
-    } catch(error) {
-        res.status(400).send(error);
-    }
-})
-
-
 // CART ROUTES AND MIDDLEWARE
-router.get('/cart', verifyAuth, (req, res) => {
+router.get('/', verifyAuth, (req, res) => {
     res.json(req.session.cart)   
 })
 
-router.post('/add/:_id', verifyAuth, async (req, res) => {
+router.post('/:_id', verifyAuth, async (req, res) => {
     // We first check if the id is a mongoose.Types.ObjectId
     if(!ObjectId.isValid(req.params._id)) return res.status(404).send("item's id isn't valid")
     
     // We then check if the quantity is a number
-    if(isNaN(parseInt(req.body.quantity))) return res.status(404).send('Quantity must be a number')
+    if(isNaN(parseInt(req.body.quantity)) || parseInt(req.body.quantity) <= 0) return res.status(404).send('Quantity must be a number')
 
-    // We need to check if the item in req.body is in the database
+    // We need to check if the item in req.params is in the database
     const item = await Item.findById(req.params._id);      
     if(!item) return res.status(404).send('Item not found in db')
 
     // Then we need to check if the article is already in the cart 
-    // ! TO MODIFY WHEN CART WILL BE IN DB 
-    const cart = req.session.cart.items.find(i => i._id === req.params._id)
+    const cart = req.session.cart.items.find(element => element._id === req.params._id)
     if(cart) return res.status(400).send('Item is already in cart, delete it, or change quantity in the cart')
 
     // Now we can update our  cart 
@@ -83,8 +50,45 @@ router.post('/add/:_id', verifyAuth, async (req, res) => {
     })
     req.session.cart.updatedAt = new Date()
     req.session.cart.userId = req.session.userId
-    
     res.send(req.session.cart)
+})
+
+router.put('/:_id', verifyAuth, async (req, res) => {
+    // We first check if the id is a mongoose.types.ObjectId in order to handle errors
+    if(!ObjectId.isValid(req.params._id)) return res.status(404).send("item's id isn't valid")
+
+    // We then check if the quantity is a number
+    if(isNaN(parseInt(req.body.quantity)) || parseInt(req.body.quantity) <= 0) return res.status(404).send('Quantity must be a number')
+
+    // We need to check if the item in req.params is in the database
+    const item = await Item.findById(req.params._id);      
+    if(!item) return res.status(404).send('Item not found in db')
+
+    // We then check if the item is in the cart.
+    const itemInCart = req.session.cart.items.find((element) => element._id === req.params._id)
+    if(!itemInCart) return res.status(404).send('Item not found in cart')
+
+    // We finally can change the quantity 
+    itemInCart.quantity = parseInt(req.body.quantity)
+    res.json(req.session.cart)
+})
+
+router.delete('/:_id', verifyAuth, async (req, res) => {
+    // We first check if the id is a mongoose.Types.ObjectId
+    if(!ObjectId.isValid(req.params._id)) return res.status(404).send("item's id isn't valid")
+
+    // We need to check if the item in req.params is in the database
+    const item = await Item.findById(req.params._id);      
+    if(!item) return res.status(404).send('Item not found in db')
+
+    // We then check if the item is in the cart.
+    const itemInCart = req.session.cart.items.findIndex((element) => element._id === req.params._id)
+    if(itemInCart === -1) return res.status(404).send('Item not found in cart')
+
+    // Otherwise we delete it
+    req.session.cart.items.splice(itemInCart, 1)
+    req.session.cart.updatedAt = new Date()
+    res.json(req.session.cart)
 })
 
 module.exports = router;
