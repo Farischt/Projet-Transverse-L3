@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
-const { registerValidation } = require('../Validation');
-const { passwordValidation } = require('../Validation')
-const { loginValidation } = require('../Validation');
+const { registerValidation } = require('../helpers/Validation');
+const { passwordValidation } = require('../helpers/Validation')
+const { loginValidation } = require('../helpers/Validation');
 const { verifyConnection }   = require('./verifyAuth');
 
 
