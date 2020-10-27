@@ -9,10 +9,10 @@ router.get('/', verifyAuth, async (req, res) => {
     try {
         // We request the db to get all the items
         const items = await Item.find({})
-        if(items.length === 0) return res.status(404).send('No available data, please add some items first')
-        res.send(items)
+        if(items.length === 0) return res.status(404).json({ errorMessage: 'No available data, please add some items first' })
+        res.json(items)
     } catch(err) {
-        res.status(400).send(error)
+        res.status(400).json({ errorMessage: error })
     }
 })
 
@@ -26,10 +26,9 @@ router.post('/', verifyAuth, async (req, res) => {
     })
     try {
         const savedItem = await item.save();
-        console.log(savedItem);
-        res.send({ item: savedItem._id});
+        res.json({ item: savedItem._id });
     } catch(error) {
-        res.status(400).send(error);
+        res.status(400).json({ errorMessage: error });
     }
 })
 
