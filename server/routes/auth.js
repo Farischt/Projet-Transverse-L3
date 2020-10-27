@@ -63,5 +63,14 @@ router.post('/login', verifyConnection, async (req, res) => {
     res.json({ user: req.session.userId })  
 });
 
+router.get("/me", async (req, res) => {
+    if (typeof(req.session.userId) === "undefined") {
+      res.status(401).json( { errorMesage: "You are not connected, please connect or register" } )
+      return
+    }
+      const user = await User.findOne({ _id: req.session.userId})
+      res.json( { userId: user._id, userName: user.name } )
+  });
+
 
 module.exports = router;
