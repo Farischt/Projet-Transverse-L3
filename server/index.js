@@ -34,4 +34,4 @@ app.use('/api/user', authRoute);
 app.use('/api/cart', cartRoute);
 app.use('/api/item', itemRoute);
 
-app.listen(3000, () => console.log('Server up and running'));
+app.listen(3080, () => console.log('Server up and running'));
