@@ -11,15 +11,15 @@ const { verifyConnection }   = require('./verifyAuth');
 router.post('/register', async (req, res) => {
     // We first validate the user informations 
     const { error } = registerValidation(req.body)
-    if(error) return res.status(400).send(error.details[0].message)
+    if(error) return res.status(400).json({ errorMessage: error.details[0].message })
 
     // We check if passwords are the same
     const passwordCheck = passwordValidation(req.body.password, req.body.repeatedPassword);
-    if(!passwordCheck) return res.status(400).send("Passwords are not the same.")
+    if(!passwordCheck) return res.status(400).json({ errorMessage: "Passwords are not the same." })
 
     // We check if the user is or isn't in DB
     const emailIsTaken = await User.findOne({ email: req.body.email });
-    if(emailIsTaken) return res.status(400).send('Email is already taken.')
+    if(emailIsTaken) return res.status(400).json({ errorMessage: 'Email is already taken.' })
 
     // We hash the password 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -33,9 +33,9 @@ router.post('/register', async (req, res) => {
     try {
         const savedUser = await user.save();
         req.session.userId = savedUser._id
-        res.send({ user: savedUser._id, message: `Connected as ${savedUser.name}`})
+        res.json({ user: savedUser._id, message: `Connected as ${savedUser.name}`})
     } catch (error) {
-        res.status(400).send(error)
+        res.status(400).json({ errorMessage: error })
     }   
 });
 
@@ -43,15 +43,15 @@ router.post('/register', async (req, res) => {
 router.post('/login', verifyConnection, async (req, res) => {
     // We first validate the user informations 
     const { error } = loginValidation(req.body);
-    if(error) return res.status(400).send(error.details[O].message);
+    if(error) return res.status(400).json({ errorMessage: error.details[0].message });
 
     // We check if the user is or isn't in DB
     const user = await User.findOne({ email: req.body.email });
-    if(!user) return res.status(400).send('Email doesnt exist');
+    if(!user) return res.status(400).json({ errorMessage: 'Email doesnt exist' });
 
     // We check if the password is correct
     const match = await bcrypt.compare(req.body.password, user.password);
-    if(!match) return res.status(404).send('Invalid password'); 
+    if(!match) return res.status(404).json({ errorMessage: 'Invalid password' }); 
 
     // We create a session using req.session
     req.session.userId = user._id;
@@ -60,8 +60,8 @@ router.post('/login', verifyConnection, async (req, res) => {
    /* const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
     console.log(req.session);
     res.header('auth-token', token).send(`Welcome back ${token}`);*/
-    res.send(`Welcome back ${user.name}`)
-    
+    //res.send(`Welcome back ${user.name}`)
+    res.json({ user: req.session.userId })  
 });
 
 
