@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Item = require('../model/Items');
-const { verifyAuth }   = require('./verifyAuth');
+const { verifyAuth }   = require('../helpers/verifyAuth');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 

@@ -4,8 +4,7 @@ const bcrypt = require('bcrypt');
 const { registerValidation } = require('../helpers/Validation');
 const { passwordValidation } = require('../helpers/Validation')
 const { loginValidation } = require('../helpers/Validation');
-const { verifyConnection }   = require('./verifyAuth');
-
+const { verifyConnection }   = require('../helpers/verifyAuth');
 
 // Register route that create a user in DB
 router.post('/register', async (req, res) => {
