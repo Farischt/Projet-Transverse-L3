@@ -12,7 +12,8 @@ class Cart {
       this.userId = null
     }
   }
-  
+
+// Middleware creating a cart for the session
 router.use((req, res, next) => {
     if (req.session.userId && typeof req.session.cart === "undefined") {
         req.session.cart = new Cart();
@@ -23,11 +24,12 @@ router.use((req, res, next) => {
     }
 })
 
-// CART ROUTES AND MIDDLEWARE
+// Get cart
 router.get('/', verifyAuth, (req, res) => {
     res.json(req.session.cart)   
 })
 
+// Add an item in cart
 router.post('/:_id', verifyAuth, async (req, res) => {
     // We first check if the id is a mongoose.Types.ObjectId
     if(!ObjectId.isValid(req.params._id)) return res.status(404).send("item's id isn't valid")
@@ -53,6 +55,7 @@ router.post('/:_id', verifyAuth, async (req, res) => {
     res.send(req.session.cart)
 })
 
+// Change the quantity of an item inside the cart
 router.put('/:_id', verifyAuth, async (req, res) => {
     // We first check if the id is a mongoose.types.ObjectId in order to handle errors
     if(!ObjectId.isValid(req.params._id)) return res.status(404).send("item's id isn't valid")
@@ -73,6 +76,7 @@ router.put('/:_id', verifyAuth, async (req, res) => {
     res.json(req.session.cart)
 })
 
+// Delete an item from the cart
 router.delete('/:_id', verifyAuth, async (req, res) => {
     // We first check if the id is a mongoose.Types.ObjectId
     if(!ObjectId.isValid(req.params._id)) return res.status(404).send("item's id isn't valid")

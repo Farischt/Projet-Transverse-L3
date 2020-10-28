@@ -6,6 +6,10 @@ const { passwordValidation } = require('../helpers/Validation')
 const { loginValidation } = require('../helpers/Validation');
 const { verifyConnection }   = require('../helpers/verifyAuth');
 
+router.use((req, res, next) => {
+    verifyConnection(req, res, next)
+})
+
 // Register route that create a user in DB
 router.post('/register', async (req, res) => {
     // We first validate the user informations 
@@ -31,7 +35,7 @@ router.post('/register', async (req, res) => {
     })
     try {
         const savedUser = await user.save();
-        req.session.userId = savedUser._id
+        //req.session.userId = savedUser._id
         res.json({ user: savedUser._id, message: `Connected as ${savedUser.name}`})
     } catch (error) {
         res.status(400).json({ errorMessage: error })
