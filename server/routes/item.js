@@ -5,7 +5,7 @@ const { verifyAuth }   = require('../helpers/verifyAuth');
 
 // this route return all the items in items table (not the cart)
 
-router.get('/', verifyAuth, async (req, res) => {
+router.get('/',/* verifyAuth,*/ async (req, res) => {
     try {
         // We request the db to get all the items
         const items = await Item.find({})
