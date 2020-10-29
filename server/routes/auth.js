@@ -6,9 +6,9 @@ const { passwordValidation } = require('../helpers/Validation')
 const { loginValidation } = require('../helpers/Validation');
 const { verifyConnection }   = require('../helpers/verifyAuth');
 
-router.use((req, res, next) => {
+/*router.use((req, res, next) => {
     verifyConnection(req, res, next)
-})
+})*/
 
 // Register route that create a user in DB
 router.post('/register', async (req, res) => {
