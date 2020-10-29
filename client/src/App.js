@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import axios from 'axios'
+import Home from './components/Home'
 import Register from './components/Register'
 import NavBar from './components/NavBar'
-import axios from 'axios'
-import { BrowserRouter as Router, Route } from "react-router-dom";
 
-const Page404 = () => <h1>Four:oh:four</h1>
 
 class App extends Component {
   constructor(props){
@@ -38,15 +38,16 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App" style={{backgroundColor: "#17a2b7", margin: "5%"}}>
+      <div className="App" style={{backgroundColor: "#17a2b7", height: "90vh" }}>
         <Router> 
           <NavBar login={this.login} userName={this.state.userName}/>           
-            <div className="container" style={{backgroundColor: "#17a2b7", padding: "10px"}}> 
+            <div className="container" style={{backgroundColor: "#17a2b7", marginTop: "10vh"}}> 
               <Route path="/register"
                 exact
                 render={(props) => (<Register {...props} register={this.register} /> 
               )}
-              />              
+              />  
+              <Route path='/' exact component={Home}/>           
             </div>          
         </Router>
       </div>
