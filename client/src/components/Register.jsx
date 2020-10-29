@@ -21,7 +21,7 @@ class Register extends Component {
 
     render() {
         return (
-            <div className="form-signin">
+            <div className="form-signin" style={{backgroundColor: "#353a40"}}>
                 <h1 className="h3 mb-3 font-weight-normal" style={{textAlign: "center"}}> Inscrivez-vous ! </h1>
                 <input onChange={this.handleInputChange} name="name" type="text" className="form-control" placeholder="Prénom" required autoFocus/>
                 <input onChange={this.handleInputChange} name="email" type="email" className="form-control" placeholder="Adresse e-mail" required/>
