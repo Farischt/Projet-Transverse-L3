@@ -36,7 +36,6 @@ class App extends Component {
   };
 
   render() {
-    const blueColor = "#17a2b7";
     return (
       <div
         className="App"
