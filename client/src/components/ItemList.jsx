@@ -7,6 +7,7 @@ class ItemList extends Component {
     super(props);
     this.state = {
       items: [],
+      likedItems: [],
       axiosInProgress: true,
       itemsPerPage: 2,
     };
@@ -16,12 +17,16 @@ class ItemList extends Component {
     const res = await axios.get("/api/item");
     this.setState({ items: [...this.state.items, ...res.data] });
     this.setState({ axiosInProgress: false });
+    const liked = await axios.get("api/item/liked");
+    this.setState({ likedItems: liked.data });
   };
 
   handleLike = async (id) => {
-    await axios.put("/api/item/like/" + id);
+    await axios.post("/api/item/like/" + id);
     const res = await axios.get("/api/item");
     this.setState({ items: res.data });
+    const liked = await axios.get("api/item/liked");
+    this.setState({ likedItems: liked.data });
   };
 
   render() {
