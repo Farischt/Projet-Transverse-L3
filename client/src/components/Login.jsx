@@ -8,8 +8,6 @@ class Login extends Component {
         email: "",
         password: "",
       },
-      isError: false,
-      errorMessage: "",
     };
   }
 
