@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Item = require("../model/Items");
+const Like = require("../model/Like");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const { verifyAuth } = require("../helpers/verifyAuth");
@@ -21,7 +22,7 @@ router.get("/", async (req, res) => {
 });
 
 // This route return specific items based on the query. Search function
-router.get("/:query", async (req, res) => {
+router.get("/query/:query", async (req, res) => {
   // We first check that the query is a string
   if (typeof req.params.query != "string")
     return res.status(400).json({ errorMessage: "Bad request" });
@@ -37,11 +38,30 @@ router.get("/:query", async (req, res) => {
 });
 
 // This route add a like to an existing item
-router.put("/like/:_id", async (req, res) => {
+router.post("/like/:_id", async (req, res) => {
   // We first check if the id is a mongoose.Types.ObjectId
   if (!ObjectId.isValid(req.params._id))
     return res.status(400).send("item's id isn't valid");
-  // We then update the element if it exist
+
+  // We check if the item is already liked or not
+  const liked = await Like.findOne({
+    userId: req.session.userId,
+    itemId: req.params._id,
+  });
+
+  // If it is already liked we return an error
+  if (liked)
+    return res
+      .status(401)
+      .json({ errorMessage: "You already liked this item." });
+
+  // We create a new like doc
+  const like = new Like({
+    userId: req.session.userId,
+    itemId: req.params._id,
+  });
+
+  // We then update the liked item and save the new like object
   try {
     // this option return the modified item
     const option = { new: true };
@@ -50,13 +70,24 @@ router.put("/like/:_id", async (req, res) => {
       { $inc: { likes: 1 } },
       option
     );
+
     // if updatedItem is null --> no id matching in db, nothing happened
     if (!updatedItem)
       return res.status(400).json({ errorMessage: "Bad request" });
-    res.json(updatedItem.likes);
+
+    // Now we can save the like
+    const savedLike = await like.save();
+
+    // we return the new like + the liked item
+    res.json({ like: savedLike, likedItem: updatedItem });
   } catch (err) {
     return err;
   }
+});
+
+router.get("/liked", verifyAuth, async (req, res) => {
+  const likedItem = await Like.find({ userId: req.session.userId });
+  res.json(likedItem);
 });
 
 //! ADMIN ONLY
