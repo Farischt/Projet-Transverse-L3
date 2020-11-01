@@ -38,7 +38,7 @@ router.get("/query/:query", async (req, res) => {
 });
 
 // This route add a like to an existing item
-router.post("/like/:_id", async (req, res) => {
+router.post("/like/:_id", verifyAuth, async (req, res) => {
   // We first check if the id is a mongoose.Types.ObjectId
   if (!ObjectId.isValid(req.params._id))
     return res.status(400).send("item's id isn't valid");
