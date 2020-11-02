@@ -40,6 +40,13 @@ class Item extends Component {
               <i className="right chevron icon"></i>
             </div>
             <div
+              className="ui right floated primary button"
+              style={{ backgroundColor: "#353a40" }}
+            >
+              Voir plus
+              <i className="right chevron icon"></i>
+            </div>
+            <div
               className="ui label"
               style={{ backgroundColor: "gold", color: "white" }}
             >
@@ -47,12 +54,6 @@ class Item extends Component {
             </div>
             <div className="ui label">{this.props.element.sales} vente(s) </div>
           </div>
-          {/*<div className="ui labeled button">
-            <div className="ui red button">
-              <i className="heart icon"></i> Like
-            </div>
-            <a className="ui basic red left pointing label">1,048</a>
-    </div>*/}
           <LikeButton
             id={this.props.element._id}
             like={this.props.like}
