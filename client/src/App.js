@@ -21,14 +21,10 @@ class App extends Component {
   };
 
   login = async (userInfo) => {
-    try {
-      await axios.post("/api/user/login", userInfo);
-      const res = await axios.get("/api/user/me");
-      this.setState({ userId: res.data.userId });
-      this.setState({ userName: res.data.userName });
-    } catch (err) {
-      console.log(err);
-    }
+    await axios.post("/api/user/login", userInfo);
+    const res = await axios.get("/api/user/me");
+    this.setState({ userId: res.data.userId });
+    this.setState({ userName: res.data.userName });
   };
 
   register = async (userInfo) => {
@@ -43,6 +39,7 @@ class App extends Component {
       >
         <Router>
           <NavBar login={this.login} userName={this.state.userName} />
+
           <div
             className="container"
             style={{ backgroundColor: "#17a2b7", marginTop: "10vh" }}
