@@ -15,20 +15,30 @@ class App extends Component {
   }
 
   componentDidMount = async () => {
-    const res = await axios.get("/api/user/me");
-    this.setState({ userId: res.data.userId });
-    this.setState({ userName: res.data.userName });
+    try {
+      const res = await axios.get("/api/user/me");
+      this.setState({ userId: res.data.userId });
+      this.setState({ userName: res.data.userName });
+    } catch (err) {
+      console.log("error");
+    }
   };
 
   login = async (userInfo) => {
-    await axios.post("/api/user/login", userInfo);
+    const log = await axios.post("/api/user/login", userInfo);
     const res = await axios.get("/api/user/me");
-    this.setState({ userId: res.data.userId });
+    this.setState({ userId: log.data.user });
     this.setState({ userName: res.data.userName });
   };
 
   register = async (userInfo) => {
     await axios.post("/api/user/register", userInfo);
+  };
+
+  logout = async () => {
+    await axios.get("/api/user/logout");
+    this.setState({ userId: null });
+    this.setState({ userName: null });
   };
 
   render() {
@@ -44,6 +54,7 @@ class App extends Component {
             className="container"
             style={{ backgroundColor: "#17a2b7", marginTop: "10vh" }}
           >
+            <button onClick={this.logout}> Log out </button>
             <Route
               path="/register"
               exact

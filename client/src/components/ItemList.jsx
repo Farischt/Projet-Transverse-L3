@@ -14,19 +14,28 @@ class ItemList extends Component {
   }
 
   componentDidMount = async () => {
-    const res = await axios.get("/api/item");
-    this.setState({ items: [...this.state.items, ...res.data] });
-    this.setState({ axiosInProgress: false });
-    const liked = await axios.get("api/item/liked");
-    this.setState({ likedItems: liked.data });
+    try {
+      const res = await axios.get("/api/item");
+      this.setState({ items: [...this.state.items, ...res.data] });
+      this.setState({ axiosInProgress: false });
+    } catch (err) {
+      console.log("error 2");
+    }
+    try {
+      const liked = await axios.get("api/item/liked");
+      this.setState({ likedItems: liked.data });
+    } catch (err) {
+      console.log("error 3");
+    }
   };
 
   handleLike = async (id) => {
-    await axios.post("/api/item/like/" + id);
+    const like = await axios.post("/api/item/like/" + id);
     const res = await axios.get("/api/item");
     this.setState({ items: res.data });
-    const liked = await axios.get("api/item/liked");
-    this.setState({ likedItems: liked.data });
+    /* const liked = await axios.get("api/item/liked");
+    this.setState({ likedItems: liked.data });*/
+    this.setState({ likedItems: [...this.state.likedItems, like.data] });
   };
 
   render() {

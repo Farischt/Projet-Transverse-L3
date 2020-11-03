@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Login from "./Login";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";

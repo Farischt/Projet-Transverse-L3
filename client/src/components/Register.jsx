@@ -79,7 +79,7 @@ class Register extends Component {
           S'inscrire
         </button>
         <p className="mt-5 mb-3 text-muted" style={{ textAlign: "center" }}>
-          &copy; 2017-2020
+          &copy; 2020-2020
         </p>
       </div>
     );
