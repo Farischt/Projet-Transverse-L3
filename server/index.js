@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
-const cors = require("cors");
 
 const authRoute = require("./routes/auth");
 const cartRoute = require("./routes/cart");
