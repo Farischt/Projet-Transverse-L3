@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const { registerValidation } = require("../helpers/Validation");
 const { passwordValidation } = require("../helpers/Validation");
 const { loginValidation } = require("../helpers/Validation");
-const { verifyConnection } = require("../helpers/verifyAuth");
+const { verifyConnection, verifyAuth } = require("../helpers/verifyAuth");
 
 /*router.use((req, res, next) => {
     verifyConnection(req, res, next)
@@ -28,8 +28,8 @@ router.post("/register", async (req, res) => {
       .json({ errorMessage: "Passwords are not the same." });
 
   // We check if the user is or isn't in DB
-  const emailIsTaken = await User.findOne({ email: req.body.email });
-  if (emailIsTaken)
+  const email = await User.findOne({ email: req.body.email });
+  if (email)
     return res.status(400).json({ errorMessage: "Email is already taken." });
 
   // We hash the password
@@ -44,7 +44,6 @@ router.post("/register", async (req, res) => {
 
   try {
     const savedUser = await user.save();
-    //req.session.userId = savedUser._id
     res.json({
       user: savedUser._id,
       message: `Connected as ${savedUser.name}`,
@@ -72,13 +71,13 @@ router.post("/login", verifyConnection, async (req, res) => {
 
   // We create a session using req.session
   req.session.userId = user._id;
-
-  // Create and assign a jwt
-  /* const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    console.log(req.session);
-    res.header('auth-token', token).send(`Welcome back ${token}`);*/
-  //res.send(`Welcome back ${user.name}`)
   res.json({ user: req.session.userId });
+});
+
+router.get("/logout", verifyAuth, (req, res) => {
+  req.session.userId = null;
+  req.session.destroy();
+  res.send("disconnected");
 });
 
 router.get("/me", async (req, res) => {
