@@ -77,16 +77,18 @@ router.post("/like/:_id", verifyAuth, async (req, res) => {
 
     // Now we can save the like
     const savedLike = await like.save();
-    // we return the new like + the liked item
-    res.json({ like: savedLike, likedItem: updatedItem });
+    // we only return the liked item's id
+    res.json({ itemId: savedLike.itemId }); //! {itemId: "giogjozjgozrgjzo"}
   } catch (err) {
     return err;
   }
 });
 
 router.get("/liked", verifyAuth, async (req, res) => {
-  const likedItem = await Like.find({ userId: req.session.userId });
-  res.json(likedItem);
+  const likedItem = await Like.find({ userId: req.session.userId }).select(
+    "itemId -_id"
+  );
+  res.json(likedItem); //! {itemId: "5ahsbabaehezh"}
 });
 
 //! ADMIN ONLY
