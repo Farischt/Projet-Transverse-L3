@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import Home from "./components/pages/Home/Home";
@@ -7,33 +7,27 @@ import NavBar from "./components/NavBar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userId: null,
-      userName: null,
-    };
-  }
+const App = () => {
+  const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState(null);
 
-  componentDidMount = async () => {
-    try {
+  useEffect(() => {
+    async function getUserFromApi() {
       const res = await axios.get("/api/user/me");
-      this.setState({ userId: res.data.userId });
-      this.setState({ userName: res.data.userName });
-    } catch (err) {
-      console.log("error");
+      setUserId(res.data.userId);
+      setUserName(res.data.userName);
     }
-  };
+    getUserFromApi();
+  }, []);
 
-  login = async (userInfo) => {
+  const login = async (userInfo) => {
     const log = await axios.post("/api/user/login", userInfo);
     const res = await axios.get("/api/user/me");
-    this.setState({ userId: log.data.user });
-    this.setState({ userName: res.data.userName });
+    setUserId(log.data.user);
+    setUserName(res.data.userName);
   };
 
-  register = async (userInfo) => {
+  const register = async (userInfo) => {
     try {
       await axios.post("/api/user/register", userInfo);
       toast.info("You are registrated !");
@@ -42,39 +36,34 @@ class App extends Component {
     }
   };
 
-  logout = async () => {
+  const logout = async () => {
     await axios.get("/api/user/logout");
-    this.setState({ userId: null });
-    this.setState({ userName: null });
+    setUserId(null);
+    setUserName(null);
   };
 
-  render() {
-    return (
-      <Switch>
+  //render() {
+  return (
+    <Switch>
+      <React.Fragment>
+        <NavBar login={login} userName={userName} />
+        <ToastContainer />
         <div
-          className="App"
-          style={{ /*backgroundColor: "#17a2b7",*/ height: "90vh" }}
+          className="container"
+          style={{ /*backgroundColor: "#17a2b7",*/ marginTop: "10vh" }}
         >
-          <NavBar login={this.login} userName={this.state.userName} />
-          <ToastContainer />
-          <div
-            className="container"
-            style={{ /*backgroundColor: "#17a2b7",*/ marginTop: "10vh" }}
-          >
-            <button onClick={this.logout}> Log out </button>
-            <Route path="/" exact component={Home} />
-            <Route
-              path="/register"
-              exact
-              render={(props) => (
-                <Register {...props} register={this.register} />
-              )}
-            />
-          </div>
+          <button onClick={logout}> Log out </button>
+          <Route path="/" exact component={Home} />
+          <Route
+            path="/register"
+            exact
+            render={(props) => <Register {...props} register={register} />}
+          />
         </div>
-      </Switch>
-    );
-  }
-}
+      </React.Fragment>
+    </Switch>
+  );
+  //}
+};
 
 export default App;
