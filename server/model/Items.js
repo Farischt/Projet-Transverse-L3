@@ -15,6 +15,10 @@ const itemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  imageUrl: {
+    type: String,
+    required: true,
+  },
   likes: {
     type: Number,
     default: 0,
