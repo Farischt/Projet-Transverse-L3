@@ -15,7 +15,7 @@ class Home extends Component {
     return (
       <div
         className="container"
-        style={{ /*backgroundColor: "#17a2b7",*/ padding: "10px" }}
+        style={{ /* backgroundColor: "#17a2b7",*/ padding: "10px" }}
       >
         <SearchBar />
         <ItemList />

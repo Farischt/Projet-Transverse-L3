@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import Home from "./components/pages/Home/Home";
 import Register from "./components/pages/Register/Register";
 import NavBar from "./components/NavBar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class App extends Component {
   constructor(props) {
@@ -32,7 +34,12 @@ class App extends Component {
   };
 
   register = async (userInfo) => {
-    await axios.post("/api/user/register", userInfo);
+    try {
+      await axios.post("/api/user/register", userInfo);
+      toast.info("You are registrated !");
+    } catch (err) {
+      toast.error("Something went wrong");
+    }
   };
 
   logout = async () => {
@@ -43,18 +50,19 @@ class App extends Component {
 
   render() {
     return (
-      <div
-        className="App"
-        style={{ /*backgroundColor: "#17a2b7",*/ height: "90vh" }}
-      >
-        <Router>
+      <Switch>
+        <div
+          className="App"
+          style={{ /*backgroundColor: "#17a2b7",*/ height: "90vh" }}
+        >
           <NavBar login={this.login} userName={this.state.userName} />
-
+          <ToastContainer />
           <div
             className="container"
             style={{ /*backgroundColor: "#17a2b7",*/ marginTop: "10vh" }}
           >
             <button onClick={this.logout}> Log out </button>
+            <Route path="/" exact component={Home} />
             <Route
               path="/register"
               exact
@@ -62,10 +70,9 @@ class App extends Component {
                 <Register {...props} register={this.register} />
               )}
             />
-            <Route path="/" exact component={Home} />
           </div>
-        </Router>
-      </div>
+        </div>
+      </Switch>
     );
   }
 }

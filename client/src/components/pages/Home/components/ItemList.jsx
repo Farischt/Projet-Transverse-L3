@@ -43,9 +43,7 @@ class ItemList extends Component {
       <div
         className="ui divided items"
         style={{
-          /*backgroundColor: "#17a2b7",*/
           padding: "15px",
-          borderRadius: "20px",
         }}
       >
         {this.state.axiosInProgress ? (
