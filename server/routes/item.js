@@ -99,6 +99,7 @@ router.post("/", verifyAuth, async (req, res) => {
     name: req.body.name,
     description: req.body.descritpion,
     price: parseInt(req.body.price),
+    imageUrl: req.body.imageUrl,
   });
   try {
     const savedItem = await item.save();
