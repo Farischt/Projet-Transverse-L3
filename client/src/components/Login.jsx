@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../css/Buttons.css";
 
 class Login extends Component {
   constructor(props) {
@@ -8,7 +9,6 @@ class Login extends Component {
         email: "",
         password: "",
       },
-      w,
     };
   }
 

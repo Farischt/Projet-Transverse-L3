@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import ItemList from "./ItemList";
-import SearchBar from "./SearchBar";
+import ItemList from "./components/ItemList";
+import SearchBar from "./components/SearchBar";
 
 class Home extends Component {
   constructor() {
@@ -15,7 +15,7 @@ class Home extends Component {
     return (
       <div
         className="container"
-        style={{ backgroundColor: "#17a2b7", padding: "10px" }}
+        style={{ /*backgroundColor: "#17a2b7",*/ padding: "10px" }}
       >
         <SearchBar />
         <ItemList />

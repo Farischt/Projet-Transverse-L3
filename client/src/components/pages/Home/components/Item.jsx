@@ -12,10 +12,7 @@ class Item extends Component {
     return (
       <div className="item">
         <div className="image">
-          <img
-            src="https://www.bentoburo.com/69-thickbox_default/canettes-coca-cola.jpg"
-            alt="png"
-          />
+          <img src={this.props.element.imageUrl} alt="png" />
         </div>
         <div className="content">
           <a className="header"> {this.props.element.name} </a>

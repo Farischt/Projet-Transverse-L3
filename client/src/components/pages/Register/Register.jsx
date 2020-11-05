@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../css/Register.css";
+import "../../../css/Register.css";
 
 class Register extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class Register extends Component {
 
   render() {
     return (
-      <div className="form-signin" style={{ backgroundColor: "#353a40" }}>
+      <div className="form-signin" style={{ backgroundColor: "white" }}>
         <h1
           className="h3 mb-3 font-weight-normal"
           style={{ textAlign: "center" }}

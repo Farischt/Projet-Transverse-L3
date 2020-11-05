@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
-import Home from "./components/Home";
-import Register from "./components/Register";
+import Home from "./components/pages/Home/Home";
+import Register from "./components/pages/Register/Register";
 import NavBar from "./components/NavBar";
 
 class App extends Component {
@@ -45,14 +45,14 @@ class App extends Component {
     return (
       <div
         className="App"
-        style={{ backgroundColor: "#17a2b7", height: "90vh" }}
+        style={{ /*backgroundColor: "#17a2b7",*/ height: "90vh" }}
       >
         <Router>
           <NavBar login={this.login} userName={this.state.userName} />
 
           <div
             className="container"
-            style={{ backgroundColor: "#17a2b7", marginTop: "10vh" }}
+            style={{ /*backgroundColor: "#17a2b7",*/ marginTop: "10vh" }}
           >
             <button onClick={this.logout}> Log out </button>
             <Route

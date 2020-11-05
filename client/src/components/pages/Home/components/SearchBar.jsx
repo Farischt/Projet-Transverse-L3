@@ -16,7 +16,7 @@ class SearchBar extends Component {
     return (
       <form
         className="form-inline justify-content-center"
-        style={{ backgroundColor: "#17a2b7", margin: "5vh" }}
+        style={{ /*backgroundColor: "#17a2b7",*/ margin: "5vh" }}
       >
         <input
           style={{ width: "70%" }}
