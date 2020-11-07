@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import Home from "./components/pages/Home/Home";
@@ -27,7 +27,7 @@ const App = () => {
       toast.info(` Bienvenue ${res.data.userName}`);
     }
     getUserFromApi();
-  }, []);
+  }, [dispatch]);
 
   return (
     <Switch>

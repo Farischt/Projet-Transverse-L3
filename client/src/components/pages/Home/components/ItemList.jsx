@@ -21,14 +21,6 @@ const ItemList = () => {
     getDataFromApi();
   }, []);
 
-  /* const handleLike = async (id) => {
-    await axios.post("/api/item/like/" + id);
-    const res = await axios.get("/api/item");
-    const userLikes = await axios.get("/api/item/liked");
-    setItems(res.data);
-    setLikedItems(userLikes.data);
-  };*/
-
   return (
     <div
       className="ui divided items"
@@ -56,12 +48,3 @@ const ItemList = () => {
 };
 
 export default ItemList;
-
-<div className="ui segment">
-  <div className="ui active dimmer">
-    <div className="ui massive text loader">Loading</div>
-  </div>
-  <p></p>
-  <p></p>
-  <p></p>
-</div>;

@@ -1,9 +1,9 @@
 import React from "react";
+
 import LikeButton from "./LikeButton";
 import "../../../../css/Buttons.css";
 
 const Item = (props) => {
-  console.log(props);
   return (
     <div className="item">
       <div className="image">
@@ -39,7 +39,7 @@ const Item = (props) => {
           </div>
           <div className="ui label">{props.element.sales} vente(s) </div>
         </div>
-        <LikeButton id={props.element._id} />
+        <LikeButton element={props.element} />
       </div>
     </div>
   );
