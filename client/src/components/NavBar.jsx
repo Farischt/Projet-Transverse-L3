@@ -1,12 +1,17 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Login from "./Login";
+import Logout from "./Logout";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
+import "../css/NavBar.css";
 
-const NavBar = (props) => {
+const NavBar = () => {
+  let { user } = useSelector((state) => ({ ...state }));
+
   return (
-    <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Navbar.Brand>e-Commerce</Navbar.Brand>
+    <Navbar className="color-nav" fixed="top" collapseOnSelect expand="lg">
+      <Navbar.Brand>Formation & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
@@ -16,15 +21,15 @@ const NavBar = (props) => {
           </Link>
         </Nav>
         <Nav className="mr-auto">
-          <Link to="/register" className="nav-link">
+          <Link to="/cart" className="nav-link">
             {" "}
-            S'inscrire{" "}
+            Test{" "}
           </Link>
         </Nav>
         <Nav className="mr-auto">
-          <Link to="/profil" className="nav-link">
+          <Link to="/cart" className="nav-link">
             {" "}
-            Mon profil{" "}
+            Catégorie{" "}
           </Link>
         </Nav>
         <Nav className="mr-auto">
@@ -33,7 +38,29 @@ const NavBar = (props) => {
             <i className="large shopping cart icon"></i>{" "}
           </Link>
         </Nav>
-        <Login login={props.login} userName={props.userName} />
+        {!user.isLoggedIn && (
+          <React.Fragment>
+            <Login />
+            <Link to="/register" className="nav-link">
+              <button className="btn btn-info my-2 my-sm-0">
+                {" "}
+                S'inscrire{" "}
+              </button>
+            </Link>
+          </React.Fragment>
+        )}
+
+        {user.isLoggedIn && user.name && (
+          <React.Fragment>
+            <Link to="/profil" className="nav-link">
+              <button className="btn btn-info my-2 my-sm-0">
+                {" "}
+                <i className="user outline icon"></i>Mon profil
+              </button>
+            </Link>
+            <Logout />
+          </React.Fragment>
+        )}
       </Navbar.Collapse>
     </Navbar>
   );

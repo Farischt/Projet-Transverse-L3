@@ -26,11 +26,7 @@ class SearchBar extends Component {
           placeholder="Search"
           aria-label="Search"
         />
-        <button
-          className="btn btn-outline-success my-2 my-sm-0"
-          type="submit"
-          style={{ backgroundColor: "#353a40" }}
-        >
+        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">
           Search
         </button>
       </form>

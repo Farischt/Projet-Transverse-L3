@@ -6,64 +6,44 @@ import Register from "./components/pages/Register/Register";
 import NavBar from "./components/NavBar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
 
 const App = () => {
-  const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState(null);
+  let dispatch = useDispatch();
 
   useEffect(() => {
     async function getUserFromApi() {
       const res = await axios.get("/api/user/me");
-      setUserId(res.data.userId);
-      setUserName(res.data.userName);
+      const userLikes = await axios.get("/api/item/liked");
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload: {
+          name: res.data.userName,
+          _id: res.data.userId,
+          isLoggedIn: true,
+          likedItems: userLikes.data,
+        },
+      });
+      toast.info(` Bienvenue ${res.data.userName}`);
     }
     getUserFromApi();
   }, []);
 
-  const login = async (userInfo) => {
-    const log = await axios.post("/api/user/login", userInfo);
-    const res = await axios.get("/api/user/me");
-    setUserId(log.data.user);
-    setUserName(res.data.userName);
-  };
-
-  const register = async (userInfo) => {
-    try {
-      await axios.post("/api/user/register", userInfo);
-      toast.info("You are registrated !");
-    } catch (err) {
-      toast.error("Something went wrong");
-    }
-  };
-
-  const logout = async () => {
-    await axios.get("/api/user/logout");
-    setUserId(null);
-    setUserName(null);
-  };
-
-  //render() {
   return (
     <Switch>
       <React.Fragment>
-        <NavBar login={login} userName={userName} />
+        <NavBar />
         <ToastContainer />
         <div
           className="container"
           style={{ /*backgroundColor: "#17a2b7",*/ marginTop: "10vh" }}
         >
-          <button onClick={logout}> Log out </button>
           <Route path="/" exact component={Home} />
-          <Route
-            path="/register"
-            exact
-            render={(props) => <Register {...props} register={register} />}
-          />
+          <Route path="/register" exact component={Register} />
         </div>
       </React.Fragment>
     </Switch>
   );
-  //}
 };
 
 export default App;

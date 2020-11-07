@@ -4,32 +4,30 @@ import Item from "./Item";
 
 const ItemList = () => {
   const [items, setItems] = useState([]);
-  const [likedItems, setLikedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getDataFromApi = async () => {
       setIsLoading(true);
-      const res = await axios.get("/api/item");
       try {
-        const userLikes = await axios.get("/api/item/liked");
-        setLikedItems(userLikes.data);
+        const res = await axios.get("/api/item");
+        setItems(res.data);
+        setIsLoading(false);
       } catch (err) {
-        setLikedItems([]);
+        setItems([]);
+        setIsLoading(false);
       }
-      setItems(res.data);
-      setIsLoading(false);
     };
     getDataFromApi();
   }, []);
 
-  const handleLike = async (id) => {
+  /* const handleLike = async (id) => {
     await axios.post("/api/item/like/" + id);
     const res = await axios.get("/api/item");
     const userLikes = await axios.get("/api/item/liked");
     setItems(res.data);
     setLikedItems(userLikes.data);
-  };
+  };*/
 
   return (
     <div
@@ -38,11 +36,12 @@ const ItemList = () => {
         padding: "15px",
       }}
     >
-      {!isLoading ? (
+      {items.length > 0 &&
         items.map((item) => {
-          return <Item key={item._id} element={item} like={handleLike} />;
-        })
-      ) : (
+          return <Item key={item._id} element={item} />;
+        })}
+
+      {isLoading && (
         <div className="ui segment">
           <div className="ui active dimmer">
             <div className="ui massive text loader">Loading</div>
@@ -57,3 +56,12 @@ const ItemList = () => {
 };
 
 export default ItemList;
+
+<div className="ui segment">
+  <div className="ui active dimmer">
+    <div className="ui massive text loader">Loading</div>
+  </div>
+  <p></p>
+  <p></p>
+  <p></p>
+</div>;
