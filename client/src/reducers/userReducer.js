@@ -2,6 +2,7 @@ export const userReducer = (
   state = {
     name: null,
     _id: null,
+    role: null,
     isLoggedIn: false,
     likedItems: null,
   },
@@ -12,8 +13,6 @@ export const userReducer = (
       return action.payload;
     case "LOGOUT":
       return action.payload;
-    case "LIKE":
-      return state.likedItems;
     default:
       return state;
   }

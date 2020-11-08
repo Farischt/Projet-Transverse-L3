@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+
 import axios from "axios";
+
 import Item from "./Item";
 
 const ItemList = () => {
@@ -34,13 +36,8 @@ const ItemList = () => {
         })}
 
       {isLoading && (
-        <div className="ui segment">
-          <div className="ui active dimmer">
-            <div className="ui massive text loader">Loading</div>
-          </div>
-          <p></p>
-          <p></p>
-          <p></p>
+        <div className="ui active dimmer">
+          <div className="ui massive text loader">Loading</div>
         </div>
       )}
     </div>

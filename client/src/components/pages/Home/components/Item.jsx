@@ -10,7 +10,7 @@ const Item = (props) => {
         <img src={props.element.imageUrl} alt="png" />
       </div>
       <div className="content">
-        <a className="header"> {props.element.name} </a>
+        <div className="header"> {props.element.name} </div>
         <div className="meta">
           <span className="cinema"> {props.element.price}$ </span>
         </div>

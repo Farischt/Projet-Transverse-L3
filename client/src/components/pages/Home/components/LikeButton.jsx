@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import { useSelector /*, useDispatch */ } from "react-redux";
+//import axios from "axios";
 
 const LikeButton = (props) => {
-  let dispatch = useDispatch();
+  //let dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
 
   const [isLiked, setIsLiked] = useState(false);
@@ -29,7 +29,9 @@ const LikeButton = (props) => {
         {!isLiked && <i className="thumbs up outline icon"></i>}
         {isLiked && <i className="thumbs down outline icon"></i>}
       </div>
-      <a className="ui basic red left pointing label">{props.element.likes}</a>
+      <div className="ui basic red left pointing label">
+        {props.element.likes}
+      </div>
     </div>
   );
 };

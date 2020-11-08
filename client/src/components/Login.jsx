@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import "../css/Buttons.css";
 
 const Login = () => {
   let dispatch = useDispatch();
+  let history = useHistory();
 
   const [userr, setUserr] = useState({
     email: "",
@@ -19,6 +21,11 @@ const Login = () => {
     setUserr(() => userInfo);
   };
 
+  const roleRedirect = (res) => {
+    if (res.data.userRole === "admin") history.push("/admin/dashboard");
+    else history.push("/user/dashboard");
+  };
+
   const handleLogin = async () => {
     const login = await axios.post("/api/user/login", userr);
     const getUser = await axios.get("/api/user/me");
@@ -27,11 +34,13 @@ const Login = () => {
       type: "LOGGED_IN_USER",
       payload: {
         name: getUser.data.userName,
+        role: getUser.data.userRole,
         _id: login.data.user,
         isLoggedIn: true,
         likedItems: userLikes.data,
       },
     });
+    roleRedirect(getUser);
   };
 
   return (

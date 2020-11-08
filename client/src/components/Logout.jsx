@@ -2,17 +2,19 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
-const Logout = () => {
+const Logout = (props) => {
   let dispatch = useDispatch();
 
   const handleLogout = async () => {
     try {
       await axios.get("/api/user/logout");
+      console.log(props);
       dispatch({
         type: "LOGOUT",
         payload: {
           name: null,
           _id: null,
+          role: null,
           isLoggedIn: false,
           likedItems: null,
         },
