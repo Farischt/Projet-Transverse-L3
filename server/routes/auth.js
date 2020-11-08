@@ -88,7 +88,8 @@ router.get("/me", async (req, res) => {
     return;
   }
   const user = await User.findOne({ _id: req.session.userId });
-  res.json({ userId: user._id, userName: user.name });
+  console.log(user);
+  res.json({ userId: user._id, userName: user.name, userRole: user.role });
 });
 
 module.exports = router;
