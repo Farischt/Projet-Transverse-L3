@@ -13,7 +13,7 @@ const NavBar = () => {
 
   return (
     <Navbar className="color-nav" fixed="top" collapseOnSelect expand="lg">
-      <Navbar.Brand>Formation & Logiciels</Navbar.Brand>
+      <Navbar.Brand>Formations & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">

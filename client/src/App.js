@@ -5,11 +5,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-import Home from "./components/pages/Home/Home";
-import Register from "./components/pages/Register/Register";
+import Home from "./pages/Home/Home";
+import Register from "./pages/Register/Register";
 import NavBar from "./components/NavBar";
-import UserDashboard from "../src/components/pages/User/UserDashboard";
-import UserRoute from "./components/routes/UserRoute";
+import UserDashboard from "./pages/User/UserDashboard";
+import UserRoute from "./routes/UserRoute";
 
 const App = () => {
   let dispatch = useDispatch();
@@ -45,13 +45,11 @@ const App = () => {
       <NavBar />
       <ToastContainer />
       <Switch>
-        <>
-          <div className="container" style={{ marginTop: "10vh" }}>
-            <Route component={Home} path="/" exact />
-            <Route component={Register} path="/register" exact />
-            <UserRoute component={UserDashboard} path="/user/dashboard" exact />
-          </div>
-        </>
+        <div className="content" style={{ marginTop: "12vh" }}>
+          <Route component={Home} path="/" exact />
+          <Route component={Register} path="/register" exact />
+          <UserRoute component={UserDashboard} path="/user/dashboard" exact />
+        </div>
       </Switch>
     </React.Fragment>
   );

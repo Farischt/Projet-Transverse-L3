@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import axios from "axios";
 
-import "../../../css/Register.css";
+import "../../css/Register.css";
 
 const Register = ({ history }) => {
   const [userInfo, setUserInfo] = useState({

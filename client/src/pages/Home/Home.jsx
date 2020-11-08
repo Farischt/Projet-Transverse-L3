@@ -5,10 +5,7 @@ import SearchBar from "./components/SearchBar";
 
 const Home = () => {
   return (
-    <div
-      className="container"
-      style={{ /* backgroundColor: "#17a2b7",*/ padding: "10px" }}
-    >
+    <div className="container">
       <SearchBar />
       <ItemList />
     </div>
