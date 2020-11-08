@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -13,6 +13,12 @@ import UserRoute from "./components/routes/UserRoute";
 
 const App = () => {
   let dispatch = useDispatch();
+  let history = useHistory();
+
+  const roleRedirect = (res) => {
+    if (res.data.userRole === "admin") history.push("/admin/dashboard");
+    else history.push("/user/dashboard");
+  };
 
   useEffect(() => {
     async function getUserFromApi() {
@@ -28,6 +34,7 @@ const App = () => {
           likedItems: userLikes.data,
         },
       });
+      roleRedirect(res);
       toast.info(` Heureux de vous revoir ${res.data.userName}`);
     }
     getUserFromApi();
