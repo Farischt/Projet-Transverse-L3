@@ -54,13 +54,13 @@ const NavBar = () => {
 
         {user && user.isLoggedIn && user.name && (
           <React.Fragment>
+            <Logout />
             <Link to="/user/dashboard" className="nav-link">
               <button className="btn btn-info my-2 my-sm-0">
                 {" "}
                 <i className="user outline icon"></i>Mon profil
               </button>
             </Link>
-            <Logout />
           </React.Fragment>
         )}
       </Navbar.Collapse>

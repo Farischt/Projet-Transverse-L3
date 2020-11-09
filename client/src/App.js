@@ -10,6 +10,8 @@ import Register from "./pages/Register/Register";
 import NavBar from "./components/NavBar";
 import UserDashboard from "./pages/User/UserDashboard";
 import UserRoute from "./routes/UserRoute";
+import UserSettings from "./pages/User/UserSettings";
+import UserPassword from "./pages/User/UserPassword";
 
 const App = () => {
   let dispatch = useDispatch();
@@ -45,11 +47,23 @@ const App = () => {
       <NavBar />
       <ToastContainer />
       <Switch>
-        <div className="content" style={{ marginTop: "12vh" }}>
-          <Route component={Home} path="/" exact />
-          <Route component={Register} path="/register" exact />
-          <UserRoute component={UserDashboard} path="/user/dashboard" exact />
-        </div>
+        <React.Fragment>
+          <div className="content" style={{ marginTop: "12vh" }}>
+            <Route component={Home} path="/" exact />
+            <Route component={Register} path="/register" exact />
+            <UserRoute component={UserDashboard} path="/user/dashboard" exact />
+            <UserRoute
+              component={UserPassword}
+              path="/user/dashboard/password"
+              exact
+            />
+            <UserRoute
+              component={UserSettings}
+              path="/user/dashboard/settings"
+              exact
+            />
+          </div>
+        </React.Fragment>
       </Switch>
     </React.Fragment>
   );

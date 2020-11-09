@@ -8,11 +8,7 @@ const UserRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        user && user.isLoggedIn ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/test" />
-        )
+        user && user.isLoggedIn ? <Component {...props} /> : <Redirect to="/" />
       }
     />
   );

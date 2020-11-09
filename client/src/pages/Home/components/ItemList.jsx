@@ -37,7 +37,7 @@ const ItemList = () => {
 
       {isLoading && (
         <div className="ui active dimmer">
-          <div className="ui massive text loader">Loading</div>
+          <div className="ui massive text loader">Chargement...</div>
         </div>
       )}
     </div>
