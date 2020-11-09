@@ -1,14 +1,12 @@
 const router = require("express").Router();
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const { registerValidation } = require("../helpers/Validation");
 const { passwordValidation } = require("../helpers/Validation");
 const { loginValidation } = require("../helpers/Validation");
 const { verifyConnection, verifyAuth } = require("../helpers/verifyAuth");
-
-/*router.use((req, res, next) => {
-    verifyConnection(req, res, next)
-})*/
 
 // Register route that create a user in DB
 router.post("/register", async (req, res) => {
@@ -90,6 +88,50 @@ router.get("/me", async (req, res) => {
   const user = await User.findOne({ _id: req.session.userId });
   console.log(user);
   res.json({ userId: user._id, userName: user.name, userRole: user.role });
+});
+
+router.put("/password/:_id", verifyAuth, async (req, res) => {
+  // We first check if the id is a mongoose.Types.ObjectId
+  if (!ObjectId.isValid(req.params._id))
+    return res.status(400).send("user id is not valid");
+
+  // We check if body passwords are the same
+  const passwordCheck = passwordValidation(
+    req.body.newPassword,
+    req.body.repeatPassword
+  );
+
+  if (!passwordCheck)
+    return res
+      .status(400)
+      .json({ errorMessage: "Passwords are not the same " });
+
+  // We then hash the new password
+  const hashedNewPassword = await bcrypt.hash(req.body.newPassword, 10);
+
+  // Finally we find the user with his id and his password then we update
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.params._id },
+      { password: hashedNewPassword },
+      async (err, doc) => {
+        if (err) console.log(err);
+        // We check if the password is correct
+        const match = await bcrypt.compare(
+          req.body.currentPassword,
+          doc.password
+        );
+        if (!match)
+          return res
+            .status(404)
+            .json({ errorMessage: "Invalid current password" });
+      }
+    );
+    console.log(user);
+    res.json({ message: "Password updated " });
+  } catch (err) {
+    return err;
+  }
 });
 
 module.exports = router;
