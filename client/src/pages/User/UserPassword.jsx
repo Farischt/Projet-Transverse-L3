@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 import UserNav from "../../components/UserNav";
+//import UserMenu from "../../components/UserMenu";
 
 const UserPassword = () => {
   let { user } = useSelector((state) => ({ ...state }));
@@ -41,17 +42,11 @@ const UserPassword = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div
-          className="col-md-2"
-          style={{ backgroundColor: "black", borderRadius: "10px" }}
-        >
+        <div className="col-md-2">
           {" "}
           <UserNav />{" "}
         </div>
-        <div
-          className="col p-4"
-          style={{ backgroundColor: "lightgrey", borderRadius: "10px" }}
-        >
+        <div className="col p-4">
           <h1> Modification de mot de passe </h1>
           {!isLoading && (
             <form onSubmit={handleSubmit}>
