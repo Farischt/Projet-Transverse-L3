@@ -24,7 +24,6 @@ const Login = () => {
 
   const roleRedirect = (res) => {
     if (res.data.userRole === "admin") history.push("/admin/dashboard");
-    else history.push("/user/dashboard");
   };
 
   const handleLogin = async () => {
