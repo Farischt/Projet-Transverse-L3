@@ -24,10 +24,11 @@ const UserPassword = () => {
     setUserInfo(() => userInput);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       setIsLoading(true);
-      await axios.put("/api/user/password", user._id);
+      await axios.put("/api/user/password/" + user._id, userInfo);
       setIsLoading(false);
       toast.success(" Votre mot de passe a été modifié ");
     } catch (err) {
@@ -38,42 +39,64 @@ const UserPassword = () => {
   };
 
   return (
-    <form className="container-fluid">
+    <div className="container-fluid">
       <div className="row">
-        <div className="col-md-3">
+        <div
+          className="col-md-2"
+          style={{ backgroundColor: "black", borderRadius: "10px" }}
+        >
           {" "}
           <UserNav />{" "}
         </div>
-        <div className="col">
+        <div
+          className="col p-4"
+          style={{ backgroundColor: "lightgrey", borderRadius: "10px" }}
+        >
+          <h1> Modification de mot de passe </h1>
           {!isLoading && (
-            <div className="form-inline mt-2 mt-md-0">
-              <div>
-                <input
-                  onChange={handleInputChange}
-                  className="form-control mr-sm-2"
-                  type="password"
-                  name="currentPassword"
-                  placeholder=" Mot de passe actuel "
-                />
-                <input
-                  onChange={handleInputChange}
-                  className="form-control mr-sm-2"
-                  type="password"
-                  name="newPassword"
-                  placeholder=" Nouveau mot de passe "
-                />
-                <input
-                  onChange={handleInputChange}
-                  className="form-control mr-sm-2"
-                  type="password"
-                  name="repeatPassword"
-                  placeholder=" Nouveau mot de passe"
-                />
-                <button className="btn btn-info my-2 my-sm-0">
-                  Changez de mot de passe
-                </button>
+            <form onSubmit={handleSubmit}>
+              <div className="form-row ">
+                <div className="form-group col-md-4">
+                  <input
+                    onChange={handleInputChange}
+                    type="password"
+                    className="form-control"
+                    name="currentPassword"
+                    placeholder="Mot de passe actuel"
+                  />
+                </div>
               </div>
-            </div>
+              <div className="form-row">
+                <div className="form-group col-md-4">
+                  <input
+                    onChange={handleInputChange}
+                    type="password"
+                    className="form-control"
+                    name="newPassword"
+                    placeholder="Nouveau mot de passe"
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-4">
+                  <input
+                    onChange={handleInputChange}
+                    type="password"
+                    className="form-control"
+                    name="repeatPassword"
+                    placeholder="Nouveau mot de passe"
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col">
+                  <button className="btn btn-info my-2 my-sm-0" type="submit">
+                    {" "}
+                    Modifier le mot de passe{" "}
+                  </button>
+                </div>
+              </div>
+            </form>
           )}
 
           {isLoading && (
@@ -83,7 +106,7 @@ const UserPassword = () => {
           )}
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 

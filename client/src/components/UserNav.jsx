@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const UserNav = () => {
   return (
-    <nav style={{ backgroundColor: "black", color: "white" }}>
+    <nav>
       <ul className="nav flex-column">
         <li className="nav-items">
           <Link to="/user/dashboard" className="nav-link">

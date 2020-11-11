@@ -13,6 +13,10 @@ import UserRoute from "./routes/UserRoute";
 import UserSettings from "./pages/User/UserSettings";
 import UserPassword from "./pages/User/UserPassword";
 
+import { Layout, Menu, Breadcrumb } from "antd";
+
+const { Header, Content, Footer } = Layout;
+
 const App = () => {
   let dispatch = useDispatch();
   let history = useHistory();
@@ -48,7 +52,7 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <React.Fragment>
-          <div className="content" style={{ marginTop: "12vh" }}>
+          <div className="container-fluid" style={{ marginTop: "12vh" }}>
             <Route component={Home} path="/" exact />
             <Route component={Register} path="/register" exact />
             <UserRoute component={UserDashboard} path="/user/dashboard" exact />

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import axios from "axios";
 import "../css/Buttons.css";
 
@@ -27,20 +28,25 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    const login = await axios.post("/api/user/login", userr);
-    const getUser = await axios.get("/api/user/me");
-    const userLikes = await axios.get("/api/item/liked");
-    dispatch({
-      type: "LOGGED_IN_USER",
-      payload: {
-        name: getUser.data.userName,
-        role: getUser.data.userRole,
-        _id: login.data.user,
-        isLoggedIn: true,
-        likedItems: userLikes.data,
-      },
-    });
-    roleRedirect(getUser);
+    try {
+      const login = await axios.post("/api/user/login", userr);
+      const getUser = await axios.get("/api/user/me");
+      const userLikes = await axios.get("/api/item/liked");
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload: {
+          name: getUser.data.userName,
+          role: getUser.data.userRole,
+          _id: login.data.user,
+          isLoggedIn: true,
+          likedItems: userLikes.data,
+        },
+      });
+      roleRedirect(getUser);
+    } catch (err) {
+      console.log(err);
+      toast.error(" Une erreur est survenu ");
+    }
   };
 
   return (
