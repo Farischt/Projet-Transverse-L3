@@ -1,7 +1,11 @@
 // Dependencies
 const router = require("express").Router();
 // Middlewares
-const { verifyConnection, verifyAuth } = require("../helpers/verifyAuth");
+const {
+  verifyConnection,
+  verifyAuth,
+  verifyAdmin,
+} = require("../helpers/auth");
 // Controllers
 const {
   register,
@@ -21,7 +25,10 @@ router.post("/login", verifyConnection, login);
 router.get("/logout", verifyAuth, logout);
 
 // Current user route
-router.get("/me", currentUser);
+router.get("/me", verifyAuth, currentUser);
+
+// Current admin route
+router.get("/admin", verifyAuth, verifyAdmin, currentUser);
 
 // Update password route
 router.put("/password/:_id", verifyAuth, updatePassword);
