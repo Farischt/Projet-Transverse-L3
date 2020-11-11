@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -12,19 +12,11 @@ import UserDashboard from "./pages/User/UserDashboard";
 import UserRoute from "./routes/UserRoute";
 import UserSettings from "./pages/User/UserSettings";
 import UserPassword from "./pages/User/UserPassword";
-
-import { Layout, Menu, Breadcrumb } from "antd";
-
-const { Header, Content, Footer } = Layout;
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminRoute from "./routes/AdminRoute";
 
 const App = () => {
   let dispatch = useDispatch();
-  let history = useHistory();
-
-  const roleRedirect = (res) => {
-    if (res.data.userRole === "admin") history.push("/admin/dashboard");
-    else history.push("/user/dashboard");
-  };
 
   useEffect(() => {
     async function getUserFromApi() {
@@ -40,7 +32,6 @@ const App = () => {
           likedItems: userLikes.data,
         },
       });
-      roleRedirect(res);
       toast.info(` Heureux de vous revoir ${res.data.userName}`);
     }
     getUserFromApi();
@@ -64,6 +55,11 @@ const App = () => {
             <UserRoute
               component={UserSettings}
               path="/user/dashboard/settings"
+              exact
+            />
+            <AdminRoute
+              component={AdminDashboard}
+              path="/admin/dashboard"
               exact
             />
           </div>
