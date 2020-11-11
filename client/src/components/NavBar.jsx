@@ -52,7 +52,7 @@ const NavBar = () => {
           </React.Fragment>
         )}
 
-        {user && user.isLoggedIn && user.name && (
+        {user && user.isLoggedIn && (
           <React.Fragment>
             <Logout />
             <Link to="/user/dashboard" className="nav-link">
@@ -62,6 +62,16 @@ const NavBar = () => {
               </button>
             </Link>
           </React.Fragment>
+        )}
+
+        {user && user.isLoggedIn && user.role === "admin" && (
+          <Link to="/admin/dashboard">
+            {" "}
+            <button className="btn btn-info my-2 my-sm-0">
+              {" "}
+              <i className="user outline icon"></i>Admin
+            </button>
+          </Link>
         )}
       </Navbar.Collapse>
     </Navbar>
