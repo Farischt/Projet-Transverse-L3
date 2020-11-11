@@ -6,7 +6,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const Item = require("../model/Items");
 const Like = require("../model/Like");
 // Middlewares
-const { verifyAuth } = require("../helpers/verifyAuth");
+const { verifyAuth } = require("../helpers/auth");
 
 // this route return all the items in items table (not the cart)
 
