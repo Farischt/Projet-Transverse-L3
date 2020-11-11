@@ -1,8 +1,11 @@
+// Dependencies
 const router = require("express").Router();
-const Item = require("../model/Items");
-const Like = require("../model/Like");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
+// Models
+const Item = require("../model/Items");
+const Like = require("../model/Like");
+// Middlewares
 const { verifyAuth } = require("../helpers/verifyAuth");
 
 // this route return all the items in items table (not the cart)

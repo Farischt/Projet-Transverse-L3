@@ -1,9 +1,10 @@
+// Dependencies
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const logger = require("morgan");
 const cookieParser = require("cookie-parser");
-
+// Routes
 const authRoute = require("./routes/auth");
 const cartRoute = require("./routes/cart");
 const itemRoute = require("./routes/item");
@@ -36,7 +37,6 @@ app.use(
     resave: false,
   })
 );
-
 // Route Middlewares :
 app.use("/api/user", authRoute);
 app.use("/api/cart", cartRoute);
