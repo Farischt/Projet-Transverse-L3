@@ -27,6 +27,15 @@ const loginValidation = (data) => {
   return JoiSchema.validate(data);
 };
 
+// Category creation validation
+const createCategoryValidation = (data) => {
+  const JoiSchema = Joi.object({
+    name: Joi.string().min(2).max(24).required(),
+  });
+  return JoiSchema.validate(data);
+};
+
 module.exports.registerValidation = registerValidation;
 module.exports.passwordValidation = passwordValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.createCategoryValidation = createCategoryValidation;
