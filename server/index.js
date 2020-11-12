@@ -6,6 +6,7 @@ const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 // Routes
 const authRoute = require("./routes/auth");
+const categoryRoute = require("./routes/category");
 const cartRoute = require("./routes/cart");
 const itemRoute = require("./routes/item");
 require("dotenv").config();
@@ -39,6 +40,7 @@ app.use(
 );
 // Route Middlewares :
 app.use("/api/user", authRoute);
+app.use("/api", categoryRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/item", itemRoute);
 
