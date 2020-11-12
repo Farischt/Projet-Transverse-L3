@@ -40,6 +40,7 @@ const NavBar = () => {
             <i className="large shopping cart icon"></i>{" "}
           </Link>
         </Nav>
+
         {user && !user.isLoggedIn && (
           <React.Fragment>
             <Login />
