@@ -5,7 +5,7 @@ const ObjectId = mongoose.Types.ObjectId;
 // Models
 const Item = require("../model/Items");
 // Middlewares
-const { verifyAuth } = require("../helpers/auth");
+const { verifyAuth } = require("../middlewares/auth");
 
 class Cart {
   constructor() {

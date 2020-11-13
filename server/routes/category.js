@@ -1,7 +1,7 @@
 // Dependencies
 const router = require("express").Router();
 // Middlewares
-const { verifyAuth, verifyAdmin } = require("../helpers/auth");
+const { verifyAuth, verifyAdmin } = require("../middlewares/auth");
 // Controllers
 const {
   create,

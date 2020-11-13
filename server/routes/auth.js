@@ -5,7 +5,7 @@ const {
   verifyConnection,
   verifyAuth,
   verifyAdmin,
-} = require("../helpers/auth");
+} = require("../middlewares/auth");
 // Controllers
 const {
   register,
