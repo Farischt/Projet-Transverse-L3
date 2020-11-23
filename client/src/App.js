@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+//import "antd/dist/antd.css";
 import axios from "axios";
 
 import Home from "./pages/Home/Home";
@@ -14,6 +15,7 @@ import UserSettings from "./pages/User/UserSettings";
 import UserPassword from "./pages/User/UserPassword";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminRoute from "./routes/AdminRoute";
+import CategoryCreate from "./pages/Admin/Category/CategoryCreate";
 
 const App = () => {
   let dispatch = useDispatch();
@@ -60,6 +62,11 @@ const App = () => {
             <AdminRoute
               component={AdminDashboard}
               path="/admin/dashboard"
+              exact
+            />
+            <AdminRoute
+              component={CategoryCreate}
+              path="/admin/dashboard/categories"
               exact
             />
           </div>
