@@ -2,7 +2,9 @@
 const Category = require("../model/Category");
 const slugify = require("slugify");
 // Helpers
-const { createCategoryValidation } = require("../helpers/Validation");
+const {
+  createCategoryValidation,
+} = require("../helpers/categoryValidation.js");
 
 //! CREATE A CATEGORY
 module.exports.create = async (req, res) => {
@@ -22,7 +24,7 @@ module.exports.create = async (req, res) => {
     res.json(category);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ errorMessage: err });
+    return res.status(500).json({ errorMessage: err.message });
   }
 };
 
@@ -43,7 +45,7 @@ module.exports.list = async (req, res) => {
     res.json(categories);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ errorMessage: err });
+    return res.status(500).json({ errorMessage: err.message });
   }
 };
 
@@ -63,7 +65,7 @@ module.exports.read = async (req, res) => {
     res.json(category);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ errorMessage: err });
+    res.status(500).json({ errorMessage: err.message });
   }
 };
 
@@ -84,7 +86,7 @@ module.exports.remove = async (req, res) => {
     res.json(deletedCategory);
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    res.status(500).json({ errorMessage: err.message });
   }
 };
 
@@ -113,6 +115,6 @@ module.exports.update = async (req, res) => {
     res.json(updatedCategory);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ errorMessage: err });
+    return res.status(500).json({ errorMessage: err.message });
   }
 };

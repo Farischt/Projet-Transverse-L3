@@ -3,9 +3,11 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 // Helpers Validation
-const { registerValidation } = require("../helpers/Validation");
-const { passwordValidation } = require("../helpers/Validation");
-const { loginValidation } = require("../helpers/Validation");
+const {
+  registerValidation,
+  passwordValidation,
+  loginValidation,
+} = require("../helpers/authValidation.js");
 
 //! REGISTER
 module.exports.register = async (req, res) => {
@@ -44,7 +46,7 @@ module.exports.register = async (req, res) => {
       user: savedUser._id,
     });
   } catch (error) {
-    res.status(500).json({ errorMessage: error });
+    res.status(500).json({ errorMessage: error.message });
   }
 };
 
@@ -82,7 +84,7 @@ module.exports.logout = (req, res) => {
 module.exports.currentUser = async (req, res) => {
   if (typeof req.session.userId === "undefined") {
     return res.status(401).json({
-      errorMesage: "You are not connected, please connect or register",
+      errorMessage: "You are not connected, please connect or register",
     });
   }
   const user = await User.findOne({ _id: req.session.userId });
@@ -121,6 +123,6 @@ module.exports.updatePassword = async (req, res) => {
     await user.save();
     res.json({ message: "Password updated ! " });
   } catch (err) {
-    return res.status(500).json({ errorMessage: err });
+    return res.status(500).json({ errorMessage: err.message });
   }
 };
