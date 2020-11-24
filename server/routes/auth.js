@@ -26,6 +26,6 @@ router.get("/me", verifyAuth, currentUser);
 // Current admin route
 router.get("/admin", verifyAuth, verifyAdmin, currentUser);
 // Update password route
-router.put("/password/:_id", verifyAuth, updatePassword);
+router.put("/password", verifyAuth, updatePassword);
 
 module.exports = router;
