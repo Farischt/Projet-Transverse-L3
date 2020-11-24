@@ -39,7 +39,7 @@ const Item = (props) => {
           </div>
           <div className="ui label">{props.element.sales} vente(s) </div>
         </div>
-        <LikeButton element={props.element} />
+        {/* <LikeButton element={props.element} /> */}
       </div>
     </div>
   );
