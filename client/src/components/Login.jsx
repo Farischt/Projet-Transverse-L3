@@ -65,7 +65,7 @@ const Login = () => {
           name="password"
           placeholder="Mot de passe"
         />
-        <button onClick={handleLogin} className="btn btn-info my-2 my-sm-0">
+        <button onClick={handleLogin} className="btn btn-primary my-2 my-sm-0">
           Se connecter
         </button>
       </div>

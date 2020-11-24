@@ -25,7 +25,7 @@ const Logout = (props) => {
   };
 
   return (
-    <button onClick={handleLogout} className="btn btn-info my-2 my-sm-0">
+    <button onClick={handleLogout} className="btn btn-danger my-2 my-sm-0">
       <i className="power off icon"></i> Deconnexion{" "}
     </button>
   );

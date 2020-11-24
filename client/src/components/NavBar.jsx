@@ -12,7 +12,7 @@ const NavBar = () => {
   let { user } = useSelector((state) => ({ ...state }));
 
   return (
-    <Navbar className="color-nav" fixed="top" collapseOnSelect expand="lg">
+    <Navbar className="color-nav" fixed="top" collapseOnSelect expand="xl">
       <Navbar.Brand>Formations & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -42,37 +42,48 @@ const NavBar = () => {
         </Nav>
 
         {user && !user.isLoggedIn && (
-          <React.Fragment>
-            <Login />
-            <Link to="/register" className="nav-link">
-              <button className="btn btn-info my-2 my-sm-0">
-                {" "}
-                S'inscrire{" "}
-              </button>
-            </Link>
-          </React.Fragment>
+          <>
+            <Nav className="mr-auto">
+              <Login />
+            </Nav>
+            <Nav className="mr-auto">
+              <Link to="/register" className="nav-link">
+                <button className="btn btn-primary my-2 my-sm-0">
+                  {" "}
+                  S'inscrire{" "}
+                </button>
+              </Link>
+            </Nav>
+          </>
         )}
 
         {user && user.isLoggedIn && (
-          <React.Fragment>
-            <Logout />
+          <Nav className="mr-auto">
             <Link to="/user/dashboard" className="nav-link">
-              <button className="btn btn-info my-2 my-sm-0">
+              <button className="btn btn-primary my-2 my-sm-0">
                 {" "}
                 <i className="user outline icon"></i>Mon profil
               </button>
             </Link>
-          </React.Fragment>
+          </Nav>
         )}
 
         {user && user.isLoggedIn && user.role === "admin" && (
-          <Link to="/admin/dashboard">
-            {" "}
-            <button className="btn btn-info my-2 my-sm-0">
+          <Nav className="mr-auto">
+            <Link to="/admin/dashboard">
               {" "}
-              <i className="user outline icon"></i>Admin
-            </button>
-          </Link>
+              <button className="btn btn-primary my-2 my-sm-0">
+                {" "}
+                <i className="user outline icon"></i>Admin
+              </button>
+            </Link>
+          </Nav>
+        )}
+
+        {user && user.isLoggedIn && (
+          <Nav className="mr-auto">
+            <Logout />
+          </Nav>
         )}
       </Navbar.Collapse>
     </Navbar>
