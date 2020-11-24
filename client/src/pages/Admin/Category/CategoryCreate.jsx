@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import useSelector from "react-redux";
 import { toast } from "react-toastify";
 import {
   getCategories,
@@ -56,17 +55,9 @@ const CategoryCreate = () => {
   };
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          {" "}
-          <AdminNav />{" "}
-        </div>
-        <div className="col">
-          <h1> Créer une catégorie </h1>
-          {categoryForm()}
-        </div>
-      </div>
+    <div className="col p-4">
+      <h1> Créer une catégorie </h1>
+      {categoryForm()}
     </div>
   );
 };

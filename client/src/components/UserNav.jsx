@@ -1,26 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const UserNav = () => {
+const UserNav = ({ url }) => {
   return (
     <nav>
       <ul className="nav flex-column">
         <li className="nav-items">
-          <Link to="/user/dashboard" className="nav-link">
-            {" "}
-            Accueil{" "}
+          <Link to={url} className="nav-link">
+            Accueil
           </Link>
         </li>
         <li className="nav-items">
-          <Link to="/user/dashboard/password" className="nav-link">
+          <Link to={`${url}/password`} className="nav-link">
             {" "}
             Mot de passe{" "}
-          </Link>
-        </li>
-        <li className="nav-items">
-          <Link to="/user/dashboard/settings" className="nav-link">
-            {" "}
-            Paramètres{" "}
           </Link>
         </li>
       </ul>
