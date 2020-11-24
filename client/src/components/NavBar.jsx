@@ -9,10 +9,19 @@ import Logout from "./Logout";
 import "../css/NavBar.css";
 
 const NavBar = () => {
-  let { user } = useSelector((state) => ({ ...state }));
+  let { user } = useSelector((state) => ({
+    ...state,
+  }));
 
   return (
-    <Navbar className="color-nav" fixed="top" collapseOnSelect expand="xl">
+    <Navbar
+      className="color-nav"
+      fixed="top"
+      collapseOnSelect
+      expand="xl"
+      bg="dark"
+      variant="dark"
+    >
       <Navbar.Brand>Formations & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -40,7 +49,6 @@ const NavBar = () => {
             <i className="large shopping cart icon"></i>{" "}
           </Link>
         </Nav>
-
         {user && !user.isLoggedIn && (
           <>
             <Nav className="mr-auto">
@@ -56,19 +64,7 @@ const NavBar = () => {
             </Nav>
           </>
         )}
-
-        {user && user.isLoggedIn && (
-          <Nav className="mr-auto">
-            <Link to="/user/dashboard" className="nav-link">
-              <button className="btn btn-primary my-2 my-sm-0">
-                {" "}
-                <i className="user outline icon"></i>Mon profil
-              </button>
-            </Link>
-          </Nav>
-        )}
-
-        {user && user.isLoggedIn && user.role === "admin" && (
+        {user && user.isLoggedIn && user.user.userRole === "admin" && (
           <Nav className="mr-auto">
             <Link to="/admin/dashboard">
               {" "}
@@ -79,11 +75,25 @@ const NavBar = () => {
             </Link>
           </Nav>
         )}
-
         {user && user.isLoggedIn && (
-          <Nav className="mr-auto">
-            <Logout />
-          </Nav>
+          <>
+            <Nav className="mr-auto">
+              <Link to="/user/dashboard" className="nav-link">
+                <button className="btn btn-primary my-2 my-sm-0">
+                  {" "}
+                  <i className="user outline icon"></i>Mon profil
+                </button>
+              </Link>
+            </Nav>
+            <Nav className="mr-auto">
+              <Logout />
+            </Nav>
+          </>
+        )}
+        {user.loading && (
+          <div className="ui active dimmer">
+            <div className="ui massive text loader">Chargement...</div>
+          </div>
         )}
       </Navbar.Collapse>
     </Navbar>

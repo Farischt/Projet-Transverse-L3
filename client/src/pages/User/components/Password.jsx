@@ -26,7 +26,7 @@ const Password = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      await axios.put("/api/user/password/" + user._id, userInfo);
+      await axios.put("/api/user/password", userInfo);
       setIsLoading(false);
       toast.success(" Votre mot de passe a été modifié ");
     } catch (err) {

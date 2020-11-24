@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Switch, Route } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //import "antd/dist/antd.css";
-import axios from "axios";
 
 import Home from "./pages/Home/Home";
 import Register from "./pages/Register/Register";
@@ -13,28 +11,13 @@ import UserDashboard from "./pages/User/UserDashboard";
 import UserRoute from "./routes/UserRoute";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminRoute from "./routes/AdminRoute";
+import { currentUser } from "./redux";
+import { connect } from "react-redux";
 
-const App = () => {
-  let dispatch = useDispatch();
-
+const App = ({ userData, connected, currentUser }) => {
   useEffect(() => {
-    async function getUserFromApi() {
-      const res = await axios.get("/api/user/me");
-      const userLikes = await axios.get("/api/item/liked");
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          name: res.data.userName,
-          role: res.data.userRole,
-          _id: res.data.userId,
-          isLoggedIn: true,
-          likedItems: userLikes.data,
-        },
-      });
-      toast.info(` Heureux de vous revoir ${res.data.userName}`);
-    }
-    getUserFromApi();
-  }, [dispatch]);
+    currentUser();
+  }, []);
 
   return (
     <React.Fragment>
@@ -54,4 +37,17 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    userData: state.user,
+    connected: state.isLoggedIn,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    currentUser: () => dispatch(currentUser()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

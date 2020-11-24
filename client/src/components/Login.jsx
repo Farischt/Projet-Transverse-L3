@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "../css/Buttons.css";
+import { connect } from "react-redux";
+import { loginUser } from "../redux";
 
-const Login = () => {
+const Login = ({ userData, connected, loginUser }) => {
   let dispatch = useDispatch();
   let history = useHistory();
 
@@ -26,26 +28,30 @@ const Login = () => {
     if (res.data.userRole === "admin") history.push("/admin/dashboard");
   };
 
-  const handleLogin = async () => {
-    try {
-      const login = await axios.post("/api/user/login", userr);
-      const getUser = await axios.get("/api/user/me");
-      const userLikes = await axios.get("/api/item/liked");
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          name: getUser.data.userName,
-          role: getUser.data.userRole,
-          _id: login.data.user,
-          isLoggedIn: true,
-          likedItems: userLikes.data,
-        },
-      });
-      roleRedirect(getUser);
-    } catch (err) {
-      console.log(err);
-      toast.error(" Une erreur est survenu ");
-    }
+  // const handleLogin = async () => {
+  //   try {
+  //     const login = await axios.post("/api/user/login", userr);
+  //     const getUser = await axios.get("/api/user/me");
+  //     const userLikes = await axios.get("/api/item/liked");
+  //     dispatch({
+  //       type: "LOGGED_IN_USER",
+  //       payload: {
+  //         name: getUser.data.userName,
+  //         role: getUser.data.userRole,
+  //         _id: login.data.user,
+  //         isLoggedIn: true,
+  //         likedItems: userLikes.data,
+  //       },
+  //     });
+  //     roleRedirect(getUser);
+  //   } catch (err) {
+  //     console.log(err);
+  //     toast.error(" Une erreur est survenu ");
+  //   }
+  // };
+
+  const handleClick = () => {
+    loginUser(userr);
   };
 
   return (
@@ -65,7 +71,10 @@ const Login = () => {
           name="password"
           placeholder="Mot de passe"
         />
-        <button onClick={handleLogin} className="btn btn-primary my-2 my-sm-0">
+        {/* <button onClick={handleLogin} className="btn btn-primary my-2 my-sm-0">
+          Se connecter
+        </button> */}
+        <button onClick={handleClick} className="btn btn-primary my-2 my-sm-0">
           Se connecter
         </button>
       </div>
@@ -73,4 +82,17 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    userData: state.user,
+    connected: state.isLoggedIn,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginUser: (user) => dispatch(loginUser(user)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
