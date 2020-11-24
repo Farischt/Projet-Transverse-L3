@@ -96,7 +96,7 @@ module.exports.updatePassword = async (req, res) => {
   const { currentPassword, newPassword, repeatPassword } = req.body;
 
   // We first check if the id is a mongoose.Types.ObjectId
-  if (!ObjectId.isValid(req.params._id))
+  if (!ObjectId.isValid(req.session.userId))
     return res.status(400).send("user id is not valid");
 
   // We check if body passwords are the same
@@ -107,7 +107,7 @@ module.exports.updatePassword = async (req, res) => {
       .json({ errorMessage: "Passwords are not the same " });
 
   // Then we try to find the user in db
-  const user = await User.findById(req.params._id);
+  const user = await User.findById(req.session.userId);
   if (!user) return res.status(404).json({ errorMessage: "User not found " });
 
   // We check if the password is correct
