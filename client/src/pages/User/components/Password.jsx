@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 const Password = () => {
-  let { user } = useSelector((state) => ({ ...state }));
-
   const [userInfo, setUserInfo] = useState({
     currentPassword: "",
     newPassword: "",
