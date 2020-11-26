@@ -1,6 +1,6 @@
 import React from "react";
 
-import LikeButton from "./LikeButton";
+//import LikeButton from "./LikeButton";
 import "../../../css/Buttons.css";
 
 const Item = (props) => {
