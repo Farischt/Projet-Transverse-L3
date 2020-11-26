@@ -11,7 +11,7 @@ const initialeState = {
   isLoggedIn: false,
 };
 
-export const userThunkReducer = (state = initialeState, action) => {
+export const userReducer = (state = initialeState, action) => {
   switch (action.type) {
     case LOGIN_USER_REQUEST:
       return {
