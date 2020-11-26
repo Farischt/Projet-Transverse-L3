@@ -90,11 +90,57 @@ const NavBar = () => {
             </Nav>
           </>
         )}
-        {user.loading && (
+        {user && user.loading && (
           <div className="ui active dimmer">
             <div className="ui massive text loader">Chargement...</div>
           </div>
         )}
+
+        {/* {user && user.loading ? (
+          <Nav className="mr-auto">
+            <div className="ui active dimmer">
+              <div className="ui massive text loader">Chargement...</div>
+            </div>
+          </Nav>
+        ) : user && user.isLoggedIn ? (
+          <>
+            <Nav className="mr-auto">
+              <Link to="/user/dashboard" className="nav-link">
+                <button className="btn btn-primary my-2 my-sm-0">
+                  {" "}
+                  <i className="user outline icon"></i>Mon profil
+                </button>
+              </Link>
+            </Nav>
+            <Nav className="mr-auto">
+              <Logout />
+            </Nav>
+          </>
+        ) : user && user.isLoggedIn && user.user.userRole === "admin" ? (
+          <Nav className="mr-auto">
+            <Link to="/admin/dashboard">
+              {" "}
+              <button className="btn btn-primary my-2 my-sm-0">
+                {" "}
+                <i className="user outline icon"></i>Admin
+              </button>
+            </Link>
+          </Nav>
+        ) : (
+          <>
+            <Nav className="mr-auto">
+              <Login />
+            </Nav>
+            <Nav className="mr-auto">
+              <Link to="/register" className="nav-link">
+                <button className="btn btn-primary my-2 my-sm-0">
+                  {" "}
+                  S'inscrire{" "}
+                </button>
+              </Link>
+            </Nav>
+          </>
+        )} */}
       </Navbar.Collapse>
     </Navbar>
   );
