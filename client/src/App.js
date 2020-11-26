@@ -14,15 +14,15 @@ import AdminRoute from "./routes/AdminRoute";
 import { currentUser } from "./redux";
 import { connect } from "react-redux";
 
-const App = ({ userData, connected, currentUser }) => {
+const App = ({ userData, currentUser }) => {
   useEffect(() => {
     currentUser();
-  }, []);
+  }, [currentUser]);
 
   return (
     <React.Fragment>
       <NavBar />
-      <ToastContainer />
+      <ToastContainer newestOnTop={false} />
       <Switch>
         <React.Fragment>
           <div className="container-fluid" style={{ marginTop: "12vh" }}>
@@ -40,7 +40,6 @@ const App = ({ userData, connected, currentUser }) => {
 const mapStateToProps = (state) => {
   return {
     userData: state.user,
-    connected: state.isLoggedIn,
   };
 };
 
