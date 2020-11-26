@@ -9,9 +9,8 @@ const UserDashboard = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-2" style={{ backgroundColor: "red" }}>
-          {" "}
-          <UserNav url={url} />{" "}
+        <div className="col-md-2">
+          <UserNav url={url} />
         </div>
         <div className="col">
           <Switch>
