@@ -2,7 +2,7 @@ import React from "react";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import AdminNav from "../../components/Nav/AdminNav";
-import CategoryCreate from "./Category/CategoryCreate";
+import CategoryContainer from "./Category/CategoryContainer";
 
 const AdminDashboard = () => {
   let { path, url } = useRouteMatch();
@@ -17,7 +17,7 @@ const AdminDashboard = () => {
             <Route path={`${path}`} exact>
               Votre Dashboard Administrateur
             </Route>
-            <Route component={CategoryCreate} path={`${path}/categories`} />
+            <Route component={CategoryContainer} path={`${path}/categories`} />
           </Switch>
         </div>
       </div>

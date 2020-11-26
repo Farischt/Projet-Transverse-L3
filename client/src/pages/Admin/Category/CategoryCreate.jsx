@@ -1,20 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
-import {
-  getCategories,
-  getCategory,
-  removeCategory,
-  updateCategory,
-  createCategory,
-} from "../../../api/category";
-import AdminNav from "../../../components/Nav/AdminNav";
+import { createCategory } from "../../../api/category";
+import Spinner from "react-bootstrap/Spinner";
 
 const CategoryCreate = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const categoryForm = () => {
-    return (
+  const handleChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleCreate = async () => {
+    setLoading(true);
+    try {
+      await createCategory({ name });
+      setLoading(false);
+      toast.success(`La catégorie ${name} a été ajouté avec succès`);
+    } catch (err) {
+      setLoading(false);
+      if (err.response.status === 400)
+        toast.error(err.response.data.errorMessage);
+      else toast.error("Une erreur est survenu");
+    }
+  };
+
+  return (
+    <>
+      {" "}
+      <h1> Créer une catégorie: </h1>
       <div className="form">
         <label> Nom </label>
         <input
@@ -25,40 +39,15 @@ const CategoryCreate = () => {
           autoFocus
           required
         />
-        <button onClick={handleClick} className="btn btn-info my-2 my-sm-0">
-          {" "}
-          Enregister{" "}
+        <button onClick={handleCreate} className="btn btn-info my-2 my-sm-0">
+          {loading ? (
+            <Spinner animation="border" variant="info" />
+          ) : (
+            "Enregistrer"
+          )}
         </button>
       </div>
-    );
-  };
-
-  const handleChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    createCategory({ name })
-      .then((res) => {
-        setLoading(false);
-        setName("");
-        toast.succes(`La catégorie ${res.data.name} a été ajouté`);
-      })
-      .catch((error) => {
-        setLoading(false);
-        if (error.response.status === 400)
-          toast.error(error.response.data.errorMessage);
-        else toast.error("Une erreur est survenu");
-      });
-  };
-
-  return (
-    <div className="col p-4">
-      <h1> Créer une catégorie </h1>
-      {categoryForm()}
-    </div>
+    </>
   );
 };
 
