@@ -9,11 +9,18 @@ const {
 //! CREATE A CATEGORY
 module.exports.create = async (req, res) => {
   const { name } = req.body;
-
   // We validate the inputs
   const { error } = createCategoryValidation(req.body);
   if (error)
     return res.status(400).json({ errorMessage: error.details[0].message });
+
+  try {
+    const check = await Category.findOne({ name: name });
+    if (check)
+      return res.status(400).json({ errorMessage: "Category already exist" });
+  } catch (err) {
+    console.log(err);
+  }
 
   // We create a new category and we save it in db
   try {
