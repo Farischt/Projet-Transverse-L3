@@ -1,4 +1,5 @@
 import axios from "axios";
+import { login } from "../../api/auth";
 import {
   LOGIN_USER_FAILURE,
   LOGIN_USER_REQUEST,
@@ -27,9 +28,9 @@ export const loginUserFailure = (error, isLoggedIn) => {
 
 export const loginUser = (userInfos) => {
   return async (dispatch) => {
-    dispatch(loginUserRequest);
+    dispatch(loginUserRequest());
     try {
-      await axios.post("/api/user/login", userInfos);
+      await login(userInfos);
       const response = await axios.get("/api/user/me");
       dispatch(loginUserSuccess(response.data, true));
     } catch (err) {
@@ -40,7 +41,7 @@ export const loginUser = (userInfos) => {
 
 export const currentUser = () => {
   return async (dispatch) => {
-    dispatch(loginUserRequest);
+    dispatch(loginUserRequest());
     try {
       const response = await axios.get("/api/user/me");
       dispatch(loginUserSuccess(response.data, true));
