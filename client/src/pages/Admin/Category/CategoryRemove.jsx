@@ -17,12 +17,12 @@ const CategoryRemove = ({ slug, reload }) => {
       try {
         const removedCategory = await removeCategory(slug);
         setLoading(false);
-        toast.success(
+        toast.info(
           `La catégorie ${removedCategory.data.name} a été supprimé avec succès`
         );
       } catch (err) {
         setLoading(false);
-        if (err.response.status == 400)
+        if (err.response.status === 400)
           toast.error(err.response.data.errorMessage);
         else
           toast.error(

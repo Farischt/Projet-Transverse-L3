@@ -16,7 +16,7 @@ const CategoryCreate = () => {
     try {
       await createCategory({ name });
       setLoading(false);
-      toast.success(`La catégorie ${name} a été ajouté avec succès`);
+      toast.info(`La catégorie ${name} a été ajouté avec succès`);
     } catch (err) {
       setLoading(false);
       if (err.response.status === 400)
@@ -28,7 +28,7 @@ const CategoryCreate = () => {
   return (
     <>
       {" "}
-      <h1> Créer une catégorie: </h1>
+      <h1> Créer une catégorie </h1>
       <div className="form">
         <label> Nom </label>
         <input
@@ -36,10 +36,11 @@ const CategoryCreate = () => {
           className="form-control my-2"
           type="text"
           value={name}
+          placeholder="Nom de la catégorie"
           autoFocus
           required
         />
-        <button onClick={handleCreate} className="btn btn-info my-2 my-sm-0">
+        <button onClick={handleCreate} className="btn btn-primary my-2 my-sm-0">
           {loading ? (
             <Spinner animation="border" variant="info" />
           ) : (
