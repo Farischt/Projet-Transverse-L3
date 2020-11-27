@@ -9,6 +9,7 @@ const authRoute = require("./routes/auth");
 const categoryRoute = require("./routes/category");
 const cartRoute = require("./routes/cart");
 const itemRoute = require("./routes/item");
+const productRoute = require("./routes/product");
 require("dotenv").config();
 
 const app = express();
@@ -38,10 +39,12 @@ app.use(
     resave: false,
   })
 );
+
 // Route Middlewares :
 app.use("/api/user", authRoute);
 app.use("/api", categoryRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/item", itemRoute);
+app.use("/api/product", productRoute);
 
 app.listen(3080, () => console.log("Server up and running"));
