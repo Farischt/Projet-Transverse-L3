@@ -25,8 +25,9 @@ const App = ({ userData, currentUser }) => {
       <ToastContainer newestOnTop={false} />
       <Switch>
         <React.Fragment>
-          <div className="container-fluid" style={{ marginTop: "12vh" }}>
-            <Route component={Home} path="/" exact />
+          <div style={{ marginTop: "12vh" }}>
+            {/*className="container-fluid"*/}
+            {/* <Route component={Home} path="/" exact /> */}
             <Route component={Register} path="/register" exact />
             <UserRoute component={UserDashboard} path="/user/dashboard" />
             <AdminRoute component={AdminDashboard} path="/admin/dashboard" />
