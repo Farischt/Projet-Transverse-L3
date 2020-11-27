@@ -15,6 +15,11 @@ const AdminNav = ({ url }) => {
             Catégories
           </Link>
         </li>
+        <li className="nav-items">
+          <Link to={`${url}/products`} className="nav-link">
+            Produits
+          </Link>
+        </li>
       </ul>
     </nav>
   );

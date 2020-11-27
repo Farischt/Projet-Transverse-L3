@@ -3,11 +3,13 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import AdminNav from "../../components/Nav/AdminNav";
 import CategoryContainer from "./Category/CategoryContainer";
+import ProductContainer from "./Product/ProductContainer";
 
 const AdminDashboard = () => {
   let { path, url } = useRouteMatch();
   return (
-    <div className="container-fluid">
+    <>
+      {/* container-fluid*/}
       <div className="row">
         <div className="col-md-2">
           <AdminNav url={url} />
@@ -18,10 +20,11 @@ const AdminDashboard = () => {
               Votre Dashboard Administrateur
             </Route>
             <Route component={CategoryContainer} path={`${path}/categories`} />
+            <Route component={ProductContainer} path={`${path}/products`} />
           </Switch>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
