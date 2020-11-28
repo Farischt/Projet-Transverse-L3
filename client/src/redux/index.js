@@ -6,4 +6,5 @@ const rootReducer = combineReducers({
 });
 
 export * from "./user/userActions";
+export * from "./user/actions";
 export default rootReducer;
