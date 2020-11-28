@@ -1,34 +1,29 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
+import { connect } from "react-redux";
+import { logoutUser } from "../redux";
 
-const Logout = (props) => {
-  let dispatch = useDispatch();
-
-  const handleLogout = async () => {
-    try {
-      await axios.get("/api/user/logout");
-      console.log(props);
-      dispatch({
-        type: "LOGOUT",
-        payload: {
-          name: null,
-          _id: null,
-          role: null,
-          isLoggedIn: false,
-          likedItems: null,
-        },
-      });
-    } catch (err) {
-      console.log(err);
-    }
+const Logout = ({ logoutUser }) => {
+  const handleLogout = () => {
+    logoutUser();
   };
 
   return (
     <button onClick={handleLogout} className="btn btn-danger my-2 my-sm-0">
-      <i className="power off icon"></i> Deconnexion{" "}
+      Déconnexion
     </button>
   );
 };
 
-export default Logout;
+const mapStateToProps = (state) => {
+  return {
+    userData: state.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logoutUser: () => dispatch(logoutUser()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);
