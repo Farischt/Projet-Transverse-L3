@@ -1,11 +1,14 @@
-import axios from "axios";
-import { login } from "../../api/auth";
+import { current } from "../../api/auth";
 import {
   LOGIN_USER_FAILURE,
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
+  LOGOUT_USER_REQUEST,
+  LOGOUT_USER_SUCCESS,
+  LOGOUT_USER_FAILURE,
 } from "./userTypes";
 
+//? LOGIN :
 export const loginUserRequest = () => {
   return {
     type: LOGIN_USER_REQUEST,
@@ -26,24 +29,33 @@ export const loginUserFailure = (error, isLoggedIn) => {
   };
 };
 
-export const loginUser = (userInfos) => {
-  return async (dispatch) => {
-    dispatch(loginUserRequest());
-    try {
-      await login(userInfos);
-      const response = await axios.get("/api/user/me");
-      dispatch(loginUserSuccess(response.data, true));
-    } catch (err) {
-      dispatch(loginUserFailure(err.message));
-    }
+//? LOGOUT:
+export const logoutUserRequest = () => {
+  return {
+    type: LOGOUT_USER_REQUEST,
   };
 };
 
+export const logoutUserSuccess = (isLoggedIn) => {
+  return {
+    type: LOGOUT_USER_SUCCESS,
+    payload: isLoggedIn,
+  };
+};
+
+export const logoutUserFailure = (error) => {
+  return {
+    type: LOGOUT_USER_FAILURE,
+    payload: error,
+  };
+};
+
+//? CURRENT USER:
 export const currentUser = () => {
   return async (dispatch) => {
     dispatch(loginUserRequest());
     try {
-      const response = await axios.get("/api/user/me");
+      const response = await current();
       dispatch(loginUserSuccess(response.data, true));
     } catch (err) {
       dispatch(loginUserFailure(err.message));
