@@ -1,4 +1,5 @@
-import cloudinary from "cloudinary";
+const cloudinary = require("cloudinary");
+require("dotenv").config();
 
 //config
 cloudinary.config({
@@ -7,7 +8,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET_KEY,
 });
 
-export const upload = async (req, res) => {
+module.exports.upload = async (req, res) => {
   const { image } = req.body;
   try {
     const result = await cloudinary.uploader.upload(image, {
@@ -16,11 +17,12 @@ export const upload = async (req, res) => {
     });
     res.json({ public_id: result.public_id, url: result.secure_url });
   } catch (err) {
-    return res.status(500).json({ errorMessage: err.message });
+    console.log(err);
+    return;
   }
 };
 
-export const remove = async (req, res) => {
+module.exports.remove = async (req, res) => {
   const { public_id } = req.body;
 
   const image_id = public_id;
