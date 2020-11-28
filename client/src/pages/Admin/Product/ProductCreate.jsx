@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { createProduct } from "../../../api/product";
 import Spinner from "react-bootstrap/Spinner";
+import FileUpload from "./FileUpload";
 
 const ProductCreate = ({ categories, categoriesLoading }) => {
   const initialState = {
@@ -110,6 +111,8 @@ const ProductCreate = ({ categories, categoriesLoading }) => {
                   );
                 })}
             </select>
+
+            <FileUpload />
 
             <button
               className="btn btn-primary my-2 my-sm-0"
