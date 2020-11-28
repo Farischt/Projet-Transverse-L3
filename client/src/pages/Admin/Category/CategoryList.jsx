@@ -25,6 +25,7 @@ const CategoryList = () => {
       setCategoriesLoading(false);
       if (err.response.status === 400) {
         setCategories([]);
+        // toast.error(err.response.data.errorMessage);
       } else
         toast.error(
           "Une erreur est survenue durant le chargement des catégories"
@@ -40,7 +41,7 @@ const CategoryList = () => {
       {categoriesLoading ? (
         <div className="text-center">
           {" "}
-          <Spinner animation="border" variant="info" />{" "}
+          <Spinner animation="border" variant="primary" />{" "}
         </div>
       ) : categories.length ? (
         <>

@@ -42,7 +42,7 @@ const CategoryCreate = () => {
         />
         <button onClick={handleCreate} className="btn btn-primary my-2 my-sm-0">
           {loading ? (
-            <Spinner animation="border" variant="info" />
+            <Spinner animation="border" variant="primary" />
           ) : (
             "Enregistrer"
           )}
