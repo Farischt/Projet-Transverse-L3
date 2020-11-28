@@ -4,6 +4,6 @@ const router = require("express").Router();
 const { verifyAuth, verifyAdmin } = require("../middlewares/auth");
 const { upload } = require("../controller/cloudinaryController");
 
-router.post("/uploadimages", upload);
+router.post("/uploadimages", verifyAuth, verifyAdmin, upload);
 
 module.exports = router;
