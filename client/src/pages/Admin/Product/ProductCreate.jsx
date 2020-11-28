@@ -11,12 +11,13 @@ const ProductCreate = ({ categories, categoriesLoading }) => {
     price: "",
     quantity: "",
     category: "",
+    images: [],
   };
 
   const [product, setProduct] = useState(initialState);
   const [loading, setLoading] = useState(false);
 
-  const { name, description, price, quantity, category } = product;
+  const { name, description, price, quantity, category, images } = product;
 
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -111,8 +112,7 @@ const ProductCreate = ({ categories, categoriesLoading }) => {
                   );
                 })}
             </select>
-
-            <FileUpload />
+            <FileUpload product={product} setProduct={setProduct} />
 
             <button
               className="btn btn-primary my-2 my-sm-0"
