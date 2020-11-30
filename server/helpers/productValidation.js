@@ -7,6 +7,7 @@ module.exports.createProductValidation = (data) => {
     price: Joi.number().required(),
     quantity: Joi.number().required(),
     category: Joi.string().required(),
+    images: Joi.array().required(),
   });
   return JoiSchema.validate(data);
 };

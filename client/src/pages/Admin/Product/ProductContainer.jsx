@@ -2,15 +2,22 @@ import React, { useState, useEffect } from "react";
 
 import { toast } from "react-toastify";
 import ProductCreate from "./ProductCreate";
+import ProductList from "./ProductList";
 import { listProducts } from "../../../api/product";
 import { getCategories } from "../../../api/category";
 
 const ProductContainer = () => {
   const [categories, setCategories] = useState([]);
   const [categoriesLoading, setCategoriesLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [productsLoading, setProductsLoading] = useState(false);
 
   useEffect(() => {
     fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    fetchProducts();
   }, []);
 
   const fetchCategories = async () => {
@@ -30,13 +37,26 @@ const ProductContainer = () => {
     }
   };
 
+  const fetchProducts = async () => {
+    setProductsLoading(true);
+    try {
+      const response = await listProducts();
+      setProducts(response.data);
+      setProductsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="col p-4 bg-light rounded">
       <ProductCreate
         categories={categories}
         categoriesLoading={categoriesLoading}
+        fetchProducts={fetchProducts}
       />
       <hr />
+      <ProductList products={products} productsLoading={productsLoading} />
     </div>
   );
 };

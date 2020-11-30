@@ -36,7 +36,10 @@ module.exports.create = async (req, res) => {
 
 module.exports.list = async (req, res) => {
   try {
-    const products = await Product.find({}).sort({ createdAt: -1 });
+    const products = await Product.find({})
+      .limit(100)
+      .populate("category")
+      .sort({ createdAt: -1 });
     if (!products)
       return res.status(400).json({ errorMessage: "No available products" });
     res.json(products);

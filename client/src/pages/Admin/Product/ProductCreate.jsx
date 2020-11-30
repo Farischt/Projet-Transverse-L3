@@ -4,7 +4,7 @@ import { createProduct } from "../../../api/product";
 import Spinner from "react-bootstrap/Spinner";
 import FileUpload from "./FileUpload";
 
-const ProductCreate = ({ categories, categoriesLoading }) => {
+const ProductCreate = ({ categories, categoriesLoading, fetchProducts }) => {
   const initialState = {
     name: "",
     description: "",
@@ -32,6 +32,7 @@ const ProductCreate = ({ categories, categoriesLoading }) => {
         `Le produit "${newProduct.data.name}" a été crée avec succès !`
       );
       setProduct(initialState);
+      fetchProducts();
     } catch (err) {
       setLoading(false);
       if (err.response.status === 400)
