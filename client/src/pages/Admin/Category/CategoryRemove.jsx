@@ -39,7 +39,7 @@ const CategoryRemove = ({ slug, reload }) => {
       onClick={handleRemove}
     >
       {loading ? (
-        <Spinner animation="border" variant="info" />
+        <Spinner animation="border" variant="danger" />
       ) : (
         <DeleteOutlined />
       )}
