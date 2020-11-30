@@ -8,8 +8,7 @@ import ProductContainer from "./Product/ProductContainer";
 const AdminDashboard = () => {
   let { path, url } = useRouteMatch();
   return (
-    <>
-      {/* container-fluid*/}
+    <div className="container-fluid">
       <div className="row">
         <div className="col-md-2">
           <AdminNav url={url} />
@@ -24,7 +23,7 @@ const AdminDashboard = () => {
           </Switch>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
