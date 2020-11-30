@@ -18,7 +18,7 @@ const NavBar = () => {
       fixed="top"
       collapseOnSelect
       expand="xl"
-      variant="light"
+      variant="ligth"
     >
       <Navbar.Brand>Formations & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
