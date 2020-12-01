@@ -3,7 +3,12 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
-import { UserOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  SettingOutlined,
+  HomeTwoTone,
+  ShoppingTwoTone,
+} from "@ant-design/icons";
 
 import Login from "./Login";
 import Logout from "./Logout";
@@ -14,37 +19,21 @@ const NavBar = () => {
   }));
 
   return (
-    <Navbar fixed="top" collapseOnSelect expand="xl" bg="light" variant="light">
+    <Navbar fixed="top" collapseOnSelect expand="xl" bg="dark" variant="dark">
       <Navbar.Brand>Formations & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           <Link to="/" className="nav-link text-secondary">
-            Accueil
+            <HomeTwoTone twoToneColor="#17a2b7" />
           </Link>
         </Nav>
         <Nav className="mr-auto">
-          <Link to="/b" className="nav-link text-secondary">
-            bababa
+          <Link to="/efzfez" className="nav-link text-secondary">
+            <ShoppingTwoTone twoToneColor="#17a2b7" />
           </Link>
         </Nav>
-        <Nav className="mr-auto">
-          <Link to="/cart" className="nav-link text-secondary">
-            {" "}
-            Test{" "}
-          </Link>
-        </Nav>
-        <Nav className="mr-auto">
-          <Link to="/cart" className="nav-link text-secondary">
-            <li> Catégorie </li>
-          </Link>
-        </Nav>
-        <Nav className="mr-auto">
-          <Link to="/cart" className="nav-link text-secondary">
-            {" "}
-            <i className="large shopping cart icon"></i>{" "}
-          </Link>
-        </Nav>
+
         {user && !user.isLoggedIn && (
           <>
             <Nav className="mr-auto">
