@@ -31,7 +31,7 @@ const Register = ({ history }) => {
   const handleRegister = async () => {
     try {
       await axios.post("/api/user/register", userInfo);
-      toast.success(" Votre inscription est enrigistré !");
+      toast.dark(" Votre inscription est enrigistré !");
       history.push("/");
     } catch (err) {
       toast.error(" Votre inscription n'a pas été enrigistré !");
