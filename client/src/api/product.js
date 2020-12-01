@@ -7,3 +7,7 @@ export const createProduct = async (product) => {
 export const listProducts = async () => {
   return await axios.get(`${process.env.REACT_APP_API_URL}/products`);
 };
+
+export const removeProduct = async (slug) => {
+  return await axios.delete(`${process.env.REACT_APP_API_URL}/product/${slug}`);
+};
