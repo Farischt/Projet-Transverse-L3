@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactGa from "react-ga";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -17,6 +18,10 @@ const Register = ({ history }) => {
   let { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
+    ReactGa.pageview(window.location.pathname);
+  }, []);
+
+  useEffect(() => {
     if (user.isLoggedIn) history.push("/");
   }, [user, history]);
 
@@ -32,6 +37,10 @@ const Register = ({ history }) => {
     try {
       await axios.post("/api/user/register", userInfo);
       toast.dark(" Votre inscription est enrigistré !");
+      ReactGa.event({
+        category: "User",
+        action: "User created an account",
+      });
       history.push("/");
     } catch (err) {
       toast.error(" Votre inscription n'a pas été enrigistré !");

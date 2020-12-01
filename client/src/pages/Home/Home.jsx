@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
+import ReactGa from "react-ga";
 import { listProducts } from "../../api/product";
+import Jumbotron from "./components/Jumbotron";
 import ProductCard from "./components/ProductCard";
+import ProductSkeleton from "./components/ProductSkeleton";
 import CardColumns from "react-bootstrap/CardColumns";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [productsLoading, setProductsLoading] = useState(false);
+  const skeleton = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   useEffect(() => {
+    ReactGa.pageview(window.location.pathname);
     fetchProducts();
   }, []);
 
@@ -24,16 +29,23 @@ const Home = () => {
 
   return (
     <>
-      <div className="jumbotron">
-        {productsLoading ? <h4> Loading... </h4> : <h4> All products </h4>}
+      <div className="jumbotron text-center text-info h1 font-weight-bold">
+        <Jumbotron
+          text={["Nos nouvelles formations...", "Nos meilleurs ventes..."]}
+        />
       </div>
 
       <div className="container">
-        <CardColumns className="bg-dark">
-          {products.length &&
-            products.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
+        <CardColumns className=" p-2">
+          {productsLoading
+            ? skeleton.map((number) => {
+                return <ProductSkeleton key={number} />;
+              })
+            : products.length
+            ? products.map((product) => {
+                return <ProductCard key={product._id} product={product} />;
+              })
+            : "Aucun produits disponibles :( "}
         </CardColumns>
       </div>
     </>
