@@ -6,17 +6,17 @@ const AdminNav = ({ url }) => {
     <nav className="bg-dark rounded">
       <ul className="nav flex-column">
         <li className="nav-items">
-          <Link to={`${url}`} className="nav-link">
+          <Link to={`${url}`} className="nav-link text-info ">
             Accueil
           </Link>
         </li>
         <li className="nav-items">
-          <Link to={`${url}/categories`} className="nav-link">
+          <Link to={`${url}/categories`} className="nav-link text-info">
             Catégories
           </Link>
         </li>
         <li className="nav-items">
-          <Link to={`${url}/products`} className="nav-link">
+          <Link to={`${url}/products`} className="nav-link text-info">
             Produits
           </Link>
         </li>

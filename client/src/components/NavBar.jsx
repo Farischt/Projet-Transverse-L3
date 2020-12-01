@@ -2,8 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
+import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 
-import styles from "../css/NavBar.module.css";
 import Login from "./Login";
 import Logout from "./Logout";
 
@@ -13,36 +14,33 @@ const NavBar = () => {
   }));
 
   return (
-    <Navbar
-      className={styles.nav}
-      fixed="top"
-      collapseOnSelect
-      expand="xl"
-      variant="ligth"
-    >
+    <Navbar fixed="top" collapseOnSelect expand="xl" bg="light" variant="light">
       <Navbar.Brand>Formations & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Link to="/" className="nav-link">
-            {" "}
-            Accueil{" "}
+          <Link to="/" className="nav-link text-secondary">
+            Accueil
           </Link>
         </Nav>
         <Nav className="mr-auto">
-          <Link to="/cart" className="nav-link">
+          <Link to="/b" className="nav-link text-secondary">
+            bababa
+          </Link>
+        </Nav>
+        <Nav className="mr-auto">
+          <Link to="/cart" className="nav-link text-secondary">
             {" "}
             Test{" "}
           </Link>
         </Nav>
         <Nav className="mr-auto">
-          <Link to="/cart" className="nav-link">
-            {" "}
-            Catégorie{" "}
+          <Link to="/cart" className="nav-link text-secondary">
+            <li> Catégorie </li>
           </Link>
         </Nav>
         <Nav className="mr-auto">
-          <Link to="/cart" className="nav-link">
+          <Link to="/cart" className="nav-link text-secondary">
             {" "}
             <i className="large shopping cart icon"></i>{" "}
           </Link>
@@ -53,8 +51,8 @@ const NavBar = () => {
               <Login />
             </Nav>
             <Nav className="mr-auto">
-              <Link to="/register" className="nav-link">
-                <button className="btn btn-primary my-2 my-sm-0">
+              <Link to="/register" className="nav-link text-secondary">
+                <button className="btn btn-outline-info my-2 my-sm-0">
                   {" "}
                   S'inscrire{" "}
                 </button>
@@ -64,29 +62,32 @@ const NavBar = () => {
         )}
         {user && user.isLoggedIn && user.user.userRole === "admin" && (
           <Nav className="mr-auto">
-            <Link to="/admin/dashboard">
-              {" "}
-              <button className="btn btn-primary my-2 my-sm-0"> Admin</button>
+            <Link to="/admin/dashboard" className="nav-link text-secondary">
+              <button className="btn btn-outline-info my-2 my-sm-0">
+                <SettingOutlined />
+              </button>
             </Link>
           </Nav>
         )}
         {user && user.isLoggedIn && (
           <>
             <Nav className="mr-auto">
-              <Link to="/user/dashboard" className="nav-link">
-                <button className="btn btn-primary my-2 my-sm-0">
-                  Profile
+              <Link to="/user/dashboard" className="nav-link text-secondary">
+                <button className="btn btn-outline-info my-2 my-sm-0">
+                  <UserOutlined />
                 </button>
               </Link>
             </Nav>
             <Nav className="mr-auto">
-              <Logout />
+              <Link to="/">
+                <Logout />
+              </Link>
             </Nav>
           </>
         )}
         {user && user.loading && (
-          <div className="ui active dimmer">
-            <div className="ui massive text loader">Chargement...</div>
+          <div className="text-center">
+            <Spinner animation="border" variant="primary" />
           </div>
         )}
       </Navbar.Collapse>
