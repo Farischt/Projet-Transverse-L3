@@ -30,7 +30,7 @@ module.exports.create = async (req, res) => {
     res.json(newProduct);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ errorMessage: err.message });
+    return res.status(500).json({ errorMessage: err.message });
   }
 };
 
@@ -45,6 +45,20 @@ module.exports.list = async (req, res) => {
     res.json(products);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ errorMessage: err.message });
+    return res.status(500).json({ errorMessage: err.message });
+  }
+};
+
+module.exports.remove = async (req, res) => {
+  const { slug } = req.params;
+
+  try {
+    const deletedProduct = await Product.findOneAndDelete({ slug: slug });
+    if (!deletedProduct)
+      return res.status(400).json({ errorMessage: "Invalid product slug" });
+    res.json(deletedProduct);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ errorMessage: err.message });
   }
 };

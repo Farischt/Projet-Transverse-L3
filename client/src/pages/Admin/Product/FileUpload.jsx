@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Spinner from "react-bootstrap/Spinner";
 import Figure from "react-bootstrap/Figure";
+import Badge from "react-bootstrap/Badge";
 
 const FileUpload = ({ product, setProduct }) => {
   const [loading, setLoading] = useState(false);
@@ -95,16 +96,16 @@ const FileUpload = ({ product, setProduct }) => {
                 ) : (
                   <>
                     <Figure.Caption>
-                      <button
+                      <Badge
                         onClick={() => handleImageDelete(image.public_id)}
-                        className="btn btn-danger  rounded-circle"
+                        className="btn btn-danger rounded-circle"
                         style={{ cursor: "pointer" }}
                       >
                         x
-                      </button>
+                      </Badge>
                     </Figure.Caption>
                     <Figure.Image
-                      className="m-3"
+                      className="m-3 rounded"
                       src={image.url}
                       width={150}
                       height={150}

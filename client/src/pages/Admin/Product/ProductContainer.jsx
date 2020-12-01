@@ -56,7 +56,11 @@ const ProductContainer = () => {
         fetchProducts={fetchProducts}
       />
       <hr />
-      <ProductList products={products} productsLoading={productsLoading} />
+      <ProductList
+        products={products}
+        productsLoading={productsLoading}
+        fetchProducts={fetchProducts}
+      />
     </div>
   );
 };

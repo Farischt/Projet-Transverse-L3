@@ -2,47 +2,49 @@ import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Card from "react-bootstrap/Card";
 import CardColumns from "react-bootstrap/CardColumns";
+import ProductRemove from "./ProductRemove";
+import ProductUpdate from "./ProductUpdate";
 
-const ProductList = ({ products, productsLoading }) => {
+const ProductList = ({ products, productsLoading, fetchProducts }) => {
   return (
     <>
       <h1> Liste des produits </h1>
       {productsLoading ? (
         <div className="text-center">
-          {" "}
-          <Spinner animation="border" variant="primary" />{" "}
+          <Spinner animation="border" variant="primary" />
         </div>
-      ) : (
+      ) : products.length ? (
         <CardColumns>
           {products.map((product) => {
             return (
-              <Card key={product._id} border="dark">
-                <img
-                  className="m-2 rounded"
-                  style={{ height: "150px", objectFit: "cover" }}
+              <Card key={product._id}>
+                <Card.Img
                   src={product.images[0].url}
+                  alt="Card image"
+                  variant="top"
+                  style={{ objectFit: "cover", height: "150px" }}
+                  className="p-2 rounded"
                 />
                 <Card.Body>
                   <Card.Title>{product.name}</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    {product.category.name}
+                    {product.category && product.category.name}
                   </Card.Subtitle>
                   <Card.Text>{product.description}</Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                  <button className="btn btn-primary my-2 my-sm-0 ">
-                    {" "}
-                    Update{" "}
-                  </button>
-                  <button className="btn btn-danger m-2 my-sm-0 ">
-                    {" "}
-                    Delete{" "}
-                  </button>
+                  <ProductRemove
+                    slug={product.slug}
+                    fetchProducts={fetchProducts}
+                  />
+                  <ProductUpdate product={product} />
                 </Card.Footer>
               </Card>
             );
-          })}{" "}
+          })}
         </CardColumns>
+      ) : (
+        <h3> Aucun produit disponible </h3>
       )}
     </>
   );
