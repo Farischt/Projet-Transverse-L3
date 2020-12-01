@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
-//import { toast } from "react-toastify";
-import "../css/Buttons.css";
+import ReactGa from "react-ga";
 import { connect } from "react-redux";
 import { loginUser } from "../redux";
 
 const Login = ({ userData, loginUser }) => {
-  // let history = useHistory();
-
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -21,12 +17,12 @@ const Login = ({ userData, loginUser }) => {
     setUser(() => userInfo);
   };
 
-  // const roleRedirect = (res) => {
-  //   if (res.data.userRole === "admin") history.push("/admin/dashboard");
-  // };
-
   const handleLogin = () => {
     loginUser(user);
+    ReactGa.event({
+      category: "User",
+      action: "User logged-in",
+    });
   };
 
   return (

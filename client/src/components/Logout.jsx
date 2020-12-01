@@ -1,10 +1,15 @@
 import React from "react";
+import ReactGa from "react-ga";
 import { connect } from "react-redux";
 import { logoutUser } from "../redux";
 
 const Logout = ({ logoutUser }) => {
   const handleLogout = () => {
     logoutUser();
+    ReactGa.event({
+      category: "User",
+      action: "User logged-out",
+    });
   };
 
   return (
