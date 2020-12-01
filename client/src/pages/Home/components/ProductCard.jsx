@@ -1,17 +1,15 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+import { ShoppingCartOutlined, FundViewOutlined } from "@ant-design/icons";
 
 const ProductCard = ({ product }) => {
-  const time = Date.now();
-  console.log(time);
-
   return (
     <Card key={product._id}>
       <Card.Img
         src={product.images[0].url}
         alt="Card image"
         variant="top"
-        style={{ objectFit: "cover", height: "150px" }}
+        style={{ objectFit: "cover", height: "250px" }}
         className="p-2 rounded"
       />
       <Card.Body>
@@ -21,7 +19,16 @@ const ProductCard = ({ product }) => {
         </Card.Subtitle>
         <Card.Text>{product.description}</Card.Text>
       </Card.Body>
-      <Card.Footer>{}</Card.Footer>
+      <Card.Footer>
+        <button className="btn btn-outline-danger m-2 my-sm-0 float-right">
+          {" "}
+          <ShoppingCartOutlined />{" "}
+        </button>
+        <button className="btn btn-outline-info m-2 my-sm-0">
+          {" "}
+          <FundViewOutlined />{" "}
+        </button>
+      </Card.Footer>
     </Card>
   );
 };
