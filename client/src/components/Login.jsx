@@ -41,12 +41,15 @@ const Login = ({ userData, loginUser }) => {
         />
         <input
           onChange={handleInputChange}
-          className="form-control mr-sm-2"
+          className="form-control my-2 mr-sm-2"
           type="password"
           name="password"
           placeholder="Mot de passe"
         />
-        <button onClick={handleLogin} className="btn btn-primary my-2 my-sm-0">
+        <button
+          onClick={handleLogin}
+          className="btn btn-outline-info my-2 my-sm-0"
+        >
           Se connecter
         </button>
       </div>

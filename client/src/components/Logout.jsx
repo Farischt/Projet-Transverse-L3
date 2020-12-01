@@ -8,7 +8,10 @@ const Logout = ({ logoutUser }) => {
   };
 
   return (
-    <button onClick={handleLogout} className="btn btn-danger my-2 my-sm-0">
+    <button
+      onClick={handleLogout}
+      className="btn btn-outline-danger my-2 my-sm-0"
+    >
       Déconnexion
     </button>
   );
