@@ -8,7 +8,7 @@ const CategoryUpdate = (props) => {
   return (
     <>
       <button
-        className="btn btn my-2 my-sm-0 float-right"
+        className="btn btn-primary m-2 my-sm-0 float-right"
         onClick={() => setModalShow(true)}
       >
         <EditOutlined />

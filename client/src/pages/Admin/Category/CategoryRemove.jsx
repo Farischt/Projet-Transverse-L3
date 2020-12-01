@@ -35,7 +35,7 @@ const CategoryRemove = ({ slug, reload }) => {
 
   return (
     <button
-      className="btn btn-danger my-2 my-sm-0 float-right"
+      className="btn btn-danger m-2 my-sm-0 float-right"
       onClick={handleRemove}
     >
       {loading ? (
