@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+import { Link } from "react-router-dom";
 import { ShoppingCartOutlined, FundViewOutlined } from "@ant-design/icons";
 
 const ProductCard = ({ product }) => {
@@ -17,17 +18,21 @@ const ProductCard = ({ product }) => {
         <Card.Subtitle className="mb-2 text-muted">
           {product.category && product.category.name}
         </Card.Subtitle>
-        <Card.Text>{product.description}</Card.Text>
+        <Card.Text className="text-muted">
+          {product.description.slice(0, 30) + "..."}
+        </Card.Text>
       </Card.Body>
       <Card.Footer>
         <button className="btn btn-outline-danger m-2 my-sm-0 float-right">
           {" "}
           <ShoppingCartOutlined />{" "}
         </button>
-        <button className="btn btn-outline-info m-2 my-sm-0">
-          {" "}
-          <FundViewOutlined />{" "}
-        </button>
+        <Link to={`product/${product.slug}`}>
+          <button className="btn btn-outline-info m-2 my-sm-0">
+            {" "}
+            <FundViewOutlined />{" "}
+          </button>
+        </Link>
       </Card.Footer>
     </Card>
   );
