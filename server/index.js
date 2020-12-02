@@ -7,8 +7,6 @@ const cors = require("cors");
 // Routes
 const authRoute = require("./routes/auth");
 const categoryRoute = require("./routes/category");
-const cartRoute = require("./routes/cart");
-const itemRoute = require("./routes/item");
 const productRoute = require("./routes/product");
 const cloudinaryRoute = require("./routes/cloudinary");
 const connectDb = require("./database");
@@ -31,8 +29,6 @@ app.use(cors());
 // Route Middlewares :
 app.use("/api/user", authRoute);
 app.use("/api", categoryRoute);
-app.use("/api/cart", cartRoute);
-app.use("/api/item", itemRoute);
 app.use("/api", productRoute);
 app.use("/api/", cloudinaryRoute);
 
