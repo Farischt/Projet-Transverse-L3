@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const AdminNav = ({ url }) => {
   return (
-    <nav className="bg-dark rounded">
+    <nav className="bg-dark rounded-bottom">
       <ul className="nav flex-column">
         <li className="nav-items">
           <Link to={`${url}`} className="nav-link text-info ">

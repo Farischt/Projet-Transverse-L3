@@ -8,12 +8,12 @@ import ProductContainer from "./Product/ProductContainer";
 const AdminDashboard = () => {
   let { path, url } = useRouteMatch();
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
+    <div className="overflow-hidden">
+      <div className="row bg-dark">
+        <div className="col-md-2 bg-dark">
           <AdminNav url={url} />
         </div>
-        <div className="col">
+        <div className="col-md-10 ">
           <Switch>
             <Route path={`${path}`} exact>
               Votre Dashboard Administrateur

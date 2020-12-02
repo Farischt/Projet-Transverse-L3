@@ -34,7 +34,7 @@ const Password = () => {
   };
 
   return (
-    <div className="col p-4">
+    <div className="col p-4 bg-light rounded" style={{ minHeight: "90vh" }}>
       <h1> Modification de mot de passe </h1>
       {!isLoading && (
         <form onSubmit={handleSubmit}>

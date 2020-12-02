@@ -9,6 +9,7 @@ import {
   HomeTwoTone,
   ShoppingTwoTone,
 } from "@ant-design/icons";
+import styles from "../css/Navbar.module.css";
 
 import Login from "./Login";
 import Logout from "./Logout";
@@ -19,8 +20,8 @@ const NavBar = () => {
   }));
 
   return (
-    <Navbar fixed="top" collapseOnSelect expand="xl" bg="dark" variant="dark">
-      <Navbar.Brand>Formations & Logiciels</Navbar.Brand>
+    <Navbar static="top" collapseOnSelect expand="xl" bg="dark">
+      <Navbar.Brand className="text-white">Formations & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
