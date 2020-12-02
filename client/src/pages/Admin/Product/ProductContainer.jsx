@@ -49,7 +49,7 @@ const ProductContainer = () => {
   };
 
   return (
-    <div className="col p-4 bg-light rounded">
+    <div className="col p-4 bg-light rounded" style={{ minHeight: "90vh" }}>
       <ProductCreate
         categories={categories}
         categoriesLoading={categoriesLoading}
