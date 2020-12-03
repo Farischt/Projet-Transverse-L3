@@ -15,6 +15,7 @@ import UserRoute from "./routes/UserRoute";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminRoute from "./routes/AdminRoute";
 import ProductView from "./pages/Product/ProductView";
+import Error404 from "./pages/404/Error404";
 
 import { currentUser } from "./redux";
 import { connect } from "react-redux";
@@ -47,7 +48,7 @@ const App = ({ userData, currentUser }) => {
           <UserRoute component={UserDashboard} path="/user/dashboard" />
           <AdminRoute component={AdminDashboard} path="/admin/dashboard" />
           <Route exact path="/product/:slug" component={ProductView} />
-          <Route component={FourZeroFour} />
+          <Route component={Error404} />
         </Switch>
       </div>
     </React.Fragment>
