@@ -36,10 +36,10 @@ const NewArrivals = () => {
 
   return (
     <div className="container">
-      <h4 className="text-center text-danger font-weight-bold">
+      <h4 className="text-center text-danger font-weight-bold mb-3">
         Nos formations les plus récentes
       </h4>
-      <CardColumns className="p-2">
+      <CardColumns className="shadow-lg mb-5 p-2 rounded">
         {productsLoading ? (
           <ProductLoading count={perPage} />
         ) : products.length ? (
