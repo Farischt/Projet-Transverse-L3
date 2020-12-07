@@ -1,6 +1,6 @@
 import React from "react";
+import ProductListDetails from "./ProductListDetails";
 import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
 import Carousel from "react-bootstrap/Carousel";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
@@ -13,8 +13,6 @@ import {
 
 const SingleProduct = ({ product }) => {
   const { name, description, price, images, category } = product;
-
-  console.log(product);
 
   return (
     <>
@@ -39,14 +37,20 @@ const SingleProduct = ({ product }) => {
       <div className="col-md-5">
         <Card className="border-dark">
           <Card.Body>
-            <Card.Title>{product && name}</Card.Title>
+            <Card.Title>
+              {product && name} -{" "}
+              {product &&
+                product.price &&
+                new Intl.NumberFormat("de-DE", {
+                  style: "currency",
+                  currency: "EUR",
+                }).format(price)}
+            </Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
               {product && category && category.name}
             </Card.Subtitle>
-            <Card.Text>
-              {" "}
-              <p> {product && description} </p>
-            </Card.Text>
+            <Card.Text>{product && description}</Card.Text>
+            <ProductListDetails product={product} />
           </Card.Body>
           <Card.Footer>
             <div className="text-center">
