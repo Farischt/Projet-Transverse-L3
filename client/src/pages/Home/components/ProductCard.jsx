@@ -6,13 +6,15 @@ import { ShoppingCartOutlined, FundViewOutlined } from "@ant-design/icons";
 const ProductCard = ({ product }) => {
   return (
     <Card key={product._id}>
-      <Card.Img
-        src={product.images[0].url}
-        alt="Card image"
-        variant="top"
-        style={{ objectFit: "cover", height: "250px" }}
-        className="p-2 rounded"
-      />
+      {product && product.images && (
+        <Card.Img
+          src={product.images && product.images[0].url}
+          alt="Card image"
+          variant="top"
+          style={{ objectFit: "cover", height: "250px" }}
+          className="p-2 rounded"
+        />
+      )}
       <Card.Body>
         <Card.Title>{product.name}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
