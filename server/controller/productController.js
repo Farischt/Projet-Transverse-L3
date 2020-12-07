@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 // Model
 const Product = require("../model/Product");
+const User = require("../model/User");
 // Helper
 const { createProductValidation } = require("../helpers/productValidation");
 
@@ -135,6 +136,68 @@ module.exports.listPagination = async (req, res) => {
         .json({ errorMessage: "No product find for your criteras" });
 
     res.json(products);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ errorMessage: err.message });
+  }
+};
+
+//? Rating
+module.exports.rate = async (req, res) => {
+  const { productId } = req.params;
+  const { star } = req.body;
+
+  // We first check if the id is a mongoose.Types.ObjectId
+  if (!ObjectId.isValid(productId))
+    return res.status(400).json({ errorMessage: "product id is not valid " });
+
+  // We check if the star is a number inbetween 0 and 5
+  if (star < 0 || star > 5 || isNaN(parseInt(star)))
+    return res
+      .status(400)
+      .json({ errorMessage: "Rating must be a number in beetwen 0 and 5" });
+
+  try {
+    // We look for the product
+    const product = await Product.findById(productId);
+    if (!product)
+      return res
+        .status(404)
+        .json({ errorMessage: "No product matching the id" });
+
+    // We check if the user already rated or not
+    let existingRating = product.ratings.find(
+      (element) => element.postedBy.toString() === req.session.userId
+    );
+
+    console.log(existingRating);
+
+    // Query options
+    const options = { new: true };
+
+    // If the user has not rated yet, we create a rating
+    if (!existingRating) {
+      let newRating = await Product.findByIdAndUpdate(
+        product._id,
+        {
+          $push: {
+            ratings: { star: parseInt(star), postedBy: req.session.userId },
+          },
+        },
+        options
+      );
+      res.json(newRating);
+    }
+
+    // Else we update the rating only if the rating is different
+    else if (existingRating && existingRating.star != parseIn(star)) {
+      const ratingUpdate = await Product.updateOne(
+        { ratings: { $elemMatch: existingRating } },
+        { $set: { "ratings.$.star": parseInt(star) } },
+        options
+      );
+      res.send("ok");
+    } else res.status(403).json({ errorMessage: "Forbidden action" });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ errorMessage: err.message });
