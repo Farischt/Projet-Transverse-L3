@@ -20,10 +20,6 @@ import Error404 from "./pages/404/Error404";
 import { currentUser } from "./redux";
 import { connect } from "react-redux";
 
-const FourZeroFour = () => {
-  return <h1> Four Zero Four </h1>;
-};
-
 const App = ({ userData, currentUser }) => {
   useEffect(() => {
     ReactGa.initialize("UA-184433004-2", {
