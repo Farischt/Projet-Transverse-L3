@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import ReactGa from "react-ga";
 import Jumbotron from "./components/Jumbotron";
 import NewArrivals from "./components/NewArrivals";
