@@ -9,7 +9,6 @@ import {
   HomeTwoTone,
   ShoppingTwoTone,
 } from "@ant-design/icons";
-import styles from "../css/Navbar.module.css";
 
 import Login from "./Login";
 import Logout from "./Logout";
@@ -20,7 +19,7 @@ const NavBar = () => {
   }));
 
   return (
-    <Navbar static="top" collapseOnSelect expand="xl" bg="dark">
+    <Navbar static="top" collapseOnSelect expand="xl" bg="dark" variant="dark">
       <Navbar.Brand className="text-white">Formations & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -34,13 +33,17 @@ const NavBar = () => {
             <ShoppingTwoTone twoToneColor="#17a2b7" />
           </Link>
         </Nav>
+        <Nav className="mr-auto">
+          <Link to="/efzfez" className="nav-link text-secondary">
+            <ShoppingTwoTone twoToneColor="#17a2b7" />
+          </Link>
+        </Nav>
 
-        {user && !user.isLoggedIn && (
+        {user && !user.isLoggedIn && !user.loading && (
           <>
             <Nav className="mr-auto">
               <Login />
-            </Nav>
-            <Nav className="mr-auto">
+
               <Link to="/register" className="nav-link text-secondary">
                 <button className="btn btn-outline-info my-2 my-sm-0">
                   {" "}
@@ -77,7 +80,7 @@ const NavBar = () => {
         )}
         {user && user.loading && (
           <div className="text-center">
-            <Spinner animation="border" variant="primary" />
+            <Spinner animation="border" variant="info" />
           </div>
         )}
       </Navbar.Collapse>
