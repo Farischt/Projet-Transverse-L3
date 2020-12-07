@@ -10,6 +10,7 @@ const {
   list,
   productsTotal,
   listPagination,
+  rate,
 } = require("../controller/productController");
 
 // Route to create a product
@@ -26,5 +27,7 @@ router.post("/products", list);
 router.get("/products/total", productsTotal);
 // Route that get a list of products to be paginated
 router.post("/products/page", listPagination);
+// Route that apply a rate to a product
+router.put("/product/rating/:productId", verifyAuth, rate);
 
 module.exports = router;
