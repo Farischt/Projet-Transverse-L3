@@ -34,10 +34,16 @@ const ProductView = ({ match }) => {
   });
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{ minHeight: "90vh" }}>
       {loading ? (
-        <div className="text-center" style={{ marginTop: "40vh" }}>
-          <Spinner animation="border" variant="info" role="status" as="span" />
+        <div className="text-center">
+          <Spinner
+            animation="border"
+            variant="info"
+            role="status"
+            as="span"
+            style={{ marginTop: "40vh" }}
+          />
           <br />
           <span className="text-info"> Chargement ... </span>
         </div>
