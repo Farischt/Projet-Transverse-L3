@@ -19,13 +19,10 @@ import { currentUser } from "./redux";
 import { connect } from "react-redux";
 
 const App = ({ currentUser }) => {
-  useEffect(() => {
-    ReactGa.initialize(process.env.REACT_APP_GA_ID, {
-      cookieDomain: "auto",
-      debug: true,
-    });
-    ReactGa.pageview(window.location.pathname);
-  }, []);
+  ReactGa.initialize(process.env.REACT_APP_GA_ID, {
+    cookieDomain: "auto",
+    debug: false,
+  });
 
   useEffect(() => {
     currentUser();
