@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import Badge from "react-bootstrap/Badge";
 import StarRatings from "react-star-ratings";
 import { Link } from "react-router-dom";
-import { ShoppingCartOutlined, FundViewOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons";
 
 const ProductCard = ({ product }) => {
   const [average, setAverage] = useState(0);
@@ -70,10 +70,9 @@ const ProductCard = ({ product }) => {
           starDimension="25px"
           starSpacing="5px"
         />{" "}
-        <Link to={`product/${product.slug}`}>
+        <Link to={`/product/${product.slug}`}>
           <button className="btn btn-outline-info m-2 my-sm-0 ">
-            {" "}
-            <FundViewOutlined />{" "}
+            <EyeOutlined />
           </button>
         </Link>
       </Card.Footer>
