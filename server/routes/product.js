@@ -11,6 +11,8 @@ const {
   productsTotal,
   listPagination,
   rate,
+  listRelated,
+  searchWithFilters,
 } = require("../controller/productController");
 
 // Route to create a product
@@ -29,5 +31,9 @@ router.get("/products/total", productsTotal);
 router.post("/products/page", listPagination);
 // Route that apply a rate to a product
 router.put("/product/rating/:productId", verifyAuth, rate);
+// Route to read a product
+router.get("/product/related/:productId", listRelated);
+// Route that
+router.post("/search/filters", searchWithFilters);
 
 module.exports = router;
