@@ -19,20 +19,19 @@ const BestSellers = () => {
   }, []);
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      setProductsLoading(true);
+      try {
+        const response = await listPagination(sort, order, page);
+        setProducts(response.data);
+        setProductsLoading(false);
+      } catch (err) {
+        setProductsLoading(false);
+        console.log(err);
+      }
+    };
     fetchProducts();
   }, [page]);
-
-  const fetchProducts = async () => {
-    setProductsLoading(true);
-    try {
-      const response = await listPagination(sort, order, page);
-      setProducts(response.data);
-      setProductsLoading(false);
-    } catch (err) {
-      setProductsLoading(false);
-      console.log(err);
-    }
-  };
 
   return (
     <div className="container">
