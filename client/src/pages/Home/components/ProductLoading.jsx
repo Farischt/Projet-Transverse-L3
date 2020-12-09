@@ -9,13 +9,6 @@ const ProductLoading = ({ count }) => {
     for (let i = 0; i < count; i++) {
       totalProductCards.push(
         <Card key={i}>
-          <Card.Img
-            src="holder.js/250x200"
-            alt="Card image"
-            variant="top"
-            style={{ objectFit: "cover", height: "250px" }}
-            className="p-2 rounded"
-          />
           <Card.Body>
             <Card.Title>
               <div className="text-center">
