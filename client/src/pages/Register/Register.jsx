@@ -50,7 +50,7 @@ const Register = ({ history }) => {
   return (
     user &&
     !user.IsLoggedIn && (
-      <div className="form-signin" style={{ backgroundColor: "white" }}>
+      <div className="form-signin mt-4">
         <h1
           className="h3 mb-3 font-weight-normal"
           style={{ textAlign: "center" }}
@@ -91,16 +91,10 @@ const Register = ({ history }) => {
           placeholder="Répétez votre mot de passe"
           required
         />
-        <div className="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me" /> Se souvenir de moi
-          </label>
-        </div>
         <button
           onClick={handleRegister}
-          className="btn btn-lg btn-primary btn-block"
+          className="btn btn-lg btn-dark btn-block"
           type="submit"
-          style={{ backgroundColor: "#353a40" }}
         >
           S'inscrire
         </button>
