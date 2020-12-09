@@ -35,3 +35,10 @@ export const productsTotal = async () => {
 export const readProduct = async (slug) => {
   return await axios.get(`${process.env.REACT_APP_API_URL}/product/${slug}`);
 };
+
+export const rateProduct = async (star, productId) => {
+  return await axios.put(
+    `${process.env.REACT_APP_API_URL}/product/rating/${productId}`,
+    { star }
+  );
+};
