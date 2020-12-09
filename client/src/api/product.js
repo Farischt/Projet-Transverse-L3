@@ -42,3 +42,9 @@ export const rateProduct = async (star, productId) => {
     { star }
   );
 };
+
+export const listRelated = async (productId) => {
+  return await axios.get(
+    `${process.env.REACT_APP_API_URL}/product/related/${productId}`
+  );
+};
