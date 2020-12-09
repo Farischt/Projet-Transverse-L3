@@ -203,3 +203,36 @@ module.exports.rate = async (req, res) => {
     return res.status(500).json({ errorMessage: err.message });
   }
 };
+
+module.exports.listRelated = async (req, res) => {
+  const { productId } = req.params;
+
+  // We first check if the id is a mongoose.Types.ObjectId
+  if (!ObjectId.isValid(productId))
+    return res.status(400).json({ errorMessage: "product id is not valid " });
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product)
+      return res.status(404).json({ errorMessage: "product not found" });
+
+    const relatedProducts = await Product.find({
+      _id: { $ne: product._id },
+      category: product.category,
+    })
+      .limit(3)
+      .populate("category");
+    // .populate("postedBy", "_id name");
+    if (!relatedProducts)
+      return res
+        .status(404)
+        .json({ errorMessage: "No product matching your query" });
+
+    res.json(relatedProducts);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ errorMessage: err.message });
+  }
+};
+
+module.exports.searchWithFilters = async (req, res) => {};
