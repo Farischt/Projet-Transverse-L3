@@ -152,7 +152,7 @@ module.exports.rate = async (req, res) => {
     return res.status(400).json({ errorMessage: "product id is not valid " });
 
   // We check if the star is a number inbetween 0 and 5
-  if (star < 0 || star > 5 || isNaN(parseInt(star)))
+  if (parseInt(star) < 0 || parseInt(star) > 5 || isNaN(parseInt(star)))
     return res
       .status(400)
       .json({ errorMessage: "Rating must be a number in beetwen 0 and 5" });
@@ -190,8 +190,8 @@ module.exports.rate = async (req, res) => {
     }
 
     // Else we update the rating only if the rating is different
-    else if (existingRating && existingRating.star != parseIn(star)) {
-      const ratingUpdate = await Product.updateOne(
+    else if (existingRating && existingRating.star != parseInt(star)) {
+      await Product.updateOne(
         { ratings: { $elemMatch: existingRating } },
         { $set: { "ratings.$.star": parseInt(star) } },
         options
