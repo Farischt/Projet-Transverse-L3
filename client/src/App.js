@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/Home/Home";
 import Register from "./pages/Register/Register";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer/Footer";
 import UserDashboard from "./pages/User/UserDashboard";
 import UserRoute from "./routes/UserRoute";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
@@ -42,6 +43,7 @@ const App = ({ currentUser }) => {
           <Route component={Error404} />
         </Switch>
       </div>
+      <Footer />
     </React.Fragment>
   );
 };
