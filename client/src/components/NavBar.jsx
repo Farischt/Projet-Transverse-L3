@@ -24,58 +24,33 @@ const NavBar = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Link to="/" className="nav-link text-secondary">
+          <Link to="/" className="nav-link">
             <HomeTwoTone twoToneColor="#17a2b7" />
           </Link>
-        </Nav>
-        <Nav className="mr-auto">
-          <Link to="/efzfez" className="nav-link text-secondary">
-            <ShoppingTwoTone twoToneColor="#17a2b7" />
-          </Link>
-        </Nav>
-        <Nav className="mr-auto">
-          <Link to="/efzfez" className="nav-link text-secondary">
+          <Link to="/efzfez" className="nav-link">
             <ShoppingTwoTone twoToneColor="#17a2b7" />
           </Link>
         </Nav>
 
-        {user && !user.isLoggedIn && !user.loading && (
-          <>
-            <Nav className="mr-auto">
-              <Login />
-
-              <Link to="/register" className="nav-link text-secondary">
-                <button className="btn btn-outline-info my-2 my-sm-0">
-                  {" "}
-                  S'inscrire{" "}
-                </button>
-              </Link>
-            </Nav>
-          </>
-        )}
+        {user && !user.isLoggedIn && !user.loading && <Login />}
         {user && user.isLoggedIn && user.user.userRole === "admin" && (
-          <Nav className="mr-auto">
-            <Link to="/admin/dashboard" className="nav-link text-secondary">
-              <button className="btn btn-outline-info my-2 my-sm-0">
-                <SettingOutlined />
-              </button>
-            </Link>
-          </Nav>
+          <Link to="/admin/dashboard" className="m-2">
+            <button className="btn btn-outline-info my-2 my-sm-0">
+              <SettingOutlined />
+            </button>
+          </Link>
         )}
         {user && user.isLoggedIn && (
           <>
-            <Nav className="mr-auto">
-              <Link to="/user/dashboard" className="nav-link text-secondary">
-                <button className="btn btn-outline-info my-2 my-sm-0">
-                  <UserOutlined />
-                </button>
-              </Link>
-            </Nav>
-            <Nav className="mr-auto">
-              <Link to="/">
-                <Logout />
-              </Link>
-            </Nav>
+            <Link to="/user/dashboard" className="m-2">
+              <button className="btn btn-outline-info my-2 my-sm-0">
+                <UserOutlined />
+              </button>
+            </Link>
+
+            <Link to="/" className="m-2">
+              <Logout />
+            </Link>
           </>
         )}
         {user && user.loading && (
