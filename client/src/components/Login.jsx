@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactGa from "react-ga";
 import { connect } from "react-redux";
 import { loginUser } from "../redux";
+import { Link } from "react-router-dom";
 
 const Login = ({ userData, loginUser }) => {
   const [user, setUser] = useState({
@@ -48,6 +49,12 @@ const Login = ({ userData, loginUser }) => {
         >
           Se connecter
         </button>
+        <Link to="/register" className="m-2">
+          <button className="btn btn-outline-info my-2 my-sm-0">
+            {" "}
+            S'inscrire{" "}
+          </button>
+        </Link>
       </div>
     </div>
   );
