@@ -4,8 +4,6 @@ import { ToastContainer } from "react-toastify";
 import ReactGa from "react-ga";
 
 import "react-toastify/dist/ReactToastify.css";
-import "antd/dist/antd.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 import Home from "./pages/Home/Home";
 import Register from "./pages/Register/Register";
@@ -20,11 +18,11 @@ import Error404 from "./pages/404/Error404";
 import { currentUser } from "./redux";
 import { connect } from "react-redux";
 
-const App = ({ userData, currentUser }) => {
+const App = ({ currentUser }) => {
   useEffect(() => {
-    ReactGa.initialize("UA-184433004-2", {
+    ReactGa.initialize(process.env.REACT_APP_GA_ID, {
       cookieDomain: "auto",
-      debug: false,
+      debug: true,
     });
     ReactGa.pageview(window.location.pathname);
   }, []);
@@ -41,9 +39,9 @@ const App = ({ userData, currentUser }) => {
         <Switch>
           <Route component={Home} path="/" exact />
           <Route component={Register} path="/register" exact />
+          <Route component={ProductView} path="/product/:slug" exact />
           <UserRoute component={UserDashboard} path="/user/dashboard" />
           <AdminRoute component={AdminDashboard} path="/admin/dashboard" />
-          <Route exact path="/product/:slug" component={ProductView} />
           <Route component={Error404} />
         </Switch>
       </div>
