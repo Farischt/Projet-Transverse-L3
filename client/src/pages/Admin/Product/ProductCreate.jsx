@@ -17,7 +17,7 @@ const ProductCreate = ({ categories, categoriesLoading, fetchProducts }) => {
   const [product, setProduct] = useState(initialState);
   const [loading, setLoading] = useState(false);
 
-  const { name, description, price, quantity, category, images } = product;
+  const { name, description, price, quantity, category } = product;
 
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
