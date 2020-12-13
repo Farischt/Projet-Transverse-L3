@@ -32,4 +32,6 @@ app.use("/api", categoryRoute);
 app.use("/api", productRoute);
 app.use("/api/", cloudinaryRoute);
 
-app.listen(3080, () => console.log("Server up and running"));
+app.listen(process.env.PORT || 3080, () =>
+  console.log("Server up and running")
+);
