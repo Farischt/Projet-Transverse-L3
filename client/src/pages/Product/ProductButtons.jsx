@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import RatingModal from "./RatingModal";
-import Button from "react-bootstrap/Button";
+import React, { useState } from "react"
+import RatingModal from "./RatingModal"
+import Button from "react-bootstrap/Button"
 import {
   ShoppingCartOutlined,
   HeartOutlined,
   StarOutlined,
-} from "@ant-design/icons";
+} from "@ant-design/icons"
 
 const ProductButtons = ({ product }) => {
-  const [modalShow, setModalShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false)
 
   return (
     <div className="text-center">
@@ -31,7 +31,7 @@ const ProductButtons = ({ product }) => {
         product={product}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ProductButtons;
+export default ProductButtons
