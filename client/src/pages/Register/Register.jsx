@@ -95,6 +95,7 @@ const Register = ({ history }) => {
           onClick={handleRegister}
           className="btn btn-lg btn-dark btn-block"
           type="submit"
+          style={{ borderRadius: "25px" }}
         >
           S'inscrire
         </button>
