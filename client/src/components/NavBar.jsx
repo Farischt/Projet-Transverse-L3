@@ -1,22 +1,23 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { Navbar, Nav } from "react-bootstrap";
-import Spinner from "react-bootstrap/Spinner";
+import React from "react"
+import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
+import { Navbar, Nav } from "react-bootstrap"
+import Spinner from "react-bootstrap/Spinner"
 import {
   UserOutlined,
   SettingOutlined,
   HomeTwoTone,
   ShoppingTwoTone,
-} from "@ant-design/icons";
+} from "@ant-design/icons"
 
-import Login from "./Login";
-import Logout from "./Logout";
+import Login from "./Login"
+import Logout from "./Logout"
+import SearchBar from "./SearchBar"
 
 const NavBar = () => {
   let { user } = useSelector((state) => ({
     ...state,
-  }));
+  }))
 
   return (
     <Navbar static="top" collapseOnSelect expand="xl" bg="dark" variant="dark">
@@ -31,6 +32,7 @@ const NavBar = () => {
             <ShoppingTwoTone twoToneColor="#17a2b7" />
           </Link>
         </Nav>
+        <SearchBar />
 
         {user && !user.isLoggedIn && !user.loading && <Login />}
         {user && user.isLoggedIn && user.user.userRole === "admin" && (
@@ -60,7 +62,7 @@ const NavBar = () => {
         )}
       </Navbar.Collapse>
     </Navbar>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar
