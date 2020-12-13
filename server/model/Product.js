@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema;
+const mongoose = require("mongoose")
+const { ObjectId } = mongoose.Schema
 
 const productSchema = new mongoose.Schema(
   {
@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema(
       trim: true,
       required: true,
       maxlength: 24,
-      text: true,
+      // text: true,
     },
 
     slug: {
@@ -23,6 +23,7 @@ const productSchema = new mongoose.Schema(
       trim: true,
       required: true,
       maxlength: 1000,
+      text: true,
     },
 
     price: {
@@ -58,6 +59,13 @@ const productSchema = new mongoose.Schema(
     ],
   },
   { timestamps: true }
-);
+)
 
-module.exports = mongoose.model("Product", productSchema);
+// productSchema.indexes({ description: "text", slug: "index" })
+const Product = mongoose.model("Product", productSchema)
+
+Product.on("index", function (err) {
+  if (err) console.error(err) // error occurred during index creation
+})
+
+module.exports = Product
