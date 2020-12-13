@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { rateProduct } from "../../api/product";
-import Login from "../../components/Login";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
-import StarRatings from "react-star-ratings";
+import React, { useState, useEffect } from "react"
+import { useSelector } from "react-redux"
+import { toast } from "react-toastify"
+import { rateProduct } from "../../api/product"
+import Login from "../../components/Login"
+import Modal from "react-bootstrap/Modal"
+import Button from "react-bootstrap/Button"
+import Spinner from "react-bootstrap/Spinner"
+import StarRatings from "react-star-ratings"
 
 const RatingModal = ({ product, ...props }) => {
-  const { user } = useSelector((state) => ({ ...state }));
-  const [rate, setRate] = useState(0);
-  const [rateLoading, setRateLoading] = useState(0);
+  const { user } = useSelector((state) => ({ ...state }))
+  const [rate, setRate] = useState(0)
+  const [rateLoading, setRateLoading] = useState(0)
 
   useEffect(() => {
     if (
@@ -23,27 +23,27 @@ const RatingModal = ({ product, ...props }) => {
     ) {
       const rate = product.ratings.find(
         (element) => element.postedBy === user.user.userId
-      );
+      )
 
       if (rate) {
-        setRate(rate.star);
+        setRate(rate.star)
       }
     }
-  }, [product, user]);
+  }, [product, user])
 
   const handleStarClick = async (newRating, productId) => {
-    setRateLoading(true);
+    setRateLoading(true)
     try {
-      await rateProduct(parseInt(newRating), productId);
-      //getProduct(); // memory leak !
-      setRateLoading(false);
-      toast(`Merci pour votre retour`);
-      setRate(newRating);
+      await rateProduct(parseInt(newRating), productId)
+      // getProduct() // memory leak !
+      setRateLoading(false)
+      toast(`Merci pour votre retour`)
+      setRate(newRating)
     } catch (err) {
-      console.log(err);
-      setRateLoading(false);
+      console.log(err)
+      setRateLoading(false)
     }
-  };
+  }
 
   return (
     <Modal
@@ -92,7 +92,7 @@ const RatingModal = ({ product, ...props }) => {
         </Button>
       </Modal.Footer>
     </Modal>
-  );
-};
+  )
+}
 
-export default RatingModal;
+export default RatingModal

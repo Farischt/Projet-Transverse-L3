@@ -1,24 +1,35 @@
-import React, { useState, useEffect } from "react";
-import ProductListDetails from "./ProductListDetails";
-import ProductButtons from "./ProductButtons";
-import Card from "react-bootstrap/Card";
-import Carousel from "react-bootstrap/Carousel";
-import Badge from "react-bootstrap/Badge";
-import StarRatings from "react-star-ratings";
+import React, { useState, useEffect } from "react"
+import ProductListDetails from "./ProductListDetails"
+import ProductButtons from "./ProductButtons"
+import Card from "react-bootstrap/Card"
+import Carousel from "react-bootstrap/Carousel"
+import Badge from "react-bootstrap/Badge"
+import StarRatings from "react-star-ratings"
 
 const SingleProduct = ({ product }) => {
-  const { _id, name, description, price, images, category, ratings } = product;
-  const [average, setAverage] = useState(0);
+  const { _id, name, description, price, images, category, ratings } = product
+  const [average, setAverage] = useState(0)
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (product && ratings && ratings.length > 0) {
+  //     let sum = 0
+  //     for (let i = 0; i < ratings.length; i++) {
+  //       sum += ratings[i].star
+  //     }
+  //     setAverage(sum / ratings.length)
+  //   }
+
+  // }, [product, ratings])
+
+  const averageRate = () => {
     if (product && ratings && ratings.length > 0) {
-      let sum = 0;
+      let sum = 0
       for (let i = 0; i < ratings.length; i++) {
-        sum += ratings[i].star;
+        sum += ratings[i].star
       }
-      setAverage(sum / ratings.length);
+      return sum / ratings.length
     }
-  }, [product, ratings]);
+  }
 
   return (
     <>
@@ -36,7 +47,7 @@ const SingleProduct = ({ product }) => {
                   />
                   <Carousel.Caption>{product && name}</Carousel.Caption>
                 </Carousel.Item>
-              );
+              )
             })}
         </Carousel>
       </div>
@@ -57,7 +68,9 @@ const SingleProduct = ({ product }) => {
               <br />
               <StarRatings
                 name={_id}
-                rating={average}
+                rating={
+                  product && ratings && ratings.length > 0 && averageRate()
+                }
                 starRatedColor="gold"
                 numberOfStars={5}
                 starDimension="25px"
@@ -79,7 +92,7 @@ const SingleProduct = ({ product }) => {
         </Card>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SingleProduct;
+export default SingleProduct
