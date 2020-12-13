@@ -9,17 +9,20 @@ const ProductLoading = ({ count }) => {
     for (let i = 0; i < count; i++) {
       totalProductCards.push(
         <Card key={i}>
-          <Card.Body>
+          <Card.Body style={{ minHeight: "62vh" }}>
             <Card.Title>
               <div className="text-center">
                 <Spinner animation="grow" />
               </div>
-              <Skeleton />
+              <Skeleton style={{ marginTop: "10vh" }} />
             </Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
               <Skeleton />
             </Card.Subtitle>
             <Card.Text>
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
               <Skeleton />
             </Card.Text>
           </Card.Body>
