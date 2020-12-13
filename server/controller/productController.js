@@ -142,7 +142,7 @@ module.exports.listPagination = async (req, res) => {
   }
 };
 
-//? Rating
+//? Rating:
 module.exports.rate = async (req, res) => {
   const { productId } = req.params;
   const { star } = req.body;
@@ -204,6 +204,7 @@ module.exports.rate = async (req, res) => {
   }
 };
 
+//? Related products:
 module.exports.listRelated = async (req, res) => {
   const { productId } = req.params;
 
@@ -235,4 +236,33 @@ module.exports.listRelated = async (req, res) => {
   }
 };
 
-module.exports.searchWithFilters = async (req, res) => {};
+//? Search filters
+
+const querySearch = async (req, res, query) => {
+  try {
+    const products = await Product.find({
+      $text: { $search: query },
+    })
+      .populate("category", "_id name")
+      .populate("postedBy", "_id name")
+      .sort({ createdAt: -1 });
+
+    if (!products.length)
+      return res
+        .status(404)
+        .json({ errorMessage: "No product found for your query" });
+
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ errorMessage: err.message });
+  }
+};
+
+module.exports.searchWithFilters = async (req, res) => {
+  const { query } = req.body;
+
+  if (query) {
+    await querySearch(req, res, query);
+  }
+};
