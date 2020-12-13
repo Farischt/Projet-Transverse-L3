@@ -1,37 +1,59 @@
-import React, { useEffect, useState } from "react";
-import ReactGa from "react-ga";
-import Spinner from "react-bootstrap/Spinner";
-import SingleProduct from "./SingleProduct";
-import ProductCard from "../Home/components/ProductCard";
-import { readProduct, listRelated } from "../../api/product";
-import { CardColumns } from "react-bootstrap";
+import React, { useEffect, useState, useCallback } from "react"
+import ReactGa from "react-ga"
+import Spinner from "react-bootstrap/Spinner"
+import SingleProduct from "./SingleProduct"
+import ProductCard from "../Home/components/ProductCard"
+import { readProduct, listRelated } from "../../api/product"
+import { CardColumns } from "react-bootstrap"
 
 const ProductView = ({ match }) => {
-  const [product, setProduct] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [related, setRelated] = useState([]);
-  const { slug } = match.params;
+  const [product, setProduct] = useState({})
+  const [loading, setLoading] = useState(false)
+  const [related, setRelated] = useState([])
+  const { slug } = match.params
+
+  const getProduct = useCallback(() => {
+    setLoading(true)
+    readProduct(slug)
+      .then((response) => {
+        setProduct(response.data)
+        listRelated(response.data._id)
+          .then((response) => {
+            setRelated(response.data)
+            setLoading(false)
+          })
+          .catch((err) => {
+            setLoading(false)
+            console.log(err)
+          })
+      })
+      .catch((err) => {
+        setLoading(false)
+        console.log(err)
+      })
+  }, [slug])
 
   useEffect(() => {
-    const getProduct = async () => {
-      setLoading(true);
-      try {
-        const response = await readProduct(slug);
-        setProduct(response.data);
-        const relatedResponse = await listRelated(response.data._id);
-        setRelated(relatedResponse.data);
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-        setLoading(false);
-      }
-    };
-    getProduct();
-  }, [slug]);
+    getProduct()
+  }, [getProduct])
 
   useEffect(() => {
-    ReactGa.pageview(window.location.pathname + window.location.search);
-  });
+    ReactGa.pageview(window.location.pathname + window.location.search)
+  })
+
+  // const getProduct = async () => {
+  //   setLoading(true)
+  //   try {
+  //     const response = await readProduct(slug)
+  //     setProduct(response.data)
+  //     const relatedResponse = await listRelated(response.data._id)
+  //     setRelated(relatedResponse.data)
+  //     setLoading(false)
+  //   } catch (err) {
+  //     console.log(err)
+  //     setLoading(false)
+  //   }
+  // }
 
   return (
     <div className="container-fluid" style={{ minHeight: "90vh" }}>
@@ -62,7 +84,7 @@ const ProductView = ({ match }) => {
                 </div>
                 <CardColumns className="p-2">
                   {related.map((element) => {
-                    return <ProductCard key={element._id} product={element} />;
+                    return <ProductCard key={element._id} product={element} />
                   })}
                 </CardColumns>
               </>
@@ -76,7 +98,7 @@ const ProductView = ({ match }) => {
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ProductView;
+export default ProductView
