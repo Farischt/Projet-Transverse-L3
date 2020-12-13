@@ -1,11 +1,11 @@
 // Dependencies
-const router = require("express").Router();
+const router = require("express").Router()
 // Middlewares
 const {
   verifyConnection,
   verifyAuth,
   verifyAdmin,
-} = require("../middlewares/auth");
+} = require("../middlewares/auth")
 // Controllers
 const {
   register,
@@ -13,19 +13,19 @@ const {
   logout,
   currentUser,
   updatePassword,
-} = require("../controller/authController");
+} = require("../controller/authController")
 
 // Register route that create a user in DB
-router.post("/register", register);
+router.post("/register", register)
 // Login route that connect the user
-router.post("/login", verifyConnection, login);
+router.post("/login", verifyConnection, login)
 // Logout route
-router.get("/logout", verifyAuth, logout);
+router.get("/logout", verifyAuth, logout)
 // Current user route
-router.get("/me", verifyAuth, currentUser);
+router.get("/me", verifyAuth, currentUser)
 // Current admin route
-router.get("/admin", verifyAuth, verifyAdmin, currentUser);
+router.get("/admin", verifyAuth, verifyAdmin, currentUser)
 // Update password route
-router.put("/password", verifyAuth, updatePassword);
+router.put("/password", verifyAuth, updatePassword)
 
-module.exports = router;
+module.exports = router
