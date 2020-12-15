@@ -69,7 +69,8 @@ const SingleProduct = ({ product }) => {
               <StarRatings
                 name={_id}
                 rating={
-                  product && ratings && ratings.length > 0 && averageRate()
+                  (product && ratings && ratings.length > 0 && averageRate()) ||
+                  0
                 }
                 starRatedColor="gold"
                 numberOfStars={5}
