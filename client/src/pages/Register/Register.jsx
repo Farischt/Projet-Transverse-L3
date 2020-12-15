@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import ReactGa from "react-ga";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import React, { useState, useEffect } from "react"
+import ReactGa from "react-ga"
+import { useSelector } from "react-redux"
+import { toast } from "react-toastify"
 
-import axios from "axios";
+import axios from "axios"
 
-import "../../css/Register.css";
+import "../../css/Register.css"
 
 const Register = ({ history }) => {
   const [userInfo, setUserInfo] = useState({
@@ -13,39 +13,39 @@ const Register = ({ history }) => {
     email: "",
     password: "",
     repeatedPassword: "",
-  });
+  })
 
-  let { user } = useSelector((state) => ({ ...state }));
-
-  useEffect(() => {
-    ReactGa.pageview(window.location.pathname);
-  }, []);
+  let { user } = useSelector((state) => ({ ...state }))
 
   useEffect(() => {
-    if (user.isLoggedIn) history.push("/");
-  }, [user, history]);
+    ReactGa.pageview(window.location.pathname)
+  }, [])
+
+  useEffect(() => {
+    if (user.isLoggedIn) history.push("/")
+  }, [user, history])
 
   const handleInputChange = (event) => {
     const user = {
       ...userInfo,
       [event.target.name]: event.target.value,
-    };
-    setUserInfo(() => user);
-  };
+    }
+    setUserInfo(() => user)
+  }
 
   const handleRegister = async () => {
     try {
-      await axios.post("/api/user/register", userInfo);
-      toast.dark(" Votre inscription est enrigistré !");
+      await axios.post("/api/user/register", userInfo)
+      toast.dark(" Votre inscription est enrigistré !")
       ReactGa.event({
         category: "User",
         action: "User created an account",
-      });
-      history.push("/");
+      })
+      history.push("/")
     } catch (err) {
-      toast.error(" Votre inscription n'a pas été enrigistré !");
+      toast.error(" Votre inscription n'a pas été enrigistré !")
     }
-  };
+  }
 
   return (
     user &&
@@ -93,7 +93,7 @@ const Register = ({ history }) => {
         />
         <button
           onClick={handleRegister}
-          className="btn btn-lg btn-dark btn-block"
+          className="btn btn-lg btn-main btn-block"
           type="submit"
           style={{ borderRadius: "25px" }}
         >
@@ -104,7 +104,7 @@ const Register = ({ history }) => {
         </p>
       </div>
     )
-  );
-};
+  )
+}
 
-export default Register;
+export default Register
