@@ -1,35 +1,43 @@
-import React, { useState } from "react"
-import Spinner from "react-bootstrap/Spinner"
+import React from "react"
+import { SearchOutlined } from "@ant-design/icons"
+import { useHistory } from "react-router-dom"
 import { connect } from "react-redux"
 import { searchWithQuery } from "../redux"
 
 const SearchBar = ({ searchData, searchWithQuery }) => {
-  const [query, setQuery] = useState("")
+  let history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    searchWithQuery(query)
+    searchWithQuery(searchData.query, "keyword")
+    if (history.location.pathname !== "/shop") {
+      history.push(`/shop?${searchData.query}&&type=${searchData.type}`)
+    }
   }
 
   const handleInputChange = (e) => {
-    setQuery(e.target.value)
+    setTimeout(() => {
+      searchWithQuery(e.target.value, "keyword")
+    }, 1500)
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form-inline mt-2 mt-md-0">
-      {searchData && searchData.loading ? (
-        <Spinner animation="border" variant="info" />
-      ) : searchData.error ? (
-        <h1> {searchData.error} </h1>
-      ) : (
+    <form onSubmit={handleSubmit} className=" form-inline mt-2 mt-md-0 mr-2">
+      {searchData && (
         <input
           onChange={handleInputChange}
           className="form-control my-2 mr-sm-2"
           type="text"
           name="text"
-          placeholder="Recherche"
+          placeholder="Recherche..."
+          defaultValue={searchData.type === "keyword" ? searchData.query : ""}
+          style={{ maxWidth: "10rem" }}
         />
       )}
+      <button type="submit" className="btn btn-outline-info my-2 my-sm-0 ml-1">
+        {" "}
+        <SearchOutlined />{" "}
+      </button>
     </form>
   )
 }
@@ -42,7 +50,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    searchWithQuery: (keyword) => dispatch(searchWithQuery(keyword)),
+    searchWithQuery: (keyword, type) =>
+      dispatch(searchWithQuery(keyword, type)),
   }
 }
 
