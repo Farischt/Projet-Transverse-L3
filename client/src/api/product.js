@@ -49,8 +49,9 @@ export const listRelated = async (productId) => {
   )
 }
 
-export const searchQuery = async (query) => {
+export const searchQuery = async (query, type) => {
   return await axios.post(`${process.env.REACT_APP_API_URL}/search/filters`, {
     query,
+    type,
   })
 }
