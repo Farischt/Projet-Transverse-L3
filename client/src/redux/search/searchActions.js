@@ -1,21 +1,22 @@
 import { SEARCH_REQUEST, SEARCH_SUCCESS, SEARCH_FAILURE } from "./searchTypes"
 
-export const searchRequest = () => {
+export const searchRequest = (query, type) => {
   return {
     type: SEARCH_REQUEST,
+    payload: { query, type },
   }
 }
 
-export const searchSuccess = (products) => {
+export const searchSuccess = (products, query, type) => {
   return {
     type: SEARCH_SUCCESS,
-    payload: products,
+    payload: { products, query, type },
   }
 }
 
-export const searchFailure = (error) => {
+export const searchFailure = (error, query, type) => {
   return {
     type: SEARCH_FAILURE,
-    payload: error,
+    payload: { error, query, type },
   }
 }
