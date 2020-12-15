@@ -1,7 +1,6 @@
-import React from "react";
-
-import CategoryList from "./CategoryList";
-import CategoryCreate from "./CategoryCreate";
+import React from "react"
+import CategoryList from "./CategoryList"
+import CategoryCreate from "./CategoryCreate"
 
 const CategoryContainer = () => {
   return (
@@ -10,7 +9,7 @@ const CategoryContainer = () => {
       <hr />
       <CategoryList />
     </div>
-  );
-};
+  )
+}
 
-export default CategoryContainer;
+export default CategoryContainer
