@@ -19,7 +19,7 @@ const ProductButtons = ({ product }) => {
         <HeartOutlined /> <br /> Save
       </Button>
       <Button
-        variant="outline-warning"
+        variant="outline-golden"
         className="m-3 rounded float-right"
         onClick={() => setModalShow(true)}
       >
