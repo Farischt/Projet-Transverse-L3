@@ -1,9 +1,9 @@
-import React from "react";
-import { SlackOutlined } from "@ant-design/icons";
+import React from "react"
+import { SlackOutlined } from "@ant-design/icons"
 
 const Footer = () => {
   return (
-    <footer className="footer p-5 bg-dark">
+    <footer className="footer p-5 bg-main">
       <div className="row">
         <div className="col-12 col-md">
           <h5 className="text-white"> Created by Faris Chtatou </h5>
@@ -50,7 +50,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
