@@ -8,6 +8,7 @@ import {
   SettingOutlined,
   HomeTwoTone,
   ShoppingTwoTone,
+  ShoppingCartOutlined,
 } from "@ant-design/icons"
 
 import Login from "./Login"
@@ -20,46 +21,43 @@ const NavBar = () => {
   }))
 
   return (
-    <Navbar static="top" collapseOnSelect expand="xl" bg="dark" variant="dark">
+    <Navbar static="top" collapseOnSelect expand="xl" bg="main" variant="dark">
       <Navbar.Brand className="text-white">Formations & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           <Link to="/" className="nav-link">
-            <HomeTwoTone twoToneColor="#17a2b7" />
+            <HomeTwoTone twoToneColor="#17a2b7" /> <br />
           </Link>
-          <Link to="/efzfez" className="nav-link">
+          <Link to="/shop" className="nav-link">
             <ShoppingTwoTone twoToneColor="#17a2b7" />
           </Link>
-        </Nav>
-        <SearchBar />
-
-        {user && !user.isLoggedIn && !user.loading && <Login />}
-        {user && user.isLoggedIn && user.user.userRole === "admin" && (
-          <Link to="/admin/dashboard" className="m-2">
-            <button className="btn btn-outline-info my-2 my-sm-0">
-              <SettingOutlined />
-            </button>
+          <Link to="/cart" className="nav-link">
+            <ShoppingCartOutlined style={{ color: "#17a2b7" }} />
           </Link>
-        )}
-        {user && user.isLoggedIn && (
-          <>
-            <Link to="/user/dashboard" className="m-2">
-              <button className="btn btn-outline-info my-2 my-sm-0">
-                <UserOutlined />
-              </button>
+          {user && user.isLoggedIn && user.user.userRole === "admin" && (
+            <Link to="/admin/dashboard" className="nav-link">
+              <SettingOutlined style={{ color: "#17a2b7" }} />
             </Link>
-
-            <Link to="/" className="m-2">
-              <Logout />
-            </Link>
-          </>
-        )}
+          )}
+          {user && user.isLoggedIn && (
+            <>
+              <Link to="/user/dashboard" className="nav-link">
+                <UserOutlined style={{ color: "#17a2b7" }} />
+              </Link>
+              <Link to="/" className="nav-link">
+                <Logout />
+              </Link>
+            </>
+          )}
+        </Nav>
+        {user && !user.isLoggedIn && !user.loading && <Login />}
         {user && user.loading && (
           <div className="text-center">
             <Spinner animation="border" variant="info" />
           </div>
         )}
+        <SearchBar />
       </Navbar.Collapse>
     </Navbar>
   )
