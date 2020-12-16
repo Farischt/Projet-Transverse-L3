@@ -1,11 +1,12 @@
-import React from "react";
-import Card from "react-bootstrap/Card";
-import Skeleton from "react-loading-skeleton";
-import Spinner from "react-bootstrap/Spinner";
+import React from "react"
+import Card from "react-bootstrap/Card"
+import Skeleton from "react-loading-skeleton"
+import Spinner from "react-bootstrap/Spinner"
+import StarRatings from "react-star-ratings"
 
 const ProductLoading = ({ count }) => {
   const productLoadingCard = () => {
-    let totalProductCards = [];
+    let totalProductCards = []
     for (let i = 0; i < count; i++) {
       totalProductCards.push(
         <Card key={i}>
@@ -27,20 +28,31 @@ const ProductLoading = ({ count }) => {
             </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <button className="btn btn-outline-danger m-2 my-sm-0 float-right">
-              <Spinner animation="border" variant="danger" />
-            </button>
-            <button className="btn btn-outline-info m-2 my-sm-0">
-              <Spinner animation="border" variant="info" />
-            </button>
+            <div>
+              <button className="btn btn-outline-danger m-2 my-sm-0 float-right">
+                <Spinner animation="border" variant="danger" />
+              </button>
+            </div>
+            <StarRatings
+              rating={0}
+              starRatedColor="gold"
+              numberOfStars={5}
+              starDimension="25px"
+              starSpacing="5px"
+            />{" "}
+            <div>
+              <button className="btn btn-outline-info m-2 my-sm-0">
+                <Spinner animation="border" variant="info" />
+              </button>
+            </div>
           </Card.Footer>
         </Card>
-      );
+      )
     }
-    return totalProductCards;
-  };
+    return totalProductCards
+  }
 
-  return productLoadingCard();
-};
+  return productLoadingCard()
+}
 
-export default ProductLoading;
+export default ProductLoading
