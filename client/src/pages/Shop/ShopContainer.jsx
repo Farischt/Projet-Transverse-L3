@@ -30,7 +30,7 @@ const ShopContainer = ({ searchData }) => {
   return (
     <div className="container-fluid">
       <div className="row" style={{ minHeight: "100vh" }}>
-        <div className="col-md-2 p-3 bg-second">
+        <div className="col-md-2 p-3 bg-main">
           <h6 className="text-white"> Menu de recherche </h6>
           <hr />
           <SideBar />{" "}
