@@ -3,7 +3,6 @@ import ReactGa from "react-ga"
 import { connect } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { loginUser } from "../redux"
-import Form from "react-bootstrap/Form"
 import FormControl from "react-bootstrap/FormControl"
 import Button from "react-bootstrap/Button"
 
@@ -23,7 +22,8 @@ const Login = ({ userData, loginUser }) => {
     setUser(() => userInfo)
   }
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault()
     loginUser(user)
     ReactGa.event({
       category: "User",
@@ -32,7 +32,7 @@ const Login = ({ userData, loginUser }) => {
   }
 
   return (
-    <Form inline onSubmit={handleLogin}>
+    <form className="form-inline" onSubmit={handleLogin}>
       <FormControl
         onChange={handleInputChange}
         type="email"
@@ -55,7 +55,7 @@ const Login = ({ userData, loginUser }) => {
       <Button variant="outline-info" onClick={() => history.push("/register")}>
         S'inscrire
       </Button>
-    </Form>
+    </form>
     // <div className="form-inline mt-2 mt-md-0">
     //   {/* <div className="form-inline"> */}
     //   <input
