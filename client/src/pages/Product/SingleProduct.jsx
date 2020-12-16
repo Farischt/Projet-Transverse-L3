@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import ProductListDetails from "./ProductListDetails"
 import ProductButtons from "./ProductButtons"
 import Card from "react-bootstrap/Card"
@@ -8,7 +8,7 @@ import StarRatings from "react-star-ratings"
 
 const SingleProduct = ({ product }) => {
   const { _id, name, description, price, images, category, ratings } = product
-  const [average, setAverage] = useState(0)
+  // const [average, setAverage] = useState(0)
 
   // useEffect(() => {
   //   if (product && ratings && ratings.length > 0) {
