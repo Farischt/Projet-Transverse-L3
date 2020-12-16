@@ -1,34 +1,40 @@
-import React from "react";
-import ReactGa from "react-ga";
-import { connect } from "react-redux";
-import { logoutUser } from "../redux";
+import React from "react"
+import ReactGa from "react-ga"
+import { connect } from "react-redux"
+import { logoutUser } from "../redux"
+import { PoweroffOutlined } from "@ant-design/icons"
 
 const Logout = ({ logoutUser }) => {
   const handleLogout = () => {
-    logoutUser();
+    logoutUser()
     ReactGa.event({
       category: "User",
       action: "User logged-out",
-    });
-  };
+    })
+  }
 
   return (
-    <button onClick={handleLogout} className="btn btn-danger my-2 my-sm-0">
-      Déconnexion
-    </button>
-  );
-};
+    <div
+      onClick={handleLogout}
+      className="nav-link text-center text-danger"
+      style={{ cursor: "pointer" }}
+    >
+      <PoweroffOutlined /> <br />
+      Off
+    </div>
+  )
+}
 
 const mapStateToProps = (state) => {
   return {
     userData: state.user,
-  };
-};
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logoutUser: () => dispatch(logoutUser()),
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Logout);
+export default connect(mapStateToProps, mapDispatchToProps)(Logout)
