@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 
 const AdminNav = ({ url }) => {
   return (
-    <nav className="bg-dark rounded-bottom">
+    <nav className="p-3 rounded-bottom">
       <ul className="nav flex-column">
         <li className="nav-items">
           <Link to={`${url}`} className="nav-link text-info ">
@@ -22,7 +22,7 @@ const AdminNav = ({ url }) => {
         </li>
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default AdminNav;
+export default AdminNav
