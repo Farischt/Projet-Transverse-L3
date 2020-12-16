@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { Navbar, Nav } from "react-bootstrap"
@@ -6,8 +6,8 @@ import Spinner from "react-bootstrap/Spinner"
 import {
   UserOutlined,
   SettingOutlined,
-  HomeTwoTone,
-  ShoppingTwoTone,
+  HomeOutlined,
+  ShoppingOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons"
 
@@ -20,30 +20,46 @@ const NavBar = () => {
     ...state,
   }))
 
+  // const [state, setState] = useState({
+  //   active: true,
+  //   style: "bg-primary rounded",
+  // })
+
   return (
     <Navbar static="top" collapseOnSelect expand="xl" bg="main" variant="dark">
       <Navbar.Brand className="text-white">Formations & Logiciels</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Link to="/" className="nav-link">
-            <HomeTwoTone twoToneColor="#17a2b7" /> <br />
+          <Link to="/" className="nav-link  text-center text-info ">
+            <HomeOutlined /> <br />
+            Home
           </Link>
-          <Link to="/shop" className="nav-link">
-            <ShoppingTwoTone twoToneColor="#17a2b7" />
+          <Link to="/shop" className="nav-link text-center text-info">
+            <ShoppingOutlined />
+            <br />
+            Shop
           </Link>
-          <Link to="/cart" className="nav-link">
-            <ShoppingCartOutlined style={{ color: "#17a2b7" }} />
+          <Link to="/cart" className="nav-link text-center text-info">
+            <ShoppingCartOutlined />
+            <br />
+            Cart
           </Link>
           {user && user.isLoggedIn && user.user.userRole === "admin" && (
-            <Link to="/admin/dashboard" className="nav-link">
-              <SettingOutlined style={{ color: "#17a2b7" }} />
+            <Link
+              to="/admin/dashboard"
+              className="nav-link text-center text-info"
+            >
+              <SettingOutlined /> <br /> Admin
             </Link>
           )}
           {user && user.isLoggedIn && (
             <>
-              <Link to="/user/dashboard" className="nav-link">
-                <UserOutlined style={{ color: "#17a2b7" }} />
+              <Link
+                to="/user/dashboard"
+                className="nav-link text-center text-info"
+              >
+                <UserOutlined /> <br /> Profil
               </Link>
               <Link to="/" className="nav-link">
                 <Logout />
@@ -51,13 +67,13 @@ const NavBar = () => {
             </>
           )}
         </Nav>
+        <SearchBar />
         {user && !user.isLoggedIn && !user.loading && <Login />}
         {user && user.loading && (
           <div className="text-center">
             <Spinner animation="border" variant="info" />
           </div>
         )}
-        <SearchBar />
       </Navbar.Collapse>
     </Navbar>
   )
