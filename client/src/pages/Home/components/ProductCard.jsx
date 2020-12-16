@@ -1,34 +1,53 @@
-import React, { useState, useEffect } from "react";
-import Card from "react-bootstrap/Card";
-import Badge from "react-bootstrap/Badge";
-import StarRatings from "react-star-ratings";
-import { Link } from "react-router-dom";
-import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react"
+import Card from "react-bootstrap/Card"
+import Badge from "react-bootstrap/Badge"
+import StarRatings from "react-star-ratings"
+import { Link } from "react-router-dom"
+import _ from "lodash"
+import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons"
 
 const ProductCard = ({ product }) => {
-  const [average, setAverage] = useState(0);
-  const [newP, setNewP] = useState(false);
+  const [average, setAverage] = useState(0)
+  const [newP, setNewP] = useState(false)
 
   useEffect(() => {
     if (product && product.ratings && product.ratings.length > 0) {
-      let sum = 0;
+      let sum = 0
       for (let i = 0; i < product.ratings.length; i++) {
-        sum += product.ratings[i].star;
+        sum += product.ratings[i].star
       }
-      setAverage(sum / product.ratings.length);
+      setAverage(sum / product.ratings.length)
     }
-  }, [product, product.ratings]);
+  }, [product, product.ratings])
 
   useEffect(() => {
     if (product && product.createdAt) {
-      const today = new Date(Date.now());
-      const createdAt = new Date(product.createdAt);
-      const timeElapsed = today.getMonth() - createdAt.getMonth();
+      const today = new Date(Date.now())
+      const createdAt = new Date(product.createdAt)
+      const timeElapsed = today.getMonth() - createdAt.getMonth()
       if (timeElapsed === 0) {
-        setNewP(true);
+        setNewP(true)
       }
     }
-  }, [product]);
+  }, [product])
+
+  const handleAddToCart = () => {
+    let cart = []
+    if (window) {
+      // if cart is available in local storage
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"))
+      }
+      cart.push({
+        ...product,
+        quantity: 1,
+      })
+      let unique = _.uniqWith(cart, _.isEqual)
+      console.log(unique)
+
+      localStorage.setItem("cart", JSON.stringify(unique))
+    }
+  }
 
   return (
     <Card key={product._id}>
@@ -58,7 +77,10 @@ const ProductCard = ({ product }) => {
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-        <button className="btn btn-outline-danger m-2 my-sm-0 float-right">
+        <button
+          className="btn btn-outline-danger m-2 my-sm-0 float-right"
+          onClick={handleAddToCart}
+        >
           {" "}
           <ShoppingCartOutlined />{" "}
         </button>{" "}
@@ -77,7 +99,7 @@ const ProductCard = ({ product }) => {
         </Link>
       </Card.Footer>
     </Card>
-  );
-};
+  )
+}
 
-export default ProductCard;
+export default ProductCard
