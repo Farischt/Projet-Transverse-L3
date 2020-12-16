@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 // import { toast } from "react-toastify";
-import Spinner from "react-bootstrap/Spinner";
+import Spinner from "react-bootstrap/Spinner"
 
 const ProductUpdateForm = ({ product }) => {
   const initialState = {
@@ -10,16 +10,17 @@ const ProductUpdateForm = ({ product }) => {
     quantity: product.quantity,
     category: product.category.name,
     images: product.images,
-  };
+  }
 
-  const [newProduct, setNewProduct] = useState(initialState);
-  const [loading, setLoading] = useState(false);
+  const [newProduct, setNewProduct] = useState(initialState)
+  // eslint-disable-next-line
+  const [loading, setLoading] = useState(false)
 
-  const { name, description, price, quantity } = newProduct;
+  const { name, description, price, quantity } = newProduct
 
   const handleChange = (e) => {
-    setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
-  };
+    setNewProduct({ ...newProduct, [e.target.name]: e.target.value })
+  }
 
   return (
     <>
@@ -73,7 +74,7 @@ const ProductUpdateForm = ({ product }) => {
         </button>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ProductUpdateForm;
+export default ProductUpdateForm
