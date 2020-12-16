@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react"
+import { connect } from "react-redux"
+import { updateCart } from "../../../redux"
 import Card from "react-bootstrap/Card"
 import Badge from "react-bootstrap/Badge"
 import StarRatings from "react-star-ratings"
+import { Tooltip } from "antd"
 import { Link } from "react-router-dom"
 import _ from "lodash"
 import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons"
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, updateCart, cartData }) => {
   const [average, setAverage] = useState(0)
-  const [newP, setNewP] = useState(false)
+  const [isNew, setisNew] = useState(false)
+  const [toolTip, setToolTip] = useState("Ajouter au panier")
 
+  // Setting average rating
   useEffect(() => {
     if (product && product.ratings && product.ratings.length > 0) {
       let sum = 0
@@ -20,16 +25,25 @@ const ProductCard = ({ product }) => {
     }
   }, [product, product.ratings])
 
+  // Check if the product is new or not
   useEffect(() => {
     if (product && product.createdAt) {
       const today = new Date(Date.now())
       const createdAt = new Date(product.createdAt)
       const timeElapsed = today.getMonth() - createdAt.getMonth()
       if (timeElapsed === 0) {
-        setNewP(true)
+        setisNew(true)
       }
     }
   }, [product])
+
+  // Check if the product is already in cart or not
+  useEffect(() => {
+    const checkInCart = cartData.find((element) => element._id === product._id)
+    if (checkInCart) {
+      setToolTip("Déjà dans votre panier")
+    }
+  }, [cartData, product._id])
 
   const handleAddToCart = () => {
     let cart = []
@@ -43,10 +57,9 @@ const ProductCard = ({ product }) => {
         quantity: 1,
       })
       let unique = _.uniqWith(cart, _.isEqual)
-      console.log(unique)
-
       localStorage.setItem("cart", JSON.stringify(unique))
     }
+    updateCart(cart)
   }
 
   return (
@@ -63,7 +76,7 @@ const ProductCard = ({ product }) => {
       <Card.Body>
         <Card.Title>
           {product.name}{" "}
-          {newP && (
+          {isNew && (
             <Badge variant="danger" className="mx-1">
               New
             </Badge>
@@ -77,13 +90,15 @@ const ProductCard = ({ product }) => {
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-        <button
-          className="btn btn-outline-danger m-2 my-sm-0 float-right"
-          onClick={handleAddToCart}
-        >
-          {" "}
-          <ShoppingCartOutlined />{" "}
-        </button>{" "}
+        <Tooltip placement="top" title={toolTip}>
+          <button
+            className="btn btn-outline-danger m-2 my-sm-0 float-right"
+            onClick={handleAddToCart}
+          >
+            {" "}
+            <ShoppingCartOutlined />{" "}
+          </button>{" "}
+        </Tooltip>
         <StarRatings
           name={product._id}
           rating={average}
@@ -102,4 +117,16 @@ const ProductCard = ({ product }) => {
   )
 }
 
-export default ProductCard
+const mapStateToProps = (state) => {
+  return {
+    cartData: state.cart,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCart: (newCart) => dispatch(updateCart(newCart)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductCard)

@@ -1,20 +1,56 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import { connect } from "react-redux"
+import { updateCart } from "../../redux"
 import RatingModal from "./RatingModal"
 import Button from "react-bootstrap/Button"
+import { Tooltip } from "antd"
 import {
   ShoppingCartOutlined,
   HeartOutlined,
   StarOutlined,
 } from "@ant-design/icons"
+import _ from "lodash"
 
-const ProductButtons = ({ product }) => {
+const ProductButtons = ({ product, updateCart, cartData }) => {
   const [modalShow, setModalShow] = useState(false)
+  const [toolTip, setToolTip] = useState("Ajouter au panier")
+
+  useEffect(() => {
+    const checkInCart = cartData.find((element) => element._id === product._id)
+    if (checkInCart) {
+      setToolTip("Déjà dans votre panier")
+    }
+  }, [cartData, product._id])
+
+  const handleAddToCart = () => {
+    let cart = []
+    if (window) {
+      // if cart is available in local storage
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"))
+      }
+      cart.push({
+        ...product,
+        quantity: 1,
+      })
+      let unique = _.uniqWith(cart, _.isEqual)
+      localStorage.setItem("cart", JSON.stringify(unique))
+    }
+    updateCart(cart)
+  }
 
   return (
     <div className="text-center">
-      <Button variant="outline-info" className="m-3 rounded float-left">
-        <ShoppingCartOutlined /> <br /> Panier
-      </Button>
+      <Tooltip placement="bottom" title={toolTip}>
+        <Button
+          variant="outline-info"
+          className="m-3 rounded float-left"
+          onClick={handleAddToCart}
+        >
+          {" "}
+          <ShoppingCartOutlined /> <br /> Panier
+        </Button>
+      </Tooltip>
       <Button variant="outline-danger" className="m-3 rounded ">
         <HeartOutlined /> <br /> Save
       </Button>
@@ -34,4 +70,16 @@ const ProductButtons = ({ product }) => {
   )
 }
 
-export default ProductButtons
+const mapStateToProps = (state) => {
+  return {
+    cartData: state.cart,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateCart: (newCart) => dispatch(updateCart(newCart)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductButtons)
