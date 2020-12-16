@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
+import { Link } from "react-router-dom"
 
 const UserNav = ({ url }) => {
   return (
-    <nav className="bg-dark rounded-bottom">
+    <nav className="p-3">
       <ul className="nav flex-column">
         <li className="nav-items">
           <Link to={url} className="nav-link text-info">
@@ -18,7 +18,7 @@ const UserNav = ({ url }) => {
         </li>
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default UserNav;
+export default UserNav
