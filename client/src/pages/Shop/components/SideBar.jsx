@@ -26,8 +26,8 @@ const SideBar = () => {
         <CategoryFilter />
       </SubMenu>
       <SubMenu key="sub4" title="Filtre par mot clef">
-        <div className="px-2 py-2">
-          <SearchBar />
+        <div className="px-3 py-1">
+          <SearchBar isButton={false} />
         </div>
       </SubMenu>
     </Menu>
