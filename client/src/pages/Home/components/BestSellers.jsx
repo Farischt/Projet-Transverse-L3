@@ -1,37 +1,65 @@
-import React, { useState, useEffect } from "react";
-import { listPagination, productsTotal } from "../../../api/product";
-import ProductCard from "./ProductCard";
-import ProductLoading from "./ProductLoading";
-import CardColumns from "react-bootstrap/CardColumns";
-import { Pagination } from "antd";
+import React, { useState, useEffect } from "react"
+import { listPagination, productsTotal } from "../../../api/product"
+import ProductCard from "./ProductCard"
+import ProductLoading from "./ProductLoading"
+import CardColumns from "react-bootstrap/CardColumns"
+import { Pagination } from "antd"
 
 const BestSellers = () => {
-  const [products, setProducts] = useState([]);
-  const [productsLoading, setProductsLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [countProducts, setCountProducts] = useState(1);
-  const sort = "sold";
-  const order = "desc";
-  const perPage = 3;
+  const [products, setProducts] = useState([])
+  const [productsLoading, setProductsLoading] = useState(false)
+  const [page, setPage] = useState(1)
+  const [countProducts, setCountProducts] = useState(1)
+  const sort = "sold"
+  const order = "desc"
+  const perPage = 3
+
+  // useEffect(() => {
+  //   productsTotal().then((res) => setCountProducts(res.data));
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     setProductsLoading(true);
+  //     try {
+  //       const response = await listPagination(sort, order, page);
+  //       setProducts(response.data);
+  //       setProductsLoading(false);
+  //     } catch (err) {
+  //       setProductsLoading(false);
+  //       console.log(err);
+  //     }
+  //   };
+  //   fetchProducts();
+  // }, [page]);
+  useEffect(() => {
+    let isSubscribed = true
+    productsTotal().then((res) => {
+      if (isSubscribed) setCountProducts(res.data)
+    })
+
+    return () => (isSubscribed = false)
+  }, [])
 
   useEffect(() => {
-    productsTotal().then((res) => setCountProducts(res.data));
-  }, []);
+    let isSubscribed = true
+    setProductsLoading(true)
+    listPagination(sort, order, page)
+      .then((response) => {
+        if (isSubscribed) {
+          setProducts(response.data)
+          setProductsLoading(false)
+        }
+      })
+      .catch((err) => {
+        if (isSubscribed) {
+          setProductsLoading(false)
+          console.log(err)
+        }
+      })
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setProductsLoading(true);
-      try {
-        const response = await listPagination(sort, order, page);
-        setProducts(response.data);
-        setProductsLoading(false);
-      } catch (err) {
-        setProductsLoading(false);
-        console.log(err);
-      }
-    };
-    fetchProducts();
-  }, [page]);
+    return () => (isSubscribed = false)
+  }, [page])
 
   return (
     <div className="container">
@@ -43,7 +71,7 @@ const BestSellers = () => {
           <ProductLoading count={perPage} />
         ) : products.length ? (
           products.map((product) => {
-            return <ProductCard key={product._id} product={product} />;
+            return <ProductCard key={product._id} product={product} />
           })
         ) : (
           <div className="text-center">
@@ -60,7 +88,7 @@ const BestSellers = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BestSellers;
+export default BestSellers

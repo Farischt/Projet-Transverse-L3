@@ -6,25 +6,44 @@ import Spinner from "react-bootstrap/Spinner"
 
 const CategoryFilter = ({ searchData, searchWithQuery }) => {
   const [categories, setCategories] = useState([])
-  const [categoriesLoading, setCategoriesLoading] = useState(false)
+  const [categoriesLoading, setCategoriesLoading] = useState(true)
 
-  const fetchCategories = async () => {
-    setCategoriesLoading(true)
-    try {
-      const response = await getCategories()
-      setCategories(response.data)
-      setCategoriesLoading(false)
-    } catch (err) {
-      setCategoriesLoading(false)
-      if (err.response.status === 400) {
-        setCategories([])
-      } else setCategoriesLoading(false)
-      console.log(err)
-    }
-  }
+  // const fetchCategories = async () => {
+  //   setCategoriesLoading(true)
+  //   try {
+  //     const response = await getCategories()
+  //     setCategories(response.data)
+  //     setCategoriesLoading(false)
+  //   } catch (err) {
+  //     setCategoriesLoading(false)
+  //     if (err.response.status === 400) {
+  //       setCategories([])
+  //     } else setCategoriesLoading(false)
+  //     console.log(err)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchCategories()
+  // }, [])
 
   useEffect(() => {
-    fetchCategories()
+    let isSubscribed = true
+    getCategories()
+      .then((response) => {
+        if (isSubscribed) {
+          setCategories(response.data)
+          setCategoriesLoading(false)
+        }
+      })
+      .catch((error) => {
+        if (isSubscribed) {
+          setCategoriesLoading(false)
+          console.log(error)
+        }
+      })
+
+    return () => (isSubscribed = false)
   }, [])
 
   const handleSelectChange = (e) => {
@@ -39,7 +58,7 @@ const CategoryFilter = ({ searchData, searchWithQuery }) => {
         categories &&
         categories.length > 0 && (
           <select
-            className="custom-select custom-select-sm"
+            className="custom-select custom-select-md"
             onChange={handleSelectChange}
             defaultValue={{ value: "default" }}
           >

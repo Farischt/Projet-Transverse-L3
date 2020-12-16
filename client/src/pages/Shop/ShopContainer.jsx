@@ -10,21 +10,41 @@ import SideBar from "./components/SideBar"
 
 const ShopContainer = ({ searchData }) => {
   const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     setLoading(true)
+  //     try {
+  //       const response = await listProducts()
+  //       setProducts(response.data)
+  //       setLoading(false)
+  //     } catch (err) {
+  //       setLoading(false)
+  //       console.log(err)
+  //     }
+  //   }
+  //   fetchProducts()
+  // }, [])
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true)
-      try {
-        const response = await listProducts()
-        setProducts(response.data)
-        setLoading(false)
-      } catch (err) {
-        setLoading(false)
-        console.log(err)
-      }
-    }
-    fetchProducts()
+    let isSubscribed = true
+
+    listProducts()
+      .then((response) => {
+        if (isSubscribed) {
+          setProducts(response.data)
+          setLoading(false)
+        }
+      })
+      .catch((err) => {
+        if (isSubscribed) {
+          setLoading(false)
+          console.log(err)
+        }
+      })
+
+    return () => (isSubscribed = false)
   }, [])
 
   return (
