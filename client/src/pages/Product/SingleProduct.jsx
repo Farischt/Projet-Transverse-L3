@@ -8,18 +8,6 @@ import StarRatings from "react-star-ratings"
 
 const SingleProduct = ({ product }) => {
   const { _id, name, description, price, images, category, ratings } = product
-  // const [average, setAverage] = useState(0)
-
-  // useEffect(() => {
-  //   if (product && ratings && ratings.length > 0) {
-  //     let sum = 0
-  //     for (let i = 0; i < ratings.length; i++) {
-  //       sum += ratings[i].star
-  //     }
-  //     setAverage(sum / ratings.length)
-  //   }
-
-  // }, [product, ratings])
 
   const averageRate = () => {
     if (product && ratings && ratings.length > 0) {
