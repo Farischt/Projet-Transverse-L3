@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { Navbar, Nav } from "react-bootstrap"
 import Spinner from "react-bootstrap/Spinner"
+import Badge from "react-bootstrap/Badge"
 import {
   UserOutlined,
   SettingOutlined,
@@ -16,14 +17,9 @@ import Logout from "./Logout"
 import SearchBar from "./SearchBar"
 
 const NavBar = () => {
-  let { user } = useSelector((state) => ({
+  let { user, cart } = useSelector((state) => ({
     ...state,
   }))
-
-  // const [state, setState] = useState({
-  //   active: true,
-  //   style: "bg-primary rounded",
-  // })
 
   return (
     <Navbar static="top" collapseOnSelect expand="xl" bg="main" variant="dark">
@@ -43,7 +39,10 @@ const NavBar = () => {
           <Link to="/cart" className="nav-link text-center text-info">
             <ShoppingCartOutlined />
             <br />
-            Cart
+            Cart{" "}
+            {cart && cart.length > 0 && (
+              <Badge variant="danger">{cart.length}</Badge>
+            )}
           </Link>
           {user && user.isLoggedIn && user.user.userRole === "admin" && (
             <Link
@@ -61,13 +60,12 @@ const NavBar = () => {
               >
                 <UserOutlined /> <br /> Profil
               </Link>
-              <Link to="/" className="nav-link">
-                <Logout />
-              </Link>
+
+              <Logout />
             </>
           )}
         </Nav>
-        <SearchBar />
+        <SearchBar isButton={true} />
         {user && !user.isLoggedIn && !user.loading && <Login />}
         {user && user.loading && (
           <div className="text-center">
