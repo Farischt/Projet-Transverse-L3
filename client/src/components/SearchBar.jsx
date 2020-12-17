@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom"
 import { connect } from "react-redux"
 import { searchWithQuery } from "../redux"
 
-const SearchBar = ({ searchData, searchWithQuery }) => {
+const SearchBar = ({ searchData, searchWithQuery, isButton }) => {
   let history = useHistory()
 
   const handleSubmit = (e) => {
@@ -34,10 +34,15 @@ const SearchBar = ({ searchData, searchWithQuery }) => {
           style={{ maxWidth: "10rem" }}
         />
       )}
-      <button type="submit" className="btn btn-outline-info my-2 my-sm-0 ml-1">
-        {" "}
-        <SearchOutlined />{" "}
-      </button>
+      {isButton && (
+        <button
+          type="submit"
+          className="btn btn-outline-info my-2 my-sm-0 ml-1"
+        >
+          {" "}
+          <SearchOutlined />{" "}
+        </button>
+      )}
     </form>
   )
 }
