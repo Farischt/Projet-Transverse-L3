@@ -358,7 +358,7 @@ const ratingSearch = (req, res, query) => {
     if (!products.length)
       return res
         .status(404)
-        .json({ errorMessage: "No product find for your query" })
+        .json({ errorMessage: "No product found for your query" })
 
     res.json(products)
   })
