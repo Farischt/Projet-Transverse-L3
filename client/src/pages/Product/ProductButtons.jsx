@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { updateCart } from "../../redux"
+import { addProductToCart } from "../../redux"
 import RatingModal from "./RatingModal"
 import Button from "react-bootstrap/Button"
 import { Tooltip } from "antd"
@@ -9,9 +9,8 @@ import {
   HeartOutlined,
   StarOutlined,
 } from "@ant-design/icons"
-import _ from "lodash"
 
-const ProductButtons = ({ product, updateCart, cartData }) => {
+const ProductButtons = ({ product, addProductToCart, cartData }) => {
   const [modalShow, setModalShow] = useState(false)
   const [toolTip, setToolTip] = useState("Ajouter au panier")
 
@@ -23,20 +22,7 @@ const ProductButtons = ({ product, updateCart, cartData }) => {
   }, [cartData, product._id])
 
   const handleAddToCart = () => {
-    let cart = []
-    if (window) {
-      // if cart is available in local storage
-      if (localStorage.getItem("cart")) {
-        cart = JSON.parse(localStorage.getItem("cart"))
-      }
-      cart.push({
-        ...product,
-        quantity: 1,
-      })
-      let unique = _.uniqWith(cart, _.isEqual)
-      localStorage.setItem("cart", JSON.stringify(unique))
-    }
-    updateCart(cart)
+    addProductToCart(product)
   }
 
   return (
@@ -78,7 +64,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateCart: (newCart) => dispatch(updateCart(newCart)),
+    addProductToCart: (product) => dispatch(addProductToCart(product)),
   }
 }
 
