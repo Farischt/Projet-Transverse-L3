@@ -11,9 +11,9 @@ const rootReducer = combineReducers({
 
 export * from "./user/userActions"
 export * from "./user/actions"
-export * from "./search/searchActions"
+//export * from "./search/searchActions"
 export * from "./search/actions"
-export * from "./cart/cartActions"
+//export * from "./cart/cartActions"
 export * from "./cart/actions"
 
 export default rootReducer
