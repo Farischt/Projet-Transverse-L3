@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
+import ReactGa from "react-ga"
 import { searchWithQuery } from "../../redux"
 import { listProducts } from "../../api/product"
 import CardColumns from "react-bootstrap/CardColumns"
@@ -12,24 +13,12 @@ const ShopContainer = ({ searchData }) => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
 
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     setLoading(true)
-  //     try {
-  //       const response = await listProducts()
-  //       setProducts(response.data)
-  //       setLoading(false)
-  //     } catch (err) {
-  //       setLoading(false)
-  //       console.log(err)
-  //     }
-  //   }
-  //   fetchProducts()
-  // }, [])
+  useEffect(() => {
+    ReactGa.pageview(window.location.pathname)
+  }, [])
 
   useEffect(() => {
     let isSubscribed = true
-
     listProducts()
       .then((response) => {
         if (isSubscribed) {
