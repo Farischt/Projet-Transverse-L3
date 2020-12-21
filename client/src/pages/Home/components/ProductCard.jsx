@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { updateCart } from "../../../redux"
+import { addProductToCart } from "../../../redux"
+import { Link } from "react-router-dom"
 import Card from "react-bootstrap/Card"
 import Badge from "react-bootstrap/Badge"
 import StarRatings from "react-star-ratings"
 import { Tooltip } from "antd"
-import { Link } from "react-router-dom"
-import _ from "lodash"
 import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons"
 
-const ProductCard = ({ product, updateCart, cartData }) => {
+const ProductCard = ({ product, addProductToCart, cartData }) => {
   const [average, setAverage] = useState(0)
   const [isNew, setisNew] = useState(false)
   const [toolTip, setToolTip] = useState("Ajouter au panier")
@@ -46,20 +45,7 @@ const ProductCard = ({ product, updateCart, cartData }) => {
   }, [cartData, product._id])
 
   const handleAddToCart = () => {
-    let cart = []
-    if (window) {
-      // if cart is available in local storage
-      if (localStorage.getItem("cart")) {
-        cart = JSON.parse(localStorage.getItem("cart"))
-      }
-      cart.push({
-        ...product,
-        quantity: 1,
-      })
-      let unique = _.uniqWith(cart, _.isEqual)
-      localStorage.setItem("cart", JSON.stringify(unique))
-    }
-    updateCart(cart)
+    addProductToCart(product)
   }
 
   return (
@@ -90,15 +76,6 @@ const ProductCard = ({ product, updateCart, cartData }) => {
         </Card.Text>
       </Card.Body>
       <Card.Footer>
-        <Tooltip placement="top" title={toolTip}>
-          <button
-            className="btn btn-outline-danger m-2 my-sm-0 float-right"
-            onClick={handleAddToCart}
-          >
-            {" "}
-            <ShoppingCartOutlined />{" "}
-          </button>{" "}
-        </Tooltip>
         <StarRatings
           name={product._id}
           rating={average}
@@ -112,6 +89,15 @@ const ProductCard = ({ product, updateCart, cartData }) => {
             <EyeOutlined />
           </button>
         </Link>
+        <Tooltip placement="top" title={toolTip}>
+          <button
+            className="btn btn-outline-danger m-2 my-sm-0 float-right"
+            onClick={handleAddToCart}
+          >
+            {" "}
+            <ShoppingCartOutlined />{" "}
+          </button>{" "}
+        </Tooltip>
       </Card.Footer>
     </Card>
   )
@@ -125,7 +111,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateCart: (newCart) => dispatch(updateCart(newCart)),
+    addProductToCart: (product) => dispatch(addProductToCart(product)),
   }
 }
 
