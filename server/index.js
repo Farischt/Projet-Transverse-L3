@@ -32,6 +32,6 @@ app.use("/api/user", authRoute)
 app.use("/api", categoryRoute)
 app.use("/api", productRoute)
 app.use("/api/", cloudinaryRoute)
-app.use("/api/usercart/", userRoute)
+app.use("/api/user-action", userRoute)
 
 app.listen(process.env.PORT || 3080, () => console.log("Server up and running"))
