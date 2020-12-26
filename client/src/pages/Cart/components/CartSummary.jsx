@@ -25,11 +25,11 @@ const CartSummary = ({ userData, cartData }) => {
   const handleCheckout = async () => {
     setLoading(true)
     try {
-      const response = userCart(cartData)
+      const response = await userCart(cartData)
+      setLoading(false)
       if (response.data.ok) {
         history.push("/checkout")
       }
-      setLoading(false)
     } catch (err) {
       console.log(err)
       setLoading(false)
