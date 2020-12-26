@@ -47,7 +47,7 @@ module.exports.userCart = async (req, res) => {
       orderedBy: req.session.userId,
     }).save()
 
-    res.json(newCart)
+    res.json({ ok: true })
   } catch (err) {
     return res.status(500).json({ errorMessage: err.message })
   }
