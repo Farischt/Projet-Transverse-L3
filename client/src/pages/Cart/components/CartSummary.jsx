@@ -1,8 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 import { connect } from "react-redux"
+import { useHistory } from "react-router-dom"
 import { addProductToCart } from "../../../redux"
+import { userCart } from "../../../api/user"
 
 const CartSummary = ({ userData, cartData }) => {
+  let history = useHistory()
+
+  const [loading, setLoading] = useState(false)
+
   const cartTotal = () => {
     let total = 0
     if (cartData && cartData.length > 0) {
@@ -16,12 +22,27 @@ const CartSummary = ({ userData, cartData }) => {
     }).format(total)
   }
 
+  const handleCheckout = async () => {
+    setLoading(true)
+    try {
+      const response = userCart(cartData)
+      if (response.data.ok) {
+        history.push("/checkout")
+      }
+      setLoading(false)
+    } catch (err) {
+      console.log(err)
+      setLoading(false)
+    }
+  }
+
   const checkOutButton = () => {
     return userData && userData.isLoggedIn ? (
       <button
         type="button"
         className="btn btn-main btn-block"
         disabled={!cartData.length}
+        onClick={handleCheckout}
       >
         Accéder au paiement
       </button>
