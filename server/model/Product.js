@@ -64,7 +64,7 @@ const productSchema = new mongoose.Schema(
 // productSchema.indexes({ description: "text", slug: "index" })
 const Product = mongoose.model("Product", productSchema)
 
-Product.on("index", function (err) {
+Product.on("index", (err) => {
   if (err) console.error(err) // error occurred during index creation
 })
 
