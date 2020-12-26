@@ -16,6 +16,7 @@ import AdminRoute from "./routes/AdminRoute"
 import ProductView from "./pages/Product/ProductView"
 import ShopContainer from "./pages/Shop/ShopContainer"
 import CartView from "./pages/Cart/CartView"
+import CheckOut from "./pages/CheckOut/CheckOut"
 import Error404 from "./pages/404/Error404"
 
 import { currentUser } from "./redux"
@@ -42,6 +43,7 @@ const App = ({ currentUser }) => {
           <Route component={ProductView} path="/product/:slug" exact />
           <Route component={ShopContainer} path="/shop" exact />
           <Route component={CartView} path="/cart" exact />
+          <Route component={CheckOut} path="/checkout" exact />
           <UserRoute component={UserDashboard} path="/user/dashboard" />
           <AdminRoute component={AdminDashboard} path="/admin/dashboard" />
           <Route component={Error404} />
