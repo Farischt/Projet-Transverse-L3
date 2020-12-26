@@ -6,6 +6,7 @@ import { toast } from "react-toastify"
 export const addProductToCart = (product) => {
   return (dispatch) => {
     let cart = []
+    let unique
     if (window) {
       // if cart is available in local storage
       if (localStorage.getItem("cart")) {
@@ -15,10 +16,10 @@ export const addProductToCart = (product) => {
         ...product,
         userQuantity: 1,
       })
-      let unique = _.uniqWith(cart, _.isEqual)
+      unique = _.uniqWith(cart, _.isEqual)
       localStorage.setItem("cart", JSON.stringify(unique))
     }
-    dispatch(addToCart(cart))
+    dispatch(addToCart(unique))
   }
 }
 
