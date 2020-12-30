@@ -1,25 +1,25 @@
-import { addToCart, removeFromCart, updateCart } from "./cartActions"
-import _ from "lodash"
+import { addToCart, removeFromCart, updateCart, emptyCart } from "./cartActions"
 import { toast } from "react-toastify"
 
 //? Add a product to cart (bypass)
 export const addProductToCart = (product) => {
   return (dispatch) => {
     let cart = []
-    let unique
     if (window) {
       // if cart is available in local storage
       if (localStorage.getItem("cart")) {
         cart = JSON.parse(localStorage.getItem("cart"))
       }
-      cart.push({
-        ...product,
-        userQuantity: 1,
-      })
-      unique = _.uniqWith(cart, _.isEqual)
-      localStorage.setItem("cart", JSON.stringify(unique))
+      let existingProduct = cart.find((element) => element._id === product._id)
+      if (!existingProduct) {
+        cart.push({
+          ...product,
+          userQuantity: 1,
+        })
+      }
+      localStorage.setItem("cart", JSON.stringify(cart))
     }
-    dispatch(addToCart(unique))
+    dispatch(addToCart(cart))
   }
 }
 
@@ -59,6 +59,17 @@ export const updateQuantity = (product, quantity) => {
         localStorage.setItem("cart", JSON.stringify(cart))
         dispatch(updateCart(cart))
       }
+    }
+  }
+}
+
+//? Empty Cart
+export const eraseCart = () => {
+  return (dispatch) => {
+    if (window) {
+      localStorage.removeItem("cart")
+      let cart = []
+      dispatch(emptyCart(cart))
     }
   }
 }

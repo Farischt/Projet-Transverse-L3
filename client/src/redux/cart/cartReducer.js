@@ -1,4 +1,9 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART } from "./cartTypes"
+import {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  UPDATE_CART,
+  EMPTY_CART,
+} from "./cartTypes"
 
 const getCartFromLocalStorage = () => {
   if (window && localStorage.getItem("cart")) {
@@ -17,6 +22,8 @@ export const cartReducer = (state = initialeState, action) => {
     case REMOVE_FROM_CART:
       return action.payload
     case UPDATE_CART:
+      return action.payload
+    case EMPTY_CART:
       return action.payload
     default:
       return state
