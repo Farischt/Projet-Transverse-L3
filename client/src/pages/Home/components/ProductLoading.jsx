@@ -28,11 +28,6 @@ const ProductLoading = ({ count }) => {
             </Card.Text>
           </Card.Body>
           <Card.Footer>
-            <div>
-              <button className="btn btn-outline-danger m-2 my-sm-0 float-right">
-                <Spinner animation="border" variant="danger" />
-              </button>
-            </div>
             <StarRatings
               rating={0}
               starRatedColor="gold"
@@ -40,11 +35,9 @@ const ProductLoading = ({ count }) => {
               starDimension="25px"
               starSpacing="5px"
             />{" "}
-            <div>
-              <button className="btn btn-outline-info m-2 my-sm-0">
-                <Spinner animation="border" variant="info" />
-              </button>
-            </div>
+            <button className="btn btn-outline-info m-2 my-sm-0 ">
+              <Spinner animation="border" variant="info" />
+            </button>
           </Card.Footer>
         </Card>
       )
