@@ -121,7 +121,7 @@ module.exports.productsTotal = async (req, res) => {
 module.exports.listPagination = async (req, res) => {
   const { sort, page, order } = req.body
   const currentPage = page || 1
-  const productsPerPage = 3
+  const productsPerPage = 6
 
   try {
     const products = await Product.find({})

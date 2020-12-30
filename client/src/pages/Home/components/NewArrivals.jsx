@@ -10,7 +10,7 @@ const NewArrivals = () => {
   const [productsLoading, setProductsLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [countProducts, setCountProducts] = useState(1)
-  const perPage = 3
+  const perPage = 6
   const sort = "createdAt"
   const order = "desc"
 
@@ -42,27 +42,6 @@ const NewArrivals = () => {
 
     return () => (isSubscribed = false)
   }, [page])
-
-  // useEffect(() => {
-  //   const fetchProducts = async (isSubscribed) => {
-  //     // setProductsLoading(true)
-  //     try {
-  //       const response = await listPagination(sort, order, page)
-  //       if (isSubscribed) {
-  //         setProducts(response.data)
-  //         setProductsLoading(false)
-  //       }
-  //     } catch (err) {
-  //       if (isSubscribed) {
-  //         setProductsLoading(false)
-  //         console.log(err)
-  //       }
-  //     }
-  //   }
-  //   let isSubscribed = true
-  //   fetchProducts(isSubscribed)
-  //   return () => (isSubscribed = false)
-  // }, [page])
 
   return (
     <div className="container">

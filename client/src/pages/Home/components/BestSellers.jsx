@@ -12,26 +12,8 @@ const BestSellers = () => {
   const [countProducts, setCountProducts] = useState(1)
   const sort = "sold"
   const order = "desc"
-  const perPage = 3
+  const perPage = 6
 
-  // useEffect(() => {
-  //   productsTotal().then((res) => setCountProducts(res.data));
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     setProductsLoading(true);
-  //     try {
-  //       const response = await listPagination(sort, order, page);
-  //       setProducts(response.data);
-  //       setProductsLoading(false);
-  //     } catch (err) {
-  //       setProductsLoading(false);
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchProducts();
-  // }, [page]);
   useEffect(() => {
     let isSubscribed = true
     productsTotal().then((res) => {
