@@ -3,14 +3,12 @@ const Cart = require("../model/Cart")
 const Product = require("../model/Product")
 
 module.exports.userCart = async (req, res) => {
+  // need a cart verification here
   const { cart } = req.body
 
   try {
-    const user = await User.findById(req.session.userId)
-    if (!user)
-      return res.status(401).json({ errorMessage: "Authentification needed" })
     // We check if the user already has a registrated cart in db
-    let existingCart = await Cart.findOne({ orderedBy: user._id })
+    let existingCart = await Cart.findOne({ orderedBy: req.session.userId })
     // If we find one we remove it
     if (existingCart) existingCart.remove()
 
@@ -49,6 +47,39 @@ module.exports.userCart = async (req, res) => {
 
     res.json({ ok: true })
   } catch (err) {
+    return res.status(500).json({ errorMessage: err.message })
+  }
+}
+
+module.exports.readCart = async (req, res) => {
+  try {
+    const userCart = await Cart.findOne({
+      orderedBy: req.session.userId,
+    }).populate("products.product")
+
+    if (!userCart)
+      return res.status(404).json({ errorMessage: "No cart saved in database" })
+
+    const { products, cartTotal, totalAfterDiscount } = userCart
+
+    res.json({ products, cartTotal, totalAfterDiscount })
+  } catch (err) {
+    return res.status(500).json({ errorMessage: err.message })
+  }
+}
+
+module.exports.deleteCart = async (req, res) => {
+  try {
+    const removedCart = await Cart.findOneAndRemove({
+      orderedBy: req.session.userId,
+    })
+
+    if (!removedCart)
+      return res.status(404).json({ errorMessage: "No cart found" })
+
+    res.json(removedCart)
+  } catch (err) {
+    console.log(err)
     return res.status(500).json({ errorMessage: err.message })
   }
 }
