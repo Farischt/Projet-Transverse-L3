@@ -11,15 +11,18 @@ const Home = () => {
 
   return (
     <>
-      <div className="jumbotron text-center text-dark h1 font-weight-bold">
+      <div className="jumbotron text-center text-main h1 font-weight-bold">
         <Jumbotron
           text={[
-            "💗 Bienvenue 💗",
+            "Bienvenue sur Formations & Logiciels",
             "Besoin d'une formation dynamique ?",
             "Vous êtes au bon endroit !",
             "Ne manquez pas nos nouvelles formations !",
           ]}
         />
+      </div>
+      <div className="container">
+        <hr />
       </div>
       <NewArrivals />
       <div className="container">
