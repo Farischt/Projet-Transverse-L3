@@ -5,3 +5,11 @@ export const userCart = async (cart) => {
     cart,
   })
 }
+
+export const getUserCart = async () => {
+  return await axios.get(`${process.env.REACT_APP_API_URL}/user-action/cart`)
+}
+
+export const deleteUserCart = async () => {
+  return await axios.delete(`${process.env.REACT_APP_API_URL}/user-action/cart`)
+}
