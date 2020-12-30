@@ -61,15 +61,22 @@ const ProductCard = ({ product, addProductToCart, cartData }) => {
       )}
       <Card.Body>
         <Card.Title>
-          {product.name}{" "}
+          {product.name} -
+          <Badge variant="main" className="mx-1">
+            {" "}
+            {new Intl.NumberFormat("de-DE", {
+              style: "currency",
+              currency: "EUR",
+            }).format(product.price)}{" "}
+          </Badge>
+        </Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">
+          {product.category && product.category.name}
           {isNew && (
             <Badge variant="danger" className="mx-1">
               New
             </Badge>
           )}
-        </Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
-          {product.category && product.category.name}
         </Card.Subtitle>
         <Card.Text className="text-muted">
           {product.description.slice(0, 30) + "..."}
