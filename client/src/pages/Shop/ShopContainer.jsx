@@ -62,7 +62,7 @@ const ShopContainer = ({ searchData }) => {
             searchData.products.length > 0 ? (
             <>
               <div className="jumbotron text-dark text-center h1 font-weight-bold">
-                <h3 className="display-4 text-danger">
+                <h3 className="display-4 text-main">
                   Votre recherche:{" "}
                   {searchData.type === "price" ? (
                     <>
@@ -71,6 +71,8 @@ const ShopContainer = ({ searchData }) => {
                     </>
                   ) : searchData.type === "rating" ? (
                     <> formation noté {searchData.query}/5 </>
+                  ) : searchData.type === "category" ? (
+                    <> categorie {searchData.products[0].category.name} </>
                   ) : (
                     <> {searchData.query} </>
                   )}
@@ -85,7 +87,7 @@ const ShopContainer = ({ searchData }) => {
             </>
           ) : searchData && searchData.error !== "" ? (
             <div className="jumbotron text-dark text-center h1 font-weight-bold">
-              <h1 className="display-4 text-danger">{searchData.error} </h1>
+              <h1 className="display-4 text-main">{searchData.error} </h1>
             </div>
           ) : (
             <div className="jumbotron text-dark h1 font-weight-bold">
