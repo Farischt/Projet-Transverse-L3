@@ -43,7 +43,7 @@ const App = ({ currentUser }) => {
           <Route component={ProductView} path="/product/:slug" exact />
           <Route component={ShopContainer} path="/shop" exact />
           <Route component={CartView} path="/cart" exact />
-          <Route component={CheckOut} path="/checkout" exact />
+          <UserRoute component={CheckOut} path="/checkout" exact />
           <UserRoute component={UserDashboard} path="/user/dashboard" />
           <AdminRoute component={AdminDashboard} path="/admin/dashboard" />
           <Route component={Error404} />
