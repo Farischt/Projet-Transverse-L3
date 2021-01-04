@@ -1,6 +1,7 @@
 const User = require("../model/User")
 const Cart = require("../model/Cart")
 const Product = require("../model/Product")
+const Coupon = require("../model/Coupon")
 
 module.exports.userCart = async (req, res) => {
   // need a cart verification here
@@ -80,6 +81,48 @@ module.exports.deleteCart = async (req, res) => {
     res.json(removedCart)
   } catch (err) {
     console.log(err)
+    return res.status(500).json({ errorMessage: err.message })
+  }
+}
+
+module.exports.applyCouponToCart = async (req, res) => {
+  const { coupon } = req.body
+  if (typeof coupon !== "string")
+    return res.status(400).json({ errorMessage: "Invalid body type" })
+
+  try {
+    // Cart check
+    const cart = await Cart.findOne({ orderedBy: req.session.userId }).populate(
+      "products.product",
+      "_id name price"
+    )
+    if (!cart) return res.status(404).json({ errorMessage: "No cart found" })
+
+    // Coupon check
+    const validCoupon = await Coupon.findOne({ title: coupon })
+    if (!validCoupon)
+      return res.status(400).json({ errorMessage: "Invalid coupon name" })
+
+    // Expiry check
+    const expiry = new Date(validCoupon.expiry)
+    if (expiry.getTime() - Date.now() <= 0)
+      return res.status(400).json({ errorMessage: "Coupon expired" })
+
+    // Apply discount
+    let totalAfterDiscount = (
+      cart.cartTotal -
+      (cart.cartTotal * validCoupon.discount) / 100
+    ).toFixed(2)
+
+    const newCartWithDiscount = await Cart.findOneAndUpdate(
+      { orderedBy: req.session.userId },
+      { totalAfterDiscount: parseInt(totalAfterDiscount) },
+      { new: true }
+    )
+
+    res.json(newCartWithDiscount.totalAfterDiscount)
+  } catch (err) {
+    console.log(err.message)
     return res.status(500).json({ errorMessage: err.message })
   }
 }
