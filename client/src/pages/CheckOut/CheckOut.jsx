@@ -1,30 +1,18 @@
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import Spinner from "react-bootstrap/Spinner"
-import { getUserCart, deleteUserCart } from "../../api/user"
+import { getUserCart, deleteUserCart, applyCoupon } from "../../api/user"
 import { eraseCart } from "../../redux"
 import { toast } from "react-toastify"
 
-const CheckOut = ({ eraseCart }) => {
+const CheckOut = ({ history, eraseCart }) => {
   const [cartTotal, setCartTotal] = useState(0)
   const [cartProducts, setCartProducts] = useState([])
   const [loading, setLoading] = useState(false)
-
-  const emptyCart = async () => {
-    try {
-      setLoading(true)
-      deleteUserCart()
-      eraseCart()
-      setCartProducts([])
-      setCartTotal(0)
-      setLoading(false)
-      toast.info("Votre panier a été vidé")
-    } catch (err) {
-      setLoading(false)
-      toast.error("Une erreur est survenu")
-      console.log(err)
-    }
-  }
+  const [coupon, setCoupon] = useState("")
+  const [couponLoading, setCouponLoading] = useState(false)
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0)
+  const [discountError, setDiscountError] = useState("")
 
   useEffect(() => {
     let isSubscribed = true
@@ -37,6 +25,12 @@ const CheckOut = ({ eraseCart }) => {
               style: "currency",
               currency: "EUR",
             }).format(response.data.cartTotal)
+          )
+          setTotalAfterDiscount(
+            new Intl.NumberFormat("de-DE", {
+              style: "currency",
+              currency: "EUR",
+            }).format(response.data.totalAfterDiscount)
           )
           setCartProducts(response.data.products)
           setLoading(false)
@@ -52,18 +46,81 @@ const CheckOut = ({ eraseCart }) => {
     return () => (isSubscribed = false)
   }, [])
 
-  return (
-    <div className="container-fluid" style={{ minHeight: "80vh" }}>
-      <div className="row p-2">
-        <div className="col-md-6">
-          <h4> Code promo </h4>
-          <br />
-          <input />
-        </div>
-        <div className="col-md-6">
-          <h4> Résumé de votre commande </h4>
-          <hr />
+  const emptyCart = async () => {
+    try {
+      setLoading(true)
+      deleteUserCart()
+      eraseCart()
+      setCartProducts([])
+      setCartTotal(0)
+      setTotalAfterDiscount(0)
+      setCoupon("")
+      setDiscountError("")
+      setLoading(false)
+      toast.info("Votre panier a été vidé")
+      history.push("/cart")
+    } catch (err) {
+      setLoading(false)
+      toast.error("Une erreur est survenu")
+      console.log(err)
+    }
+  }
 
+  const handleApplyCoupon = async (e) => {
+    e.preventDefault()
+    setCouponLoading(true)
+    applyCoupon(coupon)
+      .then((response) => {
+        setTotalAfterDiscount(response.data)
+        setCouponLoading(false)
+      })
+      .catch((err) => {
+        if (err.response.status === 400 || err.response.status === 404) {
+          setDiscountError(err.response.data.errorMessage)
+        }
+        setCouponLoading(false)
+      })
+  }
+
+  const handleCouponChange = (e) => {
+    setCoupon(e.target.value)
+    setDiscountError("")
+  }
+
+  return (
+    <div className="container-fluid" style={{ minHeight: "70vh" }}>
+      <div className="row p-4">
+        <div className="col-md-3"> </div>
+        <div
+          className="col-md-6 shadow-lg p-3 bg-white"
+          style={{ borderRadius: "25px" }}
+        >
+          <h2> Code promo </h2>
+          <form className="form-group" onSubmit={handleApplyCoupon}>
+            <input
+              onChange={handleCouponChange}
+              className="form-control"
+              type="text"
+              value={coupon}
+              placeholder="Veuillez saisir un code promo"
+              autoFocus
+            />
+            {discountError && (
+              <>
+                {" "}
+                <span className="text-danger"> {discountError} </span> <br />
+              </>
+            )}
+            <button className="btn btn-main mt-2" type="submit">
+              {couponLoading ? (
+                <Spinner animation="border" variant="light" />
+              ) : (
+                "Enregistrer"
+              )}
+            </button>
+          </form>
+          <hr />
+          <h2> Résumé de votre commande </h2>
           {cartProducts.map((product, index) => {
             return (
               <li
@@ -92,19 +149,39 @@ const CheckOut = ({ eraseCart }) => {
               <h5 className="font-weight-bold">{cartTotal}</h5>
             )}{" "}
           </li>
+          {totalAfterDiscount !== cartTotal && (
+            <li className="list-group-item d-flex justify-content-between align-items-center px-3 bg-info">
+              {" "}
+              Prix après remise
+              {loading ? (
+                <Spinner animation="border" variant="main" />
+              ) : (
+                <h5 className="font-weight-bold">
+                  {new Intl.NumberFormat("de-DE", {
+                    style: "currency",
+                    currency: "EUR",
+                  }).format(totalAfterDiscount)}
+                </h5>
+              )}{" "}
+            </li>
+          )}
           <hr />
-          <div className="row">
-            <div className="col-md-6 pt-2">
-              <button className="btn btn-main"> Paiement </button>
-            </div>
-            <div className="col-md-6 pt-2">
-              <button className="btn btn-main" onClick={emptyCart}>
-                {" "}
-                Vider le panier{" "}
-              </button>
-            </div>
+
+          <div className="btn-group-item d-flex justify-content-between align-items-center px-3">
+            <button
+              className="btn btn-main"
+              onClick={() => history.push("/payment")}
+            >
+              {" "}
+              Paiement{" "}
+            </button>
+            <button className="btn btn-danger" onClick={emptyCart}>
+              {" "}
+              Vider le panier{" "}
+            </button>
           </div>
         </div>
+        <div className="col-md-3"> </div>
       </div>
     </div>
   )
