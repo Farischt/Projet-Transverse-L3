@@ -54,17 +54,20 @@ const CartSummary = ({ userData, cartData }) => {
   }
 
   return (
-    <div className="mb-3">
-      <div className="pt-4">
-        <h4 className="mb-3">Prix total de votre panier</h4>
-        <ul className="list-group list-group-flush">
+    <div
+      className="mb-3 mt-3 shadow-lg p-3 bg-white"
+      style={{ borderRadius: "25px" }}
+    >
+      <div>
+        <h4>Panier</h4>
+        <ul className="list-group list-group-flush p-3 rounded">
           {cartData &&
             cartData.length > 0 &&
             cartData.map((product) => {
               return (
                 <li
                   key={product._id}
-                  className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0"
+                  className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 p-2"
                 >
                   {product.name} : {product.userQuantity} x {product.price}
                   ,00€
@@ -72,15 +75,15 @@ const CartSummary = ({ userData, cartData }) => {
                 </li>
               )
             })}
-          <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-danger">
-            Prix temporaire
-            <span>{cartTotal()} </span>
+          <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 p-2">
+            <strong> Prix temporaire </strong>
+            <strong>{cartTotal()} </strong>
           </li>
-          <li className="list-group-item d-flex justify-content-between align-items-center px-0 text-danger">
-            Livraison
-            <span>Pas d'option</span>
+          <li className="list-group-item d-flex justify-content-between align-items-center px-0 p-2">
+            <strong> Livraison </strong>
+            <strong>Pas d'option</strong>
           </li>
-          <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+          <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3 p-2">
             <div>
               <strong>Prix final </strong>
               <strong>
