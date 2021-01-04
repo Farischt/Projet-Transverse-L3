@@ -17,6 +17,7 @@ import ProductView from "./pages/Product/ProductView"
 import ShopContainer from "./pages/Shop/ShopContainer"
 import CartView from "./pages/Cart/CartView"
 import CheckOut from "./pages/CheckOut/CheckOut"
+import Payment from "./pages/Payment/Payment"
 import Error404 from "./pages/404/Error404"
 
 import { currentUser } from "./redux"
@@ -45,6 +46,7 @@ const App = ({ currentUser }) => {
           <Route component={CartView} path="/cart" exact />
           <UserRoute component={CheckOut} path="/checkout" exact />
           <UserRoute component={UserDashboard} path="/user/dashboard" />
+          <UserRoute component={Payment} path="/payment" />
           <AdminRoute component={AdminDashboard} path="/admin/dashboard" />
           <Route component={Error404} />
         </Switch>
