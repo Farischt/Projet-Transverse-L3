@@ -20,6 +20,11 @@ const AdminNav = ({ url }) => {
             Produits
           </Link>
         </li>
+        <li className="nav-items">
+          <Link to={`${url}/coupons`} className="nav-link text-info">
+            Coupons
+          </Link>
+        </li>
       </ul>
     </nav>
   )
