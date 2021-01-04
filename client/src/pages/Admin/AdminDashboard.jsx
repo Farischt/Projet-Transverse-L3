@@ -4,6 +4,7 @@ import { Switch, Route, useRouteMatch } from "react-router-dom"
 import AdminNav from "../../components/Nav/AdminNav"
 import CategoryContainer from "./Category/CategoryContainer"
 import ProductContainer from "./Product/ProductContainer"
+import CouponContainer from "./Coupon/CouponContainer"
 
 const AdminDashboard = () => {
   let { path, url } = useRouteMatch()
@@ -25,6 +26,7 @@ const AdminDashboard = () => {
             </Route>
             <Route component={CategoryContainer} path={`${path}/categories`} />
             <Route component={ProductContainer} path={`${path}/products`} />
+            <Route component={CouponContainer} path={`${path}/coupons`} />
           </Switch>
         </div>
       </div>
