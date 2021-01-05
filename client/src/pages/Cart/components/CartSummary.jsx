@@ -59,7 +59,7 @@ const CartSummary = ({ userData, cartData }) => {
       style={{ borderRadius: "25px" }}
     >
       <div>
-        <h4>Panier</h4>
+        <h4 className="text-center"> Total </h4>
         <ul className="list-group list-group-flush p-3 rounded">
           {cartData &&
             cartData.length > 0 &&
