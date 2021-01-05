@@ -79,8 +79,7 @@ const StripeCheckout = () => {
   return (
     <>
       <p className={succeeded ? "result-message" : "result-message hidden"}>
-        Paiement validé.{" "}
-        <Link to="/user/dashboard"> Direction votre compte </Link>
+        Paiement réussi. <Link to="/user/dashboard"> Voir votre commande </Link>
       </p>
       <form id="payment-form" className="stripe-form" onSubmit={handleSubmit}>
         <CardElement
