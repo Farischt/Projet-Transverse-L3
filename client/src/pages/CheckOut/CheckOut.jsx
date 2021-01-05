@@ -150,13 +150,13 @@ const CheckOut = ({ history, eraseCart }) => {
             )}{" "}
           </li>
           {totalAfterDiscount !== cartTotal && (
-            <li className="list-group-item d-flex justify-content-between align-items-center px-3 bg-info">
+            <li className="list-group-item d-flex justify-content-between align-items-center px-3 bg-main text-white">
               {" "}
               Prix après remise
               {loading ? (
                 <Spinner animation="border" variant="main" />
               ) : (
-                <h5 className="font-weight-bold">
+                <h5 className="font-weight-bold text-white">
                   {new Intl.NumberFormat("de-DE", {
                     style: "currency",
                     currency: "EUR",
