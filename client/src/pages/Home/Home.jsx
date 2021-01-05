@@ -21,9 +21,9 @@ const Home = () => {
           ]}
         />
       </div>
-      <div className="container">
+      {/* <div className="container">
         <hr />
-      </div>
+      </div> */}
       <NewArrivals />
       <div className="container">
         <hr />
