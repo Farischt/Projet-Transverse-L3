@@ -41,20 +41,6 @@ const ProductView = ({ match }) => {
     ReactGa.pageview(window.location.pathname + window.location.search)
   })
 
-  // const getProduct = async () => {
-  //   setLoading(true)
-  //   try {
-  //     const response = await readProduct(slug)
-  //     setProduct(response.data)
-  //     const relatedResponse = await listRelated(response.data._id)
-  //     setRelated(relatedResponse.data)
-  //     setLoading(false)
-  //   } catch (err) {
-  //     console.log(err)
-  //     setLoading(false)
-  //   }
-  // }
-
   return (
     <div className="container-fluid" style={{ minHeight: "90vh" }}>
       {loading ? (
