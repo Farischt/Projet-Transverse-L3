@@ -1,6 +1,7 @@
 import React from "react"
 import { Switch, Route, useRouteMatch } from "react-router-dom"
 import UserNav from "../../components/UserNav"
+import Home from "./components/Home"
 import Password from "./components/Password"
 
 const UserDashboard = () => {
@@ -14,14 +15,8 @@ const UserDashboard = () => {
         </div>
         <div className="col-md-10">
           <Switch>
-            <Route path={`${path}`} exact>
-              <div
-                className="col p-4 bg-light rounded"
-                style={{ minHeight: "90vh" }}
-              >
-                Votre compte
-              </div>
-            </Route>
+            <Route component={Home} path={`${path}`} exact />
+
             <Route component={Password} path={`${path}/password`} />
           </Switch>
         </div>
