@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom"
 import { addProductToCart } from "../../../redux"
 import CardColumns from "react-bootstrap/CardColumns"
 import ProductCard from "./ProductCard"
+import emptyCart from "../../../img/emptyCart.png"
 
 const CartItems = ({ cartData }) => {
   let history = useHistory()
@@ -23,17 +24,25 @@ const CartItems = ({ cartData }) => {
         </CardColumns>
       )}
       {cartData && !cartData.length && (
-        <p>
-          {" "}
-          Aucun produit dans votre panier
-          <button
-            className="btn btn-outline-main m-2 my-sm-0"
-            style={{ borderRadius: "25px" }}
-            onClick={() => history.push("/shop")}
-          >
-            Allez vers la boutique
-          </button>
-        </p>
+        <div className="text-center">
+          <div className="text-center p-4">
+            <img
+              src={emptyCart}
+              className="img-fluid"
+              style={{ height: "45vh", objectFit: "cover" }}
+            />
+          </div>
+          <p>
+            {" "}
+            Aucun produit dans votre panier
+            <button
+              className="btn btn-main m-2 my-sm-0"
+              onClick={() => history.push("/shop")}
+            >
+              Allez vers la boutique
+            </button>
+          </p>
+        </div>
       )}
     </>
   )
