@@ -69,6 +69,12 @@ const ProductCard = ({ product, addProductToCart, cartData }) => {
               currency: "EUR",
             }).format(product.price)}{" "}
           </Badge>
+          {product.quantity === 0 && (
+            <>
+              {" "}
+              - <Badge variant="danger"> Rupture </Badge>{" "}
+            </>
+          )}
         </Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
           {product.category && product.category.name}
@@ -100,6 +106,7 @@ const ProductCard = ({ product, addProductToCart, cartData }) => {
           <button
             className="btn btn-outline-danger m-2 my-sm-0 float-right"
             onClick={handleAddToCart}
+            disabled={product.quantity === 0}
           >
             {" "}
             <ShoppingCartOutlined />{" "}
