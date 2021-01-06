@@ -1,7 +1,25 @@
-import React from "react";
+import React from "react"
+import { Link } from "react-router-dom"
+import error from "../../img/error.png"
 
 const Error404 = () => {
-  return <h1> 404 not found </h1>;
-};
+  return (
+    <div className="container text-center">
+      <h2 className="pt-3">
+        {" "}
+        Il semble que vous vous soyez perdu en chemin !{" "}
+        <Link to="/" className="text-info">
+          {" "}
+          Page d'accueil{" "}
+        </Link>
+      </h2>
+      <img
+        src={error}
+        className="img-fluid"
+        style={{ height: "70vh", objectFit: "cover" }}
+      />
+    </div>
+  )
+}
 
-export default Error404;
+export default Error404
