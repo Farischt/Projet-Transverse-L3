@@ -32,6 +32,7 @@ const ProductButtons = ({ product, addProductToCart, cartData }) => {
           variant="outline-info"
           className="m-3 rounded float-left"
           onClick={handleAddToCart}
+          disabled={product.quantity === 0}
         >
           {" "}
           <ShoppingCartOutlined /> <br /> Panier
