@@ -20,3 +20,14 @@ export const applyCoupon = async (coupon) => {
     { coupon }
   )
 }
+
+export const createOrder = async (stripeResponse) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API_URL}/user-action/order`,
+    { stripeResponse }
+  )
+}
+
+export const listOrders = async () => {
+  return await axios.get(`${process.env.REACT_APP_API_URL}/user-action/orders`)
+}
