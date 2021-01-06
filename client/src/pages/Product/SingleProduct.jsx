@@ -53,6 +53,11 @@ const SingleProduct = ({ product }) => {
               <Badge variant="danger" className="mx-3">
                 New
               </Badge>
+              {product && product.quantity === 0 && (
+                <Badge variant="danger" className="mx-3">
+                  Rupture de stock
+                </Badge>
+              )}
               <br />
               <StarRatings
                 name={_id}
