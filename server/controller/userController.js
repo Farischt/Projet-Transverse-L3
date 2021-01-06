@@ -1,7 +1,9 @@
-const User = require("../model/User")
 const Cart = require("../model/Cart")
 const Product = require("../model/Product")
 const Coupon = require("../model/Coupon")
+const Order = require("../model/Order")
+
+//? Save cart
 
 module.exports.userCart = async (req, res) => {
   // need a cart verification here
@@ -52,6 +54,8 @@ module.exports.userCart = async (req, res) => {
   }
 }
 
+// ? Read a specific cart
+
 module.exports.readCart = async (req, res) => {
   try {
     const userCart = await Cart.findOne({
@@ -69,6 +73,8 @@ module.exports.readCart = async (req, res) => {
   }
 }
 
+//? Delete cart
+
 module.exports.deleteCart = async (req, res) => {
   try {
     const removedCart = await Cart.findOneAndRemove({
@@ -84,6 +90,8 @@ module.exports.deleteCart = async (req, res) => {
     return res.status(500).json({ errorMessage: err.message })
   }
 }
+
+//? Apply coupon
 
 module.exports.applyCouponToCart = async (req, res) => {
   const { coupon } = req.body
@@ -123,6 +131,64 @@ module.exports.applyCouponToCart = async (req, res) => {
     res.json(newCartWithDiscount.totalAfterDiscount)
   } catch (err) {
     console.log(err.message)
+    return res.status(500).json({ errorMessage: err.message })
+  }
+}
+
+// ? Create order
+
+module.exports.createOrder = async (req, res) => {
+  const { paymentIntent } = req.body.stripeResponse
+
+  try {
+    // Cart check and destructur products
+    const { products } = await Cart.findOne({ orderedBy: req.session.userId })
+    if (!products.length)
+      return res.status(400).json({ errorMessage: "No cart found " })
+
+    // Decrement quantity and increment sold
+    const bulkOption = products.map((element) => {
+      return {
+        updateOne: {
+          filter: { _id: element.product._id },
+          update: {
+            $inc: {
+              quantity: -element.userQuantity,
+              sold: +element.userQuantity,
+            },
+          },
+        },
+      }
+    })
+    await Product.bulkWrite(bulkOption, {})
+
+    // Creating a new order model
+    await new Order({
+      products,
+      paymentIntent,
+      orderedBy: req.session.userId,
+    }).save()
+
+    res.json({ ok: true })
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ errorMessage: err.message })
+  }
+}
+
+//? List all orders for a specific user
+
+module.exports.listOrders = async (req, res) => {
+  try {
+    const userOrders = await Order.find({
+      orderedBy: req.session.userId,
+    }).populate("products.product")
+    if (!userOrders.length)
+      return res.status(400).json({ errorMessage: "No order available" })
+
+    res.json(userOrders)
+  } catch (err) {
+    console.log(err)
     return res.status(500).json({ errorMessage: err.message })
   }
 }
