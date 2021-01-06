@@ -11,7 +11,7 @@ const Payment = () => {
     <div className="container p-5 text-center" style={{ minHeight: "80vh" }}>
       <h1> Paiement </h1>
       <Elements stripe={stripePromise}>
-        <div className="col-md-8 offset-md-2">
+        <div className="col-md-6 offset-md-3">
           <StripeCheckout />
         </div>
       </Elements>
