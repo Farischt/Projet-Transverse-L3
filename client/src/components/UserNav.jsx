@@ -16,6 +16,12 @@ const UserNav = ({ url }) => {
             Mot de passe{" "}
           </Link>
         </li>
+        <li className="nav-items">
+          <Link to={`${url}/wishlist`} className="nav-link text-info">
+            {" "}
+            Wish List{" "}
+          </Link>
+        </li>
       </ul>
     </nav>
   )
