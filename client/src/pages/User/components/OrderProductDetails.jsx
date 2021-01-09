@@ -1,14 +1,14 @@
 import React from "react"
 
 const OrderProductDetails = ({ order }) => (
-  <div className="table-responsive">
-    <h5 className="text-center"> Formations </h5>
+  <div className="table-responsive p-2">
+    <h3> Formations </h3>
     <table className="table table-bordered table-hover ">
       <thead className="thead-light">
         <tr>
           <th scope="col"> Nom </th>
           <th scope="col"> Quantité </th>
-          <th scope="col"> Prix </th>
+          <th scope="col"> Prix unitaire </th>
         </tr>
       </thead>
 
@@ -21,7 +21,12 @@ const OrderProductDetails = ({ order }) => (
                 <b> {element.product.name} </b>{" "}
               </td>
               <td>{element.userQuantity}</td>
-              <td>{element.product.price}</td>
+              <td>
+                {new Intl.NumberFormat("de-DE", {
+                  style: "currency",
+                  currency: "EUR",
+                }).format(element.product.price)}
+              </td>
             </tr>
           )
         })}
