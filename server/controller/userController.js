@@ -182,7 +182,9 @@ module.exports.listOrders = async (req, res) => {
   try {
     const userOrders = await Order.find({
       orderedBy: req.session.userId,
-    }).populate("products.product")
+    })
+      .populate("products.product")
+      .sort({ createdAt: -1 })
     if (!userOrders.length)
       return res.status(400).json({ errorMessage: "No order available" })
 
