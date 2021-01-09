@@ -2,6 +2,7 @@ import React from "react"
 import { Switch, Route, useRouteMatch } from "react-router-dom"
 
 import AdminNav from "../../components/Nav/AdminNav"
+import Home from "./Home/Home"
 import CategoryContainer from "./Category/CategoryContainer"
 import ProductContainer from "./Product/ProductContainer"
 import CouponContainer from "./Coupon/CouponContainer"
@@ -16,14 +17,7 @@ const AdminDashboard = () => {
         </div>
         <div className="col-md-10 ">
           <Switch>
-            <Route path={`${path}`} exact>
-              <div
-                className="col p-4 bg-light rounded"
-                style={{ minHeight: "90vh" }}
-              >
-                Votre compte
-              </div>
-            </Route>
+            <Route component={Home} path={`${path}`} exact />
             <Route component={CategoryContainer} path={`${path}/categories`} />
             <Route component={ProductContainer} path={`${path}/products`} />
             <Route component={CouponContainer} path={`${path}/coupons`} />
