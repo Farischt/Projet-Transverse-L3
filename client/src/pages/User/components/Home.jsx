@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import { listOrders } from "../../../api/user"
 import Spinner from "react-bootstrap/Spinner"
 import OrderProductDetails from "./OrderProductDetails"
+import OrderPaymentDetails from "./OrderPaymentDetails"
+import Invoice from "./Invoice"
 
 const Home = () => {
   const [orders, setOrders] = useState([])
@@ -37,13 +39,24 @@ const Home = () => {
           <Spinner animation="border" variant="primary" />{" "}
         </div>
       ) : orders.length && orders.length > 0 ? (
-        orders.map((order, index) => {
+        orders.map((order) => {
           return (
             <div className="m-5 p-3 card" key={order._id}>
-              <h3 className="text-center"> Commande n°{index} </h3>
+              <h4 className="text-center">
+                {" "}
+                Commande n° <strong>{order._id}</strong>{" "}
+              </h4>
+              <div className="text-center">
+                Statut de la commande :{" "}
+                <span className="badge bg-warning text-white">
+                  {" "}
+                  {order.orderStatus}
+                </span>{" "}
+              </div>
+              <OrderPaymentDetails order={order} />
               <OrderProductDetails order={order} />
               <div className="text-center">
-                <button className="btn  btn-primary"> Télecharger PDF </button>
+                <Invoice order={order} />
               </div>
             </div>
           )
