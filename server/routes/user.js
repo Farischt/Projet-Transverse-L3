@@ -9,6 +9,9 @@ const {
   applyCouponToCart,
   createOrder,
   listOrders,
+  addToWishList,
+  wishList,
+  removeFromWishList,
 } = require("../controller/userController")
 
 // Route that save user cart in database
@@ -23,5 +26,11 @@ router.post("/cart/apply-coupon", verifyAuth, applyCouponToCart)
 router.post("/order", verifyAuth, createOrder)
 // Route that get all the orders for a specific user
 router.get("/orders", verifyAuth, listOrders)
+// Route that add an item to wishlist
+router.post("/wishlist/:productId", verifyAuth, addToWishList)
+// Route that get a wishlist
+router.get("/wishlist", verifyAuth, wishList)
+// Route that delete a product from wishlist
+router.delete("/wishlist/:productId", verifyAuth, removeFromWishList)
 
 module.exports = router
