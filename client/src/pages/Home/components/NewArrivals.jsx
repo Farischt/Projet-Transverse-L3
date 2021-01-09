@@ -44,10 +44,10 @@ const NewArrivals = () => {
   }, [page])
 
   return (
-    <div className="container">
-      <h4 className="text-center text-danger font-weight-bold mb-3">
+    <div className="container pb-3">
+      <h1 className="text-center text-info font-weight-bold p-4">
         Nos formations les plus récentes
-      </h4>
+      </h1>
       <CardColumns className="shadow-lg mb-5 p-2 rounded">
         {productsLoading ? (
           <ProductLoading count={perPage} />
