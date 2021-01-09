@@ -2,6 +2,8 @@ const Cart = require("../model/Cart")
 const Product = require("../model/Product")
 const Coupon = require("../model/Coupon")
 const Order = require("../model/Order")
+const { isValidObjectId } = require("mongoose")
+const User = require("../model/User")
 
 //? Save cart
 
@@ -189,6 +191,77 @@ module.exports.listOrders = async (req, res) => {
       return res.status(400).json({ errorMessage: "No order available" })
 
     res.json(userOrders)
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ errorMessage: err.message })
+  }
+}
+
+// ? get wish list
+
+module.exports.wishList = async (req, res) => {
+  try {
+    const user = await User.findById(req.session.userId).populate("wishlist")
+    if (!user) return res.status(400).json({ errorMessage: "user not found" })
+
+    const { wishlist } = user
+    if (!wishlist.length)
+      return res.status(400).json({ errorMessage: "Wishlist is empty" })
+
+    res.json(wishlist)
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ errorMessage: err.message })
+  }
+}
+
+// ? Add to wishlist
+
+module.exports.addToWishList = async (req, res) => {
+  const { productId } = req.params
+
+  if (!isValidObjectId(productId))
+    return res.status(400).json({ errorMessage: "Invalid product id type" })
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.session.userId },
+      { $addToSet: { wishlist: productId } }
+    )
+
+    if (!user)
+      return res
+        .status(400)
+        .json({ errorMessage: "Nothing happened, user not found" })
+
+    res.json({ ok: true })
+  } catch (err) {
+    console.log(err.message)
+    return res.status(500).json({ errorMessage: err.message })
+  }
+}
+
+//? remove product from wishlist
+
+module.exports.removeFromWishList = async (req, res) => {
+  const { productId } = req.params
+
+  if (!isValidObjectId(productId))
+    return res.status(400).json({ errorMessage: "Invalid product id type" })
+
+  try {
+    const product = await Product.findById(productId)
+    if (!product)
+      return res.status(400).json({ errorMessage: "invalid product id" })
+
+    const user = await User.findOneAndUpdate(
+      { _id: req.session.userId },
+      { $pull: { wishlist: productId } }
+    )
+
+    if (!user) return res.status(400).json({ errorMessage: "No user found " })
+
+    res.json({ ok: true })
   } catch (err) {
     console.log(err)
     return res.status(500).json({ errorMessage: err.message })
