@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react"
-import {
-  getWishList,
-  addToWishList,
-  removeFromWishList,
-} from "../../../api/user"
+import { getWishList, removeFromWishList } from "../../../api/user"
 import Spinner from "react-bootstrap/Spinner"
+import CardColumns from "react-bootstrap/CardColumns"
+import ProductCard from "../../Home/components/ProductCard"
+import { toast } from "react-toastify"
 
 const WishList = () => {
   const [wishList, setWishList] = useState([])
@@ -40,6 +39,7 @@ const WishList = () => {
       setLoading(true)
       const res = await getWishList()
       setWishList(res.data)
+      setLoading(false)
     } catch (err) {
       setLoading(false)
       console.log(err.message)
@@ -51,8 +51,23 @@ const WishList = () => {
     }
   }
 
+  const handleRemoveFromWishList = async (productId) => {
+    try {
+      const response = await removeFromWishList(productId)
+      if (response.data.ok) {
+        loadWishList()
+      }
+    } catch (err) {
+      if ((err.response.status = 400)) {
+        toast.error(err.response.data.errorMessage)
+      } else {
+        toast.error("Une erreur inconnue est survenu")
+      }
+    }
+  }
+
   return (
-    <div className="col p-4 bg-light rounded" style={{ minHeight: "90vh" }}>
+    <div className="col p-3 bg-light rounded" style={{ minHeight: "90vh" }}>
       <h1>Votre wishlist</h1>
       {loading ? (
         <div className="text-center">
@@ -62,9 +77,20 @@ const WishList = () => {
       ) : error ? (
         <h5 className="text-center"> {error} </h5>
       ) : wishList.length > 0 ? (
-        wishList.map((product) => {
-          return <p key={product._id}> {product.name} </p>
-        })
+        <CardColumns>
+          {wishList.map((product) => {
+            return (
+              // <button
+              //   className="btn btn-block btn-danger"
+              //   onClick={() => handleRemoveFromWishList(product._id)}
+              // >
+              //   {" "}
+              //   Retirer{" "}
+              // </button>
+              <ProductCard product={product} key={product._id} />
+            )
+          })}
+        </CardColumns>
       ) : (
         "Une erreur inconnue est survenu !"
       )}
