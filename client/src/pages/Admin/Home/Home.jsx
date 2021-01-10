@@ -68,7 +68,7 @@ const Home = () => {
               <h4 className="text-center">
                 {isOrderNew(order.createdAt) && (
                   <span className="badge bg-warning text-white float-left">
-                    NEW
+                    New
                   </span>
                 )}{" "}
                 Commande n° <strong>{order._id}</strong>{" "}
