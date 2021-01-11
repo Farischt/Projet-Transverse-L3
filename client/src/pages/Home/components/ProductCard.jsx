@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { addProductToCart } from "../../../redux"
+import { addProductToCart, setDrawerVisible } from "../../../redux"
 import { Link } from "react-router-dom"
 import Card from "react-bootstrap/Card"
 import Badge from "react-bootstrap/Badge"
@@ -8,7 +8,12 @@ import StarRatings from "react-star-ratings"
 import { Tooltip } from "antd"
 import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons"
 
-const ProductCard = ({ product, addProductToCart, cartData }) => {
+const ProductCard = ({
+  product,
+  addProductToCart,
+  cartData,
+  setDrawerVisible,
+}) => {
   const [average, setAverage] = useState(0)
   const [isNew, setisNew] = useState(false)
   const [toolTip, setToolTip] = useState("Ajouter au panier")
@@ -46,6 +51,7 @@ const ProductCard = ({ product, addProductToCart, cartData }) => {
 
   const handleAddToCart = () => {
     addProductToCart(product)
+    setDrawerVisible()
   }
 
   return (
@@ -126,6 +132,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addProductToCart: (product) => dispatch(addProductToCart(product)),
+    setDrawerVisible: () => dispatch(setDrawerVisible()),
   }
 }
 
