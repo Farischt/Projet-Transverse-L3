@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-
 import ReactGa from "react-ga"
 import Jumbotron from "./components/Jumbotron"
 import NewArrivals from "./components/NewArrivals"
@@ -25,9 +24,6 @@ const Home = () => {
           ]}
         />
       </div>
-      {/* <div className="container">
-        <hr />
-      </div> */}
       <NewArrivals />
       <div className="container">
         <hr />
