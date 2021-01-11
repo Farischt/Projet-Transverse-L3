@@ -1,7 +1,7 @@
 import { SET_DRAWER_VISIBLE, SET_DRAWER_HIDDEN } from "./drawerTypes"
 
 const initialState = {
-  visibility: true,
+  visibility: false,
 }
 
 export const drawerReducer = (state = initialState, action) => {
