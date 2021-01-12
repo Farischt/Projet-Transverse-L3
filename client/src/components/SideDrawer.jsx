@@ -1,10 +1,15 @@
 import React from "react"
 import { connect } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { setDrawerHidden } from "../redux"
+import { setDrawerHidden, removeProductFromCart } from "../redux"
 import { Drawer } from "antd"
 
-const SideDrawer = ({ cartData, drawerData, setDrawerHidden }) => {
+const SideDrawer = ({
+  cartData,
+  drawerData,
+  setDrawerHidden,
+  removeProductFromCart,
+}) => {
   let history = useHistory()
 
   const redirectToCart = () => {
@@ -44,7 +49,10 @@ const SideDrawer = ({ cartData, drawerData, setDrawerHidden }) => {
                   <li className="list-group-item d-flex justify-content-between align-items-center px-3">
                     <strong> {product.name} </strong> {product.userQuantity}
                   </li>
-                  <button className="btn btn-block btn-danger">
+                  <button
+                    className="btn btn-block btn-danger"
+                    onClick={() => removeProductFromCart(product)}
+                  >
                     {" "}
                     Retirer{" "}
                   </button>
@@ -67,6 +75,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setDrawerHidden: () => dispatch(setDrawerHidden()),
+    removeProductFromCart: (product) =>
+      dispatch(removeProductFromCart(product)),
   }
 }
 
