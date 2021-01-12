@@ -80,14 +80,17 @@ const WishList = () => {
         <CardColumns>
           {wishList.map((product) => {
             return (
-              // <button
-              //   className="btn btn-block btn-danger"
-              //   onClick={() => handleRemoveFromWishList(product._id)}
-              // >
-              //   {" "}
-              //   Retirer{" "}
-              // </button>
-              <ProductCard product={product} key={product._id} />
+              <>
+                <ProductCard product={product} key={product._id} />
+
+                <button
+                  className="btn btn-danger btn-block "
+                  onClick={() => handleRemoveFromWishList(product._id)}
+                >
+                  {" "}
+                  Retirer{" "}
+                </button>
+              </>
             )
           })}
         </CardColumns>
