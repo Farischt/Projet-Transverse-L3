@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
-import { addProductToCart } from "../../redux"
+import { addProductToCart, setDrawerVisible } from "../../redux"
 import { addToWishList } from "../../api/user"
 import RatingModal from "./RatingModal"
 import Button from "react-bootstrap/Button"
@@ -12,7 +12,12 @@ import {
 } from "@ant-design/icons"
 import { toast } from "react-toastify"
 
-const ProductButtons = ({ product, addProductToCart, cartData }) => {
+const ProductButtons = ({
+  product,
+  addProductToCart,
+  cartData,
+  setDrawerVisible,
+}) => {
   const [modalShow, setModalShow] = useState(false)
   const [toolTip, setToolTip] = useState("Ajouter au panier")
 
@@ -25,6 +30,7 @@ const ProductButtons = ({ product, addProductToCart, cartData }) => {
 
   const handleAddToCart = () => {
     addProductToCart(product)
+    setDrawerVisible()
   }
 
   const handleAddToWishList = async () => {
@@ -86,6 +92,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addProductToCart: (product) => dispatch(addProductToCart(product)),
+    setDrawerVisible: () => dispatch(setDrawerVisible()),
   }
 }
 
