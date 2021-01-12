@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import {
   BarChart,
   Bar,
-  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -32,7 +31,7 @@ const Stats = () => {
             const data = {
               name: product.name,
               sales: product.sold,
-              quantity: 3,
+              // quantity: product.quantity,
             }
             setProducts((previousState) => [...previousState, data])
           })
@@ -79,8 +78,8 @@ const Stats = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="sales" fill="#18a2b6" />
-              <Bar dataKey="quantity" fill="#000c18" />
+              <Bar dataKey="sales" fill="#000c18" />
+              {/* <Bar dataKey="quantity" fill="#18a2b6" /> */}
             </BarChart>
           </ResponsiveContainer>
         </div>
