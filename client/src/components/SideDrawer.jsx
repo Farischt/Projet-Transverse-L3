@@ -39,6 +39,7 @@ const SideDrawer = ({ cartData, drawerData, setDrawerHidden }) => {
                     className="img-fluid rounded-top"
                     src={product.images[0].url}
                     style={{ width: "100%", objectFit: "cover" }}
+                    alt=""
                   />
                   <li className="list-group-item d-flex justify-content-between align-items-center px-3">
                     <strong> {product.name} </strong> {product.userQuantity}

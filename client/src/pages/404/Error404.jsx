@@ -17,6 +17,7 @@ const Error404 = () => {
         src={error}
         className="img-fluid"
         style={{ height: "70vh", objectFit: "cover" }}
+        alt="404"
       />
     </div>
   )

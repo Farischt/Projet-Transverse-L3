@@ -30,6 +30,7 @@ const CartItems = ({ cartData }) => {
               src={emptyCart}
               className="img-fluid"
               style={{ height: "45vh", objectFit: "cover" }}
+              alt=""
             />
           </div>
           <p>

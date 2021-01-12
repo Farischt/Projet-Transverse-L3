@@ -99,6 +99,7 @@ const StripeCheckout = ({ eraseCart }) => {
           src={paymentConfirmed}
           className="img-fluid"
           style={{ height: "50vh", objectFit: "cover" }}
+          alt="payment confirmed"
         />
       ) : (
         <form id="payment-form" className="stripe-form" onSubmit={handleSubmit}>
