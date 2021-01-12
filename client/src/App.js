@@ -29,6 +29,8 @@ const App = ({ currentUser }) => {
     debug: false,
   })
 
+  // test
+
   useEffect(() => {
     currentUser()
   }, [currentUser])
