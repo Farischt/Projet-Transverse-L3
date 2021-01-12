@@ -10,3 +10,13 @@ export const updateOrderStatus = async (orderId, newOrderStatus) => {
     { newOrderStatus }
   )
 }
+
+export const getSalesPerMonth = async () => {
+  return await axios.get(
+    `${process.env.REACT_APP_API_URL}/admin/sales-per-month`
+  )
+}
+
+export const stocks = async () => {
+  return await axios.get(`${process.env.REACT_APP_API_URL}/admin/out-of-stocks`)
+}
