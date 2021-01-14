@@ -18,7 +18,7 @@ const Register = ({ history }) => {
   let { user } = useSelector((state) => ({ ...state }))
 
   useEffect(() => {
-    ReactGa.pageview(window.location.pathname)
+    ReactGa.pageview(window.location.pathname + window.location.search)
   }, [])
 
   useEffect(() => {

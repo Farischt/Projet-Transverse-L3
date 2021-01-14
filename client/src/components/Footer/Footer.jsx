@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer p-5 bg-main">
       <div className="row">
         <div className="col-12 col-md">
-          <h5 className="text-white"> Created by Faris Chtatou </h5>
+          <h5 className="text-white"> Created by EFREI Students </h5>
           <SlackOutlined style={{ fontSize: "64px" }} />
           <small className="d-block mb-3 text-muted">&copy; 2020-2020</small>
         </div>

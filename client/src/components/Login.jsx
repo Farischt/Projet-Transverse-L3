@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import ReactGa from "react-ga"
 import { connect } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { loginUser } from "../redux"
@@ -25,10 +24,6 @@ const Login = ({ userData, loginUser }) => {
   const handleLogin = (e) => {
     e.preventDefault()
     loginUser(user)
-    ReactGa.event({
-      category: "User",
-      action: "User logged-in",
-    })
   }
 
   return (

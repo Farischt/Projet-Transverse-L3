@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useEffect } from "react"
+import ReactGa from "react-ga"
 import { Switch, Route, useRouteMatch } from "react-router-dom"
 import UserNav from "../../components/UserNav"
 import Home from "./components/Home"
@@ -7,6 +8,10 @@ import WishList from "./components/WishList"
 
 const UserDashboard = () => {
   let { path, url } = useRouteMatch()
+
+  useEffect(() => {
+    ReactGa.pageview(window.location.pathname + window.location.search)
+  }, [])
 
   return (
     <div className="overflow-hidden">

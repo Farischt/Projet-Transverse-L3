@@ -1,8 +1,13 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link } from "react-router-dom"
 import error from "../../img/error.png"
+import ReactGa from "react-ga"
 
 const Error404 = () => {
+  useEffect(() => {
+    ReactGa.pageview(window.location.pathname + window.location.search)
+  }, [])
+
   return (
     <div className="container text-center">
       <h2 className="pt-3">

@@ -4,6 +4,7 @@ import Spinner from "react-bootstrap/Spinner"
 import { getUserCart, deleteUserCart, applyCoupon } from "../../api/user"
 import { eraseCart } from "../../redux"
 import { toast } from "react-toastify"
+import ReactGa from "react-ga"
 
 const CheckOut = ({ history, eraseCart }) => {
   const [cartTotal, setCartTotal] = useState(0)
@@ -13,6 +14,10 @@ const CheckOut = ({ history, eraseCart }) => {
   const [couponLoading, setCouponLoading] = useState(false)
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(0)
   const [discountError, setDiscountError] = useState("")
+
+  useEffect(() => {
+    ReactGa.pageview(window.location.pathname + window.location.search)
+  }, [])
 
   useEffect(() => {
     let isSubscribed = true

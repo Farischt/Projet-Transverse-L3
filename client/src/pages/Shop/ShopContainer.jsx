@@ -14,7 +14,7 @@ const ShopContainer = ({ searchData }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    ReactGa.pageview(window.location.pathname)
+    ReactGa.pageview(window.location.pathname + window.location.search)
   }, [])
 
   useEffect(() => {

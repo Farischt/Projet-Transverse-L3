@@ -1,5 +1,6 @@
 import { addToCart, removeFromCart, updateCart, emptyCart } from "./cartActions"
 import { toast } from "react-toastify"
+import ReactGa from "react-ga"
 
 //? Add a product to cart (bypass)
 export const addProductToCart = (product) => {
@@ -20,6 +21,10 @@ export const addProductToCart = (product) => {
       localStorage.setItem("cart", JSON.stringify(cart))
     }
     dispatch(addToCart(cart))
+    ReactGa.event({
+      category: "CART",
+      action: `PRODUCT ${product.price}$ ADDED TO CART`,
+    })
   }
 }
 
@@ -33,6 +38,10 @@ export const removeProductFromCart = (product) => {
         const newCart = cart.filter((element) => element._id !== product._id)
         localStorage.setItem("cart", JSON.stringify(newCart))
         dispatch(removeFromCart(newCart))
+        ReactGa.event({
+          category: "CART",
+          action: `PRODUCT ${product.price}$ REMOVED FROM CART`,
+        })
       }
     }
   }
@@ -58,6 +67,10 @@ export const updateQuantity = (product, quantity) => {
         cart[productIndex].userQuantity = parseInt(selectedQuantity)
         localStorage.setItem("cart", JSON.stringify(cart))
         dispatch(updateCart(cart))
+        ReactGa.event({
+          category: "CART",
+          action: `PRODUCT ${product.price}$ UPDATED QUANTITY ${quantity}`,
+        })
       }
     }
   }

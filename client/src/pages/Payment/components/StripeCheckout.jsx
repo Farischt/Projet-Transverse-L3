@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import ReactGa from "react-ga"
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { createPaymentIntent } from "../../../api/stripe"
 import { Link } from "react-router-dom"
@@ -53,7 +54,10 @@ const StripeCheckout = ({ eraseCart }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setProcessing(true)
-
+    ReactGa.event({
+      category: "PAYMENT",
+      action: `PAYMENT ATTEMPT`,
+    })
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -66,6 +70,11 @@ const StripeCheckout = ({ eraseCart }) => {
     if (payload.error) {
       setError(`Le paiement n'a pas aboutit : ${payload.error}`)
       setProcessing(false)
+      ReactGa.event({
+        category: "PAYMENT",
+        action: `PAYMENT FAILURE`,
+        label: `${payload.error}`,
+      })
     } else {
       // create order and save to database
       createOrder(payload)
@@ -81,6 +90,10 @@ const StripeCheckout = ({ eraseCart }) => {
       setError("")
       setProcessing(false)
       setSucceeded(true)
+      ReactGa.event({
+        category: "PAYMENT",
+        action: `${payload.paymentIntent.amount / 100} PAYMENT SUCCESS`,
+      })
     }
   }
 

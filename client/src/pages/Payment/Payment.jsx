@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import ReactGa from "react-ga"
 import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import StripeCheckout from "./components/StripeCheckout"
@@ -12,6 +13,10 @@ const Payment = () => {
   const [totalPrice, setTotalPrice] = useState(null)
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    ReactGa.pageview(window.location.pathname + window.location.search)
+  }, [])
 
   useEffect(() => {
     let isSubscribed = true

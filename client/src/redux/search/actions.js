@@ -1,5 +1,6 @@
 import { searchQuery } from "../../api/product"
 import { searchRequest, searchFailure, searchSuccess } from "./searchActions"
+import ReactGa from "react-ga"
 
 //? Search with a keyword
 export const searchWithQuery = (filter, type) => {
