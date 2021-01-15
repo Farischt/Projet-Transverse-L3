@@ -38,13 +38,21 @@ const App = ({ currentUser }) => {
   return (
     <Suspense
       fallback={
-        <div className="text-center p-5">
-          {" "}
-          <h1>
-            {" "}
-            Chargement... <br />
-            <Spinner animation="border" variant="dark" />{" "}
-          </h1>{" "}
+        <div
+          className="container-fluid  pt-5"
+          style={{
+            minHeight: "100vh",
+            background: "rgb(2,0,36)",
+            background:
+              "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(37,156,177,1) 98%, rgba(60,175,199,1) 100%)",
+          }}
+        >
+          <div className="text-center">
+            <h1 className="text-white">
+              Chargement... <br />
+              <Spinner animation="border" variant="white" />{" "}
+            </h1>{" "}
+          </div>
         </div>
       }
     >
