@@ -80,7 +80,7 @@ const WishList = () => {
         <CardColumns>
           {wishList.map((product) => {
             return (
-              <>
+              <div key={product._id}>
                 <ProductCard product={product} key={product._id} />
 
                 <button
@@ -90,7 +90,7 @@ const WishList = () => {
                   {" "}
                   Retirer{" "}
                 </button>
-              </>
+              </div>
             )
           })}
         </CardColumns>
